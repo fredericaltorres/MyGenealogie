@@ -62,10 +62,8 @@ namespace MyGenealogie.Console
             {
                 this.Trace($"Loading container {containerName}");
                 var bm = new BlobManager(this._storageName, this._storageKey, containerName);
-                var tmpJsonFile = Path.GetTempFileName();
-                File.Delete(tmpJsonFile);
-                bm.DownloadFileAsync("p.json", tmpJsonFile).GetAwaiter().GetResult();
-                var p = Person.LoadFromJsonFile(null, tmpJsonFile, PersonDBSource.AZURE_STORAGE);
+                var json = bm.GetTextAsync("p.json").GetAwaiter().GetResult();
+                var p = Person.LoadFromJson(null, json, PersonDBSource.AZURE_STORAGE);
                 this.Persons.Add(p);
                 p.LoadImages();
                 this.Trace($"");

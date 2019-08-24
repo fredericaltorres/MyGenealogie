@@ -210,7 +210,11 @@ namespace MyGenealogie
 
         public static Person LoadFromJsonFile(string folder, string jsonFile, PersonDBSource source)
         {
-            var json = File.ReadAllText(jsonFile);
+            return LoadFromJson(folder, File.ReadAllText(jsonFile), source);
+        }
+
+        public static Person LoadFromJson(string folder, string json, PersonDBSource source)
+        {
             var p = new Person();
             p.Properties = System.JSON.JSonObject.Deserialize<PersonProperties>(json);
             p._folder = folder;

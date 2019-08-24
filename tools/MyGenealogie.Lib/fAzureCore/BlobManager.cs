@@ -46,6 +46,13 @@ namespace fAzureHelper
             await cloudBlockBlob.DownloadToFileAsync(destinationFileName, FileMode.Create);
         }
 
+        public async Task<string> GetTextAsync(string cloudFileName)
+        {
+            cloudFileName = Path.GetFileName(cloudFileName);
+            CloudBlockBlob cloudBlockBlob = _cloudBlobContainer.GetBlockBlobReference(cloudFileName);
+            return await cloudBlockBlob.DownloadTextAsync();
+        }
+
         /// <summary>
         /// https://stackoverflow.com/questions/24621664/uploading-blockblob-and-setting-contenttype
         /// </summary>
