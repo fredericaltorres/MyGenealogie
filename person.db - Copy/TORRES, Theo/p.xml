@@ -1,0 +1,17 @@
+<Person>
+	<Guid>13379e9a-f7ac-41a7-9607-5f69d26775e2</Guid>
+	<Sexe>M</Sexe>
+	<BirthDate></BirthDate>
+	<BirthCity></BirthCity>
+	<BirthCountry></BirthCountry>
+	<DeathDate></DeathDate>
+	<DeathCity></DeathCity>
+	<DeathCountry></DeathCountry>
+	<Comment></Comment>
+	
+	<FatherGuid>ac87152c-ae34-494b-81b0-5cbf3c3f2be3</FatherGuid>	
+	<MotherGuid></MotherGuid>	
+	
+	<CreationDate>2004-42-24</CreationDate>
+</Person>
+

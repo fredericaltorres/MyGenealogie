@@ -1,0 +1,19 @@
+<Person>
+  <Guid>d7c243c9-d821-467b-abab-d5e397a35b7b</Guid>
+  <Sexe>F</Sexe>
+  <BirthDate>1992-10-20</BirthDate>
+  <BirthCity>Aix En Provence</BirthCity>
+  <BirthCountry>FRANCE</BirthCountry>
+  <DeathDate>
+  </DeathDate>
+  <DeathCity>
+  </DeathCity>
+  <DeathCountry>
+  </DeathCountry>
+  <Comment>
+  </Comment>
+  <FatherGuid>a3487e7a-2fb5-488c-b7ce-1a6395ed2453</FatherGuid>
+  <MotherGuid>
+  </MotherGuid>
+  <CreationDate>2004-40-24</CreationDate>
+</Person>

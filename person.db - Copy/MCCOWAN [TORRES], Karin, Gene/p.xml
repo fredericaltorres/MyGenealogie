@@ -1,0 +1,20 @@
+<Person>
+  <Guid>16cc9b9d-33f9-4420-a3db-a28d12d655f1</Guid>
+  <Sexe>F</Sexe>
+  <BirthDate>1970-3-30</BirthDate>
+  <BirthCity>Malden</BirthCity>
+  <BirthCountry>USA, MA</BirthCountry>
+  <DeathDate>
+  </DeathDate>
+  <DeathCity>
+  </DeathCity>
+  <DeathCountry>
+  </DeathCountry>
+  <Comment>
+  </Comment>
+  <FatherGuid>
+  </FatherGuid>
+  <MotherGuid>
+  </MotherGuid>
+  <CreationDate>2004-40-24</CreationDate>
+</Person>

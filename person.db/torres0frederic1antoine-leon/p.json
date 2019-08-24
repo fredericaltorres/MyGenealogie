@@ -1,0 +1,33 @@
+{
+  "Sexe": "M",
+  "BirthCity": "Aix-en-provence",
+  "BirthCountry": "France",
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": "la persone qui a mis cette genealogie sur ordinateur!",
+  "LastName": "TORRES",
+  "MaidenName": null,
+  "FirstName": "Frederic",
+  "Guid": "a3487e7a-2fb5-488c-b7ce-1a6395ed2453",
+  "FatherGuid": "12095c1d-ad9c-4963-bdac-7b4eeffd2dc0",
+  "MotherGuid": "0fd7eccc-f61c-4e86-9a78-4edf0b003fbc",
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": null,
+  "BirthDate": {
+    "Year": 1964,
+    "Month": 12,
+    "Day": 11
+  },
+  "Images": [
+    {
+      "ImageName": "torres-frederic,date~1964,comment~avis-de-naissance",
+      "FileName": "torres-frederic,date~1964,comment~avis-de-naissance.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\TORRES, Frederic, Antoine Leon\\torres-frederic,date~1964,comment~avis-de-naissance.jpg",
+      "Url": null
+    }
+  ]
+}

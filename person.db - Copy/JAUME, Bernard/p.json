@@ -1,0 +1,22 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "JAUME",
+  "MaidenName": null,
+  "FirstName": "Bernard",
+  "Guid": "91246639-6500-433b-911a-be084c3bccb0",
+  "FatherGuid": "dfa4960a-e692-4ea4-b792-5d1dd111805b",
+  "MotherGuid": "b4920d20-1bb4-455b-8540-85a9cdd0913b",
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": null,
+  "BirthDate": null,
+  "Images": []
+}

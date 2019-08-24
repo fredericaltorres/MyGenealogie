@@ -48,17 +48,21 @@
   <ItemGroup>
     <Compile Include="ConvertPersonXmlToJson.cs" />
     <Compile Include="JsonObject.cs" />
-    <Compile Include="Model\Persons.cs" />
-    <Compile Include="Model\Person.cs" />
-    <Compile Include="Model\PersonDate.cs" />
-    <Compile Include="Model\PersonImage.cs" />
-    <Compile Include="Model\PersonProperties.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="storage.credentials" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MyGenealogie.Lib\MyGenealogie.Lib.csproj">
+      <Project>{00379635-6c77-4159-9b84-40a91be357d3}</Project>
+      <Name>MyGenealogie.Lib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

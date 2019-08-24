@@ -1,0 +1,41 @@
+{
+  "Sexe": "F",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "VERGIER",
+  "MaidenName": "SEMEAC",
+  "FirstName": "Anastasie",
+  "Guid": "746f8df4-c808-4306-9e8c-356684f7361c",
+  "FatherGuid": "609164d1-2e76-470d-bb3b-0364de8a2ff1",
+  "MotherGuid": "0f17c476-a451-4f77-85fb-87516e0d7612",
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": null,
+  "BirthDate": null,
+  "Images": [
+    {
+      "ImageName": "Vergier Anastasie 2 4 ",
+      "FileName": "Vergier Anastasie 2 4 .jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\VERGIER[SEMEAC], Anastasie\\Vergier Anastasie 2 4 .jpg",
+      "Url": null
+    },
+    {
+      "ImageName": "Vergier Anastasie, Date~1872 , (2)",
+      "FileName": "Vergier Anastasie, Date~1872 , (2).jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\VERGIER[SEMEAC], Anastasie\\Vergier Anastasie, Date~1872 , (2).jpg",
+      "Url": null
+    },
+    {
+      "ImageName": "VERGIER[SEMEAC], Anastasie",
+      "FileName": "VERGIER[SEMEAC], Anastasie.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\VERGIER[SEMEAC], Anastasie\\VERGIER[SEMEAC], Anastasie.jpg",
+      "Url": null
+    }
+  ]
+}

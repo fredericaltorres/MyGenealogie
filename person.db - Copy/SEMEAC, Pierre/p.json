@@ -1,0 +1,30 @@
+{
+  "Sexe": "M",
+  "BirthCity": "Cathervielle",
+  "BirthCountry": "France",
+  "DeathCity": "Cathervielle",
+  "DeathCountry": "France",
+  "Comment": "\r\n\tLes date sont bidon\r\n\t",
+  "LastName": "SEMEAC",
+  "MaidenName": null,
+  "FirstName": "Pierre",
+  "Guid": "fdece35e-0da7-49ac-a7cc-8b2d4175bd70",
+  "FatherGuid": null,
+  "MotherGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": {
+    "Year": 1850,
+    "Month": 0,
+    "Day": 0
+  },
+  "BirthDate": {
+    "Year": 1800,
+    "Month": 0,
+    "Day": 0
+  },
+  "Images": []
+}

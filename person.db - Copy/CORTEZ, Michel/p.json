@@ -1,0 +1,22 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "CORTEZ",
+  "MaidenName": null,
+  "FirstName": "Michel",
+  "Guid": "e7f2576b-24c4-45e5-b624-488f8b9d89d3",
+  "FatherGuid": null,
+  "MotherGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": null,
+  "BirthDate": null,
+  "Images": []
+}

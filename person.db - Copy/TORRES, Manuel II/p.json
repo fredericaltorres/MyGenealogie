@@ -1,0 +1,26 @@
+{
+  "Sexe": "M",
+  "BirthCity": "Bercanne",
+  "BirthCountry": "Maroc",
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "TORRES",
+  "MaidenName": null,
+  "FirstName": "Manuel II",
+  "Guid": "12095c1d-ad9c-4963-bdac-7b4eeffd2dc0",
+  "FatherGuid": "56d68061-8b25-4762-b809-32198ceede6c",
+  "MotherGuid": "b4ce89bc-4638-4ad9-819f-f38827c96d6c",
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": null,
+  "BirthDate": {
+    "Year": 1925,
+    "Month": 0,
+    "Day": 0
+  },
+  "Images": []
+}

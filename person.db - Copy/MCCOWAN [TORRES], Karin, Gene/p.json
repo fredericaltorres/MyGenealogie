@@ -1,0 +1,26 @@
+{
+  "Sexe": "F",
+  "BirthCity": "Malden",
+  "BirthCountry": "USA, MA",
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "MCCOWAN",
+  "MaidenName": "TORRES",
+  "FirstName": "Karin",
+  "Guid": "16cc9b9d-33f9-4420-a3db-a28d12d655f1",
+  "FatherGuid": null,
+  "MotherGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": null,
+  "BirthDate": {
+    "Year": 1970,
+    "Month": 3,
+    "Day": 30
+  },
+  "Images": []
+}

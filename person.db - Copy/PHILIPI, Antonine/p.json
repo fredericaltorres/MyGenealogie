@@ -1,0 +1,22 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "PHILIPI",
+  "MaidenName": null,
+  "FirstName": "Antonine",
+  "Guid": "c04ff96a-f90a-4eb5-a112-684a585075aa",
+  "FatherGuid": null,
+  "MotherGuid": "00b123ff-82ce-4d8a-8573-3b413996995c",
+  "CreationDate": {
+    "Year": 2005,
+    "Month": 1,
+    "Day": 21
+  },
+  "DeathDate": null,
+  "BirthDate": null,
+  "Images": []
+}

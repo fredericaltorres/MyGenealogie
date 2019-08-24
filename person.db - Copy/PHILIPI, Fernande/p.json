@@ -1,0 +1,22 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "PHILIPI",
+  "MaidenName": null,
+  "FirstName": "Fernande",
+  "Guid": "6653e149-4c66-454a-9af6-b19733841979",
+  "FatherGuid": null,
+  "MotherGuid": "00b123ff-82ce-4d8a-8573-3b413996995c",
+  "CreationDate": {
+    "Year": 2005,
+    "Month": 1,
+    "Day": 21
+  },
+  "DeathDate": null,
+  "BirthDate": null,
+  "Images": []
+}

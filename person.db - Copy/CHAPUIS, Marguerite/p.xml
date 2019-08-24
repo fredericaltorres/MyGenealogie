@@ -1,0 +1,20 @@
+<Person>
+  <Guid>b960ab3f-d4c9-47c4-ae95-579a5093dcf8</Guid>
+  <Sexe>F</Sexe>
+  <BirthDate>1885</BirthDate>
+  <BirthCity>
+  </BirthCity>
+  <BirthCountry>
+  </BirthCountry>
+  <DeathDate>
+  </DeathDate>
+  <DeathCity>
+  </DeathCity>
+  <DeathCountry>
+  </DeathCountry>
+  <Comment>
+  </Comment>
+  <FatherGuid>15fd4dd8-ea47-4a5e-a273-be97e49416f1</FatherGuid>
+  <MotherGuid>d72f8da5-e4e5-49bd-9c17-befdd758c77d</MotherGuid>
+  <CreationDate>2005-44-21</CreationDate>
+</Person>

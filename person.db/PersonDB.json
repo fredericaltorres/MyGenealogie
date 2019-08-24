@@ -2203,9 +2203,9 @@
       },
       "Images": [
         {
-          "ImageName": "Torres Frederic, date-1964, comment-Avis de naissance",
-          "FileName": "Torres Frederic, date-1964, comment-Avis de naissance.jpg",
-          "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\TORRES, Frederic, Antoine Leon\\Torres Frederic, date-1964, comment-Avis de naissance.jpg",
+          "ImageName": "torres-frederic,date~1964,comment~avis-de-naissance",
+          "FileName": "torres-frederic,date~1964,comment~avis-de-naissance.jpg",
+          "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\TORRES, Frederic, Antoine Leon\\torres-frederic,date~1964,comment~avis-de-naissance.jpg",
           "Url": null
         }
       ]
@@ -2293,7 +2293,7 @@
       "Comment": null,
       "LastName": "TORRES",
       "MaidenName": null,
-      "FirstName": "Manuel (Sidi-Bel-Abbes",
+      "FirstName": "Manuel",
       "Guid": "ec813db7-57d6-4253-8f96-b8f5ec74b86c",
       "FatherGuid": null,
       "MotherGuid": null,
@@ -2452,7 +2452,7 @@
       "DeathCity": null,
       "DeathCountry": null,
       "Comment": null,
-      "LastName": "VERGIE",
+      "LastName": "VERGIER",
       "MaidenName": "SEMEAC",
       "FirstName": "Anastasie",
       "Guid": "746f8df4-c808-4306-9e8c-356684f7361c",

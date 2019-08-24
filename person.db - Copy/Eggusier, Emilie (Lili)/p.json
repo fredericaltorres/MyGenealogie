@@ -1,0 +1,30 @@
+{
+  "Sexe": "F",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": "aix en pce",
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "Eggusier",
+  "MaidenName": null,
+  "FirstName": "Emilie (Lili)",
+  "Guid": "51f484f5-56c9-4a49-81d4-c9bbb1271cdb",
+  "FatherGuid": "33a8f7f8-3253-49a1-8b7a-f1927249917d",
+  "MotherGuid": "a143c2de-99a2-41ae-8591-1b4de5dbf8ed",
+  "CreationDate": {
+    "Year": 2005,
+    "Month": 1,
+    "Day": 21
+  },
+  "DeathDate": {
+    "Year": 1991,
+    "Month": 0,
+    "Day": 0
+  },
+  "BirthDate": {
+    "Year": 1904,
+    "Month": 0,
+    "Day": 0
+  },
+  "Images": []
+}
