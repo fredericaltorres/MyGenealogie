@@ -69,7 +69,7 @@ namespace MyGenealogie
         {
             return GetPropertiesFile("p.xml");
         }
-        private string GetPropertiesJsonFile()
+        public string GetPropertiesJsonFile()
         {
             return GetPropertiesFile("p.json");
         }
@@ -94,12 +94,18 @@ namespace MyGenealogie
         }
 
 
+        public string GetFolderName()
+        {
+            var folderName = Path.GetFileName(this._folder);
+            return folderName;
+        }
+
         public string GetNewFullPathSanitized()
         {
             var folderName = Path.GetFileName(this._folder);
             var newFolderName = SanitizeNameForAzureContainerName(folderName);
-            var parentFolder = Path.GetDirectoryName(this._folder);
-            return Path.Combine(parentFolder, newFolderName);
+            var parentPathFolder = Path.GetDirectoryName(this._folder);
+            return Path.Combine(parentPathFolder, newFolderName);
         }
 
         public List<PersonImage> LoadImages()
@@ -174,11 +180,13 @@ namespace MyGenealogie
             {
                 var json = File.ReadAllText(p.GetPropertiesJsonFile());
                 p = System.JSON.JSonObject.Deserialize<Person>(json);
+                p._folder = folder;
             }
             else if (File.Exists(p.GetPropertiesXmlFile()))
             {
+                System.Diagnostics.Debugger.Break();
                 LoadFromXmlFile(p);
-                LoadNamesInfoFromFolderSyntaxWithBrakets(p);
+                LoadNamesInfoFromFolderSyntaxNumberAsSeparator(p);
                 p.LoadImages();
             }
             return p;

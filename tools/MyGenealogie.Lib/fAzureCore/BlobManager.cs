@@ -46,13 +46,16 @@ namespace fAzureHelper
             await cloudBlockBlob.DownloadToFileAsync(destinationFileName, FileMode.Create);
         }
 
-        public async Task UploadFileAsync(string localFileName, string cloudFileName = null)
+        public async Task UploadFileAsync(string localFileName, string cloudFileName = null, Boolean overide = false)
         {
             if (cloudFileName == null) // If no cloudFileName is specified use the local file name
                 cloudFileName = Path.GetFileName(localFileName);
 
-            if (await this.FileExistAsync(cloudFileName))
-                throw new ApplicationException($"Cloud file {cloudFileName} already exist");
+            if (!overide)
+            {
+                if (await this.FileExistAsync(cloudFileName))
+                    throw new ApplicationException($"Cloud file {cloudFileName} already exist");
+            }
 
             CloudBlockBlob cloudBlockBlob = _cloudBlobContainer.GetBlockBlobReference(cloudFileName);
             await cloudBlockBlob.UploadFromFileAsync(localFileName);

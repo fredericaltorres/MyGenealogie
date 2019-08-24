@@ -12,9 +12,13 @@ namespace MyGenealogie.Console
         ContainerManager _containerManager;
         string _dbPath;
         public Persons Persons;
+        string _storageName;
+            string _storageKey;
 
         public PersonDBInAzureStorage(string dbPath, string storageName, string storageKey)
         {
+            this._storageKey = storageKey;
+            this._storageName = storageName;
             this._containerManager = new ContainerManager(storageName, storageKey);
             this._dbPath = dbPath;
             this.LoadPersons();
@@ -23,6 +27,30 @@ namespace MyGenealogie.Console
         public void Upload()
         {
             var containers = this._containerManager.GetContainerList();
+            foreach(var p in Persons)
+            {
+                var containerName = p.GetFolderName();
+                this.Trace($"Create container {containerName}");
+                this._containerManager.CreateContainer(containerName);
+
+                this.Trace($"Upload json metadata file {p.GetPropertiesJsonFile()}");
+                var bm = new BlobManager(this._storageName, this._storageKey, containerName);
+                bm.UploadFileAsync(p.GetPropertiesJsonFile(), overide:true).GetAwaiter().GetResult();
+
+                p.LoadImages();
+                foreach (var image in p.Properties.Images)
+                {
+                    this.Trace($"Upload image {image.LocalFileName}");
+                    bm.UploadFileAsync(image.LocalFileName, overide: true).GetAwaiter().GetResult();
+                }
+
+                this.Trace($"");
+            }
+        }
+
+        private void Trace(string m)
+        {
+            System.Console.WriteLine(m);
         }
 
         private void LoadPersons()

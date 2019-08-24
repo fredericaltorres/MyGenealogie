@@ -12,8 +12,8 @@ namespace MyGenealogie.Console
         static void Main(string[] args)
         {
             var dbPath = @"C:\DVT\MyGenealogie\person.db";
-             new ConvertPersonXmlToJson().Run(dbPath);
-            +++
+             ///// new ConvertPersonXmlToJson().Run(dbPath);
+
             var storageKey = File.ReadAllText(@".\storage.credentials");
             var db = new PersonDBInAzureStorage(dbPath, "mygenealogie", storageKey);
             db.Upload();
