@@ -35,25 +35,25 @@ namespace MyGenealogie.Lib.tests
         [TestMethod]
         public void GetNewFullPathSanitized()
         {
-            var p = new Person(@"C:\DVT\MyGenealogie\person.db\BEAUDUN [SEMEAC], Marie Louise");
+            var p = new Person(PersonDBSource.LOCAL_FILE_SYSTEM,  @"C:\DVT\MyGenealogie\person.db\BEAUDUN [SEMEAC], Marie Louise");
             var expected = @"C:\DVT\MyGenealogie\person.db\beaudun9semeac0marie-louise";
             Assert.AreEqual(expected, p.GetNewFullPathSanitized());
 
-            p = new Person(@"C:\DVT\MyGenealogie\person.db\BEAUDUN [SEMEAC], Marie Louise, Josette  Annette");
+            p = new Person(PersonDBSource.LOCAL_FILE_SYSTEM, @"C:\DVT\MyGenealogie\person.db\BEAUDUN [SEMEAC], Marie Louise, Josette  Annette");
             expected = @"C:\DVT\MyGenealogie\person.db\beaudun9semeac0marie-louise1josette-annette";
             Assert.AreEqual(expected, p.GetNewFullPathSanitized());
         }
         [TestMethod]
         public void LoadNamesInfoFromFolderSyntaxNumberAsSeparator_WithMaidenName()
         {
-            var p = new Person(@"C:\DVT\MyGenealogie\person.db\beaudun9semeac0marie-louise");
+            var p = new Person(PersonDBSource.LOCAL_FILE_SYSTEM, @"C:\DVT\MyGenealogie\person.db\beaudun9semeac0marie-louise");
             Person.LoadNamesInfoFromFolderSyntaxNumberAsSeparator(p);
             Assert.AreEqual("beaudun", p.Properties.LastName);
             Assert.AreEqual("semeac", p.Properties.MaidenName);
             Assert.AreEqual("marie-louise", p.Properties.FirstName);
             Assert.AreEqual(null, p.Properties.MiddleName);
 
-            p = new Person(@"C:\DVT\MyGenealogie\person.db\beaudun9semeac0marie-louise1josette-annette");
+            p = new Person(PersonDBSource.LOCAL_FILE_SYSTEM, @"C:\DVT\MyGenealogie\person.db\beaudun9semeac0marie-louise1josette-annette");
             Person.LoadNamesInfoFromFolderSyntaxNumberAsSeparator(p);
             Assert.AreEqual("beaudun", p.Properties.LastName);
             Assert.AreEqual("semeac", p.Properties.MaidenName);
@@ -64,14 +64,14 @@ namespace MyGenealogie.Lib.tests
         [TestMethod]
         public void LoadNamesInfoFromFolderSyntaxNumberAsSeparator_NoMaidenName()
         {
-            var p = new Person(@"C:\DVT\MyGenealogie\person.db\torres0frederic");
+            var p = new Person(PersonDBSource.LOCAL_FILE_SYSTEM, @"C:\DVT\MyGenealogie\person.db\torres0frederic");
             Person.LoadNamesInfoFromFolderSyntaxNumberAsSeparator(p);
             Assert.AreEqual("torres", p.Properties.LastName);
             Assert.AreEqual(null, p.Properties.MaidenName);
             Assert.AreEqual("frederic", p.Properties.FirstName);
             Assert.AreEqual(null, p.Properties.MiddleName);
 
-            p = new Person(@"C:\DVT\MyGenealogie\person.db\torres0frederic1antoine-leon");
+            p = new Person(PersonDBSource.LOCAL_FILE_SYSTEM, @"C:\DVT\MyGenealogie\person.db\torres0frederic1antoine-leon");
             Person.LoadNamesInfoFromFolderSyntaxNumberAsSeparator(p);
             Assert.AreEqual("torres", p.Properties.LastName);
             Assert.AreEqual(null, p.Properties.MaidenName);

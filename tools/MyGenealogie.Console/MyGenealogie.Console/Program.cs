@@ -16,7 +16,16 @@ namespace MyGenealogie.Console
 
             var storageKey = File.ReadAllText(@".\storage.credentials");
             var db = new PersonDBInAzureStorage(dbPath, "mygenealogie", storageKey);
-            db.Upload();
+
+            var reUploadDatabase = true;
+
+            if(reUploadDatabase)
+            {
+                db.LoadPersonsFromLocalDB();
+                db.Upload();
+            }
+
+            db.LoadPersonsFromAzureStorageDB();
 
             System.Console.WriteLine("Done");
             System.Console.ReadLine();

@@ -13,7 +13,7 @@ namespace MyGenealogie
         {
             System.Console.WriteLine("Convert Person Xml to Json file");
             var personFolders = System.IO.Directory.GetDirectories(dbPath);
-            var personDB = new Persons();
+            var personDB = new Persons(PersonDBSource.LOCAL_FILE_SYSTEM);
             var renameCounterError = 0;
             foreach(var personFolder in personFolders)
             {

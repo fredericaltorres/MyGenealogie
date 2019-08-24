@@ -11,15 +11,18 @@ namespace MyGenealogie
     public class Person
     {
         public PersonProperties Properties = new PersonProperties();
+        public PersonDBSource Source;
         internal string _folder;
+
         public Person()
         {
 
         }
-
-        public Person(string folder)
+        
+        public Person(PersonDBSource source, string folder)
         {
             this._folder = folder;
+            this.Source = source;
         }
 
         //torres0frederic-antoine-leon
@@ -31,6 +34,12 @@ namespace MyGenealogie
         //        Person.SanitizeNameForAzureContainerName("TORRES, Frederic, Antoine Leon"));
         //    Assert.AreEqual("torres0mcowan1karin2gene",
         //        Person.SanitizeNameForAzureContainerName("TORRES [McCowan], Karin, Gene"));
+
+
+        private static string BuildImageUrl(string fileName)
+        {
+            return $"https://mygenealogie.blob.core.windows.net/antonin0philippi/{fileName}";
+        }
 
         public static string SanitizeNameForAzureContainerName(string n)
         {
@@ -92,8 +101,7 @@ namespace MyGenealogie
                 return false;
             }
         }
-
-
+        
         public string GetFolderName()
         {
             var folderName = Path.GetFileName(this._folder);
@@ -108,22 +116,32 @@ namespace MyGenealogie
             return Path.Combine(parentPathFolder, newFolderName);
         }
 
-        public List<PersonImage> LoadImages()
+        public void LoadImages()
         {
-            var l = new List<PersonImage>();
-            var images = Directory.GetFiles(this._folder, "*.jpg").ToList();
-            foreach(var i in images)
+            if (this.Source == PersonDBSource.LOCAL_FILE_SYSTEM)
             {
-                var pi = new PersonImage {
-                    ImageName = Path.GetFileNameWithoutExtension(i),
-                    FileName = Path.GetFileName(i),
-                    LocalFileName = i,
-                    Url = null,
-                };
-                l.Add(pi);
+                var l = new List<PersonImage>();
+                var images = Directory.GetFiles(this._folder, "*.jpg").ToList();
+                foreach (var i in images)
+                {
+                    var pi = new PersonImage
+                    {
+                        ImageName = Path.GetFileNameWithoutExtension(i),
+                        FileName = Path.GetFileName(i),
+                        LocalFileName = i,
+                        Url = null,
+                    };
+                    l.Add(pi);
+                }
+                this.Properties.Images = l;
             }
-            this.Properties.Images = l;
-            return l;
+            else if (this.Source == PersonDBSource.AZURE_STORAGE)
+            {
+                foreach(var im in this.Properties.Images)
+                {
+                    im.Url = BuildImageUrl(im.FileName);
+                }
+            }
         }
 
         public static void LoadNamesInfoFromFolderSyntaxNumberAsSeparator(Person p)
@@ -175,12 +193,10 @@ namespace MyGenealogie
 
         public static Person LoadFromFolder(string folder)
         {
-            var p = new Person(folder);
+            var p = new Person( PersonDBSource.LOCAL_FILE_SYSTEM, folder);
             if (File.Exists(p.GetPropertiesJsonFile()))
             {
-                var json = File.ReadAllText(p.GetPropertiesJsonFile());
-                p = System.JSON.JSonObject.Deserialize<Person>(json);
-                p._folder = folder;
+                p = LoadFromJsonFile(folder, p.GetPropertiesJsonFile(), PersonDBSource.LOCAL_FILE_SYSTEM);
             }
             else if (File.Exists(p.GetPropertiesXmlFile()))
             {
@@ -189,6 +205,16 @@ namespace MyGenealogie
                 LoadNamesInfoFromFolderSyntaxNumberAsSeparator(p);
                 p.LoadImages();
             }
+            return p;
+        }
+
+        public static Person LoadFromJsonFile(string folder, string jsonFile, PersonDBSource source)
+        {
+            var json = File.ReadAllText(jsonFile);
+            var p = new Person();
+            p.Properties = System.JSON.JSonObject.Deserialize<PersonProperties>(json);
+            p._folder = folder;
+            p.Source = source;
             return p;
         }
 

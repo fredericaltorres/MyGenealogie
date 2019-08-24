@@ -46,7 +46,24 @@ namespace fAzureHelper
             await cloudBlockBlob.DownloadToFileAsync(destinationFileName, FileMode.Create);
         }
 
-        public async Task UploadFileAsync(string localFileName, string cloudFileName = null, Boolean overide = false)
+        /// <summary>
+        /// https://stackoverflow.com/questions/24621664/uploading-blockblob-and-setting-contenttype
+        /// </summary>
+        /// <param name="localFileName"></param>
+        /// <param name="cloudFileName"></param>
+        /// <param name="overide"></param>
+        /// <returns></returns>
+        public async Task UploadJpegFileAsync(string localFileName, string cloudFileName = null, Boolean overide = false)
+        {
+            await UploadFileAsync(localFileName, cloudFileName, overide, contentType: "image/jpg");
+        }
+
+        public async Task UploadJsonFileAsync(string localFileName, string cloudFileName = null, Boolean overide = false)
+        {
+            await UploadFileAsync(localFileName, cloudFileName, overide, contentType: "application/json");
+        }
+
+        public async Task UploadFileAsync(string localFileName, string cloudFileName = null, Boolean overide = false, string contentType = null)
         {
             if (cloudFileName == null) // If no cloudFileName is specified use the local file name
                 cloudFileName = Path.GetFileName(localFileName);
@@ -58,6 +75,8 @@ namespace fAzureHelper
             }
 
             CloudBlockBlob cloudBlockBlob = _cloudBlobContainer.GetBlockBlobReference(cloudFileName);
+            if(contentType != null)
+                cloudBlockBlob.Properties.ContentType = contentType;
             await cloudBlockBlob.UploadFromFileAsync(localFileName);
         }
 
