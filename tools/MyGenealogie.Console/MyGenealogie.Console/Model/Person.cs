@@ -8,47 +8,6 @@ using System.Threading.Tasks;
 
 namespace MyGenealogie
 {
-    public class PersonImage
-    {
-        public string ImageName;
-        public string FileName;
-        public string LocalFileName;
-        public string Url;
-    }
-
-    public class PersonDate {
-        public int Year;
-        public int Month;
-        public int Day;
-
-        public PersonDate()
-        {
-
-        }
-    }
-    public class PersonProperties
-    {
-        public string Sexe;
-        public string BirthCity;
-        public string BirthCountry;
-        public string DeathCity;
-        public string DeathCountry;
-        public string Comment;
-
-        public string LastName;
-        public string MaidenName;
-        public string FirstName;
-
-        public Guid Guid;
-        public Guid? FatherGuid;
-        public Guid? MotherGuid;
-        public PersonDate CreationDate;
-        public PersonDate DeathDate;
-        public PersonDate BirthDate;
-
-        public List<PersonImage> Images;
-    }
-
     public class Person
     {
         public PersonProperties Properties = new PersonProperties();
