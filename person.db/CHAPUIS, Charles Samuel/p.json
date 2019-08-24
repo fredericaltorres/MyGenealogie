@@ -1,0 +1,29 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "CHAPUIS",
+  "MaidenName": null,
+  "FirstName": "Charles Samuel",
+  "Guid": "15fd4dd8-ea47-4a5e-a273-be97e49416f1",
+  "FatherGuid": null,
+  "MotherGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 3,
+    "Day": 31
+  },
+  "DeathDate": {
+    "Year": 1922,
+    "Month": 0,
+    "Day": 0
+  },
+  "BirthDate": {
+    "Year": 1841,
+    "Month": 0,
+    "Day": 0
+  }
+}

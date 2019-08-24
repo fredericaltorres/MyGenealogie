@@ -1,0 +1,21 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "BRANDIS",
+  "MaidenName": null,
+  "FirstName": "Rene",
+  "Guid": "a59e1c7f-5dc0-40d3-8d73-4aff61fdd183",
+  "FatherGuid": null,
+  "MotherGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 3,
+    "Day": 31
+  },
+  "DeathDate": null,
+  "BirthDate": null
+}

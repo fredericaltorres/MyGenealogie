@@ -1,0 +1,29 @@
+{
+  "Sexe": "M",
+  "BirthCity": "~Salon de provence",
+  "BirthCountry": null,
+  "DeathCity": "Salon de provence",
+  "DeathCountry": null,
+  "Comment": "Negociant en huile d'holive a Salon de provence",
+  "LastName": "SEMEAC",
+  "MaidenName": null,
+  "FirstName": "Jules",
+  "Guid": "4d87103b-10c0-4193-a2e7-42a4e0d9ad15",
+  "FatherGuid": "a9efd6a4-a8f6-4ff7-acb2-4af495870002",
+  "MotherGuid": "746f8df4-c808-4306-9e8c-356684f7361c",
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": {
+    "Year": 1930,
+    "Month": 0,
+    "Day": 0
+  },
+  "BirthDate": {
+    "Year": 1867,
+    "Month": 0,
+    "Day": 0
+  }
+}

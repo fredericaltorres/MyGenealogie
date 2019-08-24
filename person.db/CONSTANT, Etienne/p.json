@@ -1,0 +1,21 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "CONSTANT",
+  "MaidenName": null,
+  "FirstName": "Etienne",
+  "Guid": "d97347ed-c668-4f5f-aecd-6e9651f6c3d6",
+  "FatherGuid": null,
+  "MotherGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": null,
+  "BirthDate": null
+}

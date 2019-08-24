@@ -1,0 +1,29 @@
+{
+  "Sexe": "F",
+  "BirthCity": "Les Mes (Basse ou Hautes Alpes De Provence)",
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "CHAPUIS",
+  "MaidenName": "BEAUDUN",
+  "FirstName": "Emilie",
+  "Guid": "dcb7d1b7-a415-4e2b-93cb-bc02e5fdd00f",
+  "FatherGuid": "15fd4dd8-ea47-4a5e-a273-be97e49416f1",
+  "MotherGuid": "d72f8da5-e4e5-49bd-9c17-befdd758c77d",
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": {
+    "Year": 1904,
+    "Month": 12,
+    "Day": 22
+  },
+  "BirthDate": {
+    "Year": 1870,
+    "Month": 0,
+    "Day": 0
+  }
+}

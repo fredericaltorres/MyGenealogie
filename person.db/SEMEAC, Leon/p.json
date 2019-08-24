@@ -1,0 +1,21 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "SEMEAC",
+  "MaidenName": null,
+  "FirstName": "Leon",
+  "Guid": "eb6db547-abee-42ec-89c3-da273f8e30f3",
+  "FatherGuid": "4d87103b-10c0-4193-a2e7-42a4e0d9ad15",
+  "MotherGuid": "a3570044-820b-49cf-a974-cdb077a4d19a",
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": null,
+  "BirthDate": null
+}

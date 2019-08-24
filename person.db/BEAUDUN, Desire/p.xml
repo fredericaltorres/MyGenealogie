@@ -1,0 +1,22 @@
+<Person>
+  <Guid>d952516f-211e-44f5-b75f-168dfae8ff17</Guid>
+  <Sexe>M</Sexe>
+  <BirthDate>
+  </BirthDate>
+  <BirthCity>
+  </BirthCity>
+  <BirthCountry>
+  </BirthCountry>
+  <DeathDate>
+  </DeathDate>
+  <DeathCity>
+  </DeathCity>
+  <DeathCountry>
+  </DeathCountry>
+  <Comment>
+  </Comment>
+  <FatherGuid>bd188b8b-390a-408c-a42c-039ae86848aa</FatherGuid>
+  <MotherGuid>
+  </MotherGuid>
+  <CreationDate>2004-40-24</CreationDate>
+</Person>

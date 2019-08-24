@@ -1,0 +1,21 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "JAUME",
+  "MaidenName": null,
+  "FirstName": "Rene II",
+  "Guid": "046d6897-aa8e-4d4c-a93d-7ee9d280a6b9",
+  "FatherGuid": null,
+  "MotherGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": null,
+  "BirthDate": null
+}

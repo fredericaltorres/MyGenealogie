@@ -1,0 +1,21 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "VERGIER",
+  "MaidenName": null,
+  "FirstName": "Cyprien",
+  "Guid": "609164d1-2e76-470d-bb3b-0364de8a2ff1",
+  "FatherGuid": null,
+  "MotherGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": null,
+  "BirthDate": null
+}

@@ -1,0 +1,21 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "JAUME",
+  "MaidenName": null,
+  "FirstName": "Pierre",
+  "Guid": "33692245-970d-40c4-8be1-9dc99900d16d",
+  "FatherGuid": null,
+  "MotherGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": null,
+  "BirthDate": null
+}

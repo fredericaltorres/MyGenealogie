@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGenealogie", "MyGenealogie\MyGenealogie.csproj", "{2A7EEA1F-7EC8-48E8-B455-9FB6A69F4232}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSLib", "N:\CSLib\CSLib.csproj", "{C3AC896F-BCE0-4E23-9DB1-A240AD544928}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{2A7EEA1F-7EC8-48E8-B455-9FB6A69F4232}.Debug.ActiveCfg = Debug|.NET
+		{2A7EEA1F-7EC8-48E8-B455-9FB6A69F4232}.Debug.Build.0 = Debug|.NET
+		{2A7EEA1F-7EC8-48E8-B455-9FB6A69F4232}.Release.ActiveCfg = Release|.NET
+		{2A7EEA1F-7EC8-48E8-B455-9FB6A69F4232}.Release.Build.0 = Release|.NET
+		{C3AC896F-BCE0-4E23-9DB1-A240AD544928}.Debug.ActiveCfg = Debug|.NET
+		{C3AC896F-BCE0-4E23-9DB1-A240AD544928}.Debug.Build.0 = Debug|.NET
+		{C3AC896F-BCE0-4E23-9DB1-A240AD544928}.Release.ActiveCfg = Release|.NET
+		{C3AC896F-BCE0-4E23-9DB1-A240AD544928}.Release.Build.0 = Release|.NET
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

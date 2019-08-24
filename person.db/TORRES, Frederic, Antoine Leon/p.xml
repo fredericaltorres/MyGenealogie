@@ -1,0 +1,17 @@
+<Person>
+  <Guid>a3487e7a-2fb5-488c-b7ce-1a6395ed2453</Guid>
+  <Sexe>M</Sexe>
+  <BirthDate>1964-12-11</BirthDate>
+  <BirthCity>Aix-en-provence</BirthCity>
+  <BirthCountry>France</BirthCountry>
+  <DeathDate>
+  </DeathDate>
+  <DeathCity>
+  </DeathCity>
+  <DeathCountry>
+  </DeathCountry>
+  <Comment>la persone qui a mis cette genealogie sur ordinateur!</Comment>
+  <FatherGuid>12095c1d-ad9c-4963-bdac-7b4eeffd2dc0</FatherGuid>
+  <MotherGuid>0fd7eccc-f61c-4e86-9a78-4edf0b003fbc</MotherGuid>
+  <CreationDate>2004-40-24</CreationDate>
+</Person>
