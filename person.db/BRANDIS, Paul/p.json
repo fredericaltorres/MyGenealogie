@@ -17,5 +17,13 @@
     "Day": 31
   },
   "DeathDate": null,
-  "BirthDate": null
+  "BirthDate": null,
+  "Images": [
+    {
+      "ImageName": "BRANDIS, Paul",
+      "FileName": "BRANDIS, Paul.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\BRANDIS, Paul\\BRANDIS, Paul.jpg",
+      "Url": null
+    }
+  ]
 }

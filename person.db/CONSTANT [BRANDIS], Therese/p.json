@@ -17,5 +17,13 @@
     "Day": 24
   },
   "DeathDate": null,
-  "BirthDate": null
+  "BirthDate": null,
+  "Images": [
+    {
+      "ImageName": "CONSTANT [BRANDIS], Therese",
+      "FileName": "CONSTANT [BRANDIS], Therese.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\CONSTANT [BRANDIS], Therese\\CONSTANT [BRANDIS], Therese.jpg",
+      "Url": null
+    }
+  ]
 }

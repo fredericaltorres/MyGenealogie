@@ -17,5 +17,13 @@
     "Day": 24
   },
   "DeathDate": null,
-  "BirthDate": null
+  "BirthDate": null,
+  "Images": [
+    {
+      "ImageName": "BEAUDUN, Desire II",
+      "FileName": "BEAUDUN, Desire II.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\BEAUDUN, Desire II\\BEAUDUN, Desire II.jpg",
+      "Url": null
+    }
+  ]
 }

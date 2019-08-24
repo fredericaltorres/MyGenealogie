@@ -17,5 +17,19 @@
     "Day": 24
   },
   "DeathDate": null,
-  "BirthDate": null
+  "BirthDate": null,
+  "Images": [
+    {
+      "ImageName": "Constant Eugene, comment-Photo prise a salon devant la maison du gardien, on reconnait la fenetre et les barreaux prise par leon semac",
+      "FileName": "Constant Eugene, comment-Photo prise a salon devant la maison du gardien, on reconnait la fenetre et les barreaux prise par leon semac.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\CONSTANT, Eugene\\Constant Eugene, comment-Photo prise a salon devant la maison du gardien, on reconnait la fenetre et les barreaux prise par leon semac.jpg",
+      "Url": null
+    },
+    {
+      "ImageName": "CONSTANT, Eugene",
+      "FileName": "CONSTANT, Eugene.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\CONSTANT, Eugene\\CONSTANT, Eugene.jpg",
+      "Url": null
+    }
+  ]
 }

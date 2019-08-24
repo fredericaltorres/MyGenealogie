@@ -17,5 +17,13 @@
     "Day": 31
   },
   "DeathDate": null,
-  "BirthDate": null
+  "BirthDate": null,
+  "Images": [
+    {
+      "ImageName": "CHAPUIS, Charles",
+      "FileName": "CHAPUIS, Charles.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\CHAPUIS, Charles\\CHAPUIS, Charles.jpg",
+      "Url": null
+    }
+  ]
 }

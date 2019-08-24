@@ -17,5 +17,13 @@
     "Day": 31
   },
   "DeathDate": null,
-  "BirthDate": null
+  "BirthDate": null,
+  "Images": [
+    {
+      "ImageName": "ANTONIN, Philippi",
+      "FileName": "ANTONIN, Philippi.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\ANTONIN, Philippi\\ANTONIN, Philippi.jpg",
+      "Url": null
+    }
+  ]
 }

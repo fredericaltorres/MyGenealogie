@@ -17,5 +17,13 @@
     "Day": 24
   },
   "DeathDate": null,
-  "BirthDate": null
+  "BirthDate": null,
+  "Images": [
+    {
+      "ImageName": "CORTEZ [TORRES], Rose",
+      "FileName": "CORTEZ [TORRES], Rose.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\CORTEZ [TORRES], Rose\\CORTEZ [TORRES], Rose.jpg",
+      "Url": null
+    }
+  ]
 }

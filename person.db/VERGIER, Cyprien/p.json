@@ -17,5 +17,19 @@
     "Day": 24
   },
   "DeathDate": null,
-  "BirthDate": null
+  "BirthDate": null,
+  "Images": [
+    {
+      "ImageName": "Vergier Cyprien",
+      "FileName": "Vergier Cyprien.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\VERGIER, Cyprien\\Vergier Cyprien.jpg",
+      "Url": null
+    },
+    {
+      "ImageName": "VERGIER, Cyprien",
+      "FileName": "VERGIER, Cyprien.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\VERGIER, Cyprien\\VERGIER, Cyprien.jpg",
+      "Url": null
+    }
+  ]
 }

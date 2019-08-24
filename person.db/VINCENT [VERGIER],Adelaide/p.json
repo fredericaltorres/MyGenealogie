@@ -17,5 +17,13 @@
     "Day": 24
   },
   "DeathDate": null,
-  "BirthDate": null
+  "BirthDate": null,
+  "Images": [
+    {
+      "ImageName": "VINCENT [VERGIER],Adelaide",
+      "FileName": "VINCENT [VERGIER],Adelaide.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\VINCENT [VERGIER],Adelaide\\VINCENT [VERGIER],Adelaide.jpg",
+      "Url": null
+    }
+  ]
 }

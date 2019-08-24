@@ -17,5 +17,13 @@
     "Day": 24
   },
   "DeathDate": null,
-  "BirthDate": null
+  "BirthDate": null,
+  "Images": [
+    {
+      "ImageName": "BEAUDUN [JAUME], Mireille",
+      "FileName": "BEAUDUN [JAUME], Mireille.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\BEAUDUN [JAUME], Mireille\\BEAUDUN [JAUME], Mireille.jpg",
+      "Url": null
+    }
+  ]
 }

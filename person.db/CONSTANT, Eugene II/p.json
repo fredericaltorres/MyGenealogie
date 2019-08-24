@@ -17,5 +17,13 @@
     "Day": 24
   },
   "DeathDate": null,
-  "BirthDate": null
+  "BirthDate": null,
+  "Images": [
+    {
+      "ImageName": "CONSTANT, Eugene II",
+      "FileName": "CONSTANT, Eugene II.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\CONSTANT, Eugene II\\CONSTANT, Eugene II.jpg",
+      "Url": null
+    }
+  ]
 }

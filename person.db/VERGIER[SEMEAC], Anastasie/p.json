@@ -17,5 +17,25 @@
     "Day": 24
   },
   "DeathDate": null,
-  "BirthDate": null
+  "BirthDate": null,
+  "Images": [
+    {
+      "ImageName": "Vergier Anastasie 2 4 ",
+      "FileName": "Vergier Anastasie 2 4 .jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\VERGIER[SEMEAC], Anastasie\\Vergier Anastasie 2 4 .jpg",
+      "Url": null
+    },
+    {
+      "ImageName": "Vergier Anastasie, Date~1872 , (2)",
+      "FileName": "Vergier Anastasie, Date~1872 , (2).jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\VERGIER[SEMEAC], Anastasie\\Vergier Anastasie, Date~1872 , (2).jpg",
+      "Url": null
+    },
+    {
+      "ImageName": "VERGIER[SEMEAC], Anastasie",
+      "FileName": "VERGIER[SEMEAC], Anastasie.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\VERGIER[SEMEAC], Anastasie\\VERGIER[SEMEAC], Anastasie.jpg",
+      "Url": null
+    }
+  ]
 }

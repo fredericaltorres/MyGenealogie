@@ -17,5 +17,25 @@
     "Day": 24
   },
   "DeathDate": null,
-  "BirthDate": null
+  "BirthDate": null,
+  "Images": [
+    {
+      "ImageName": "Semeac Victorine 2",
+      "FileName": "Semeac Victorine 2.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\SEMEAC, Victorine\\Semeac Victorine 2.jpg",
+      "Url": null
+    },
+    {
+      "ImageName": "Semeac Victorine 3",
+      "FileName": "Semeac Victorine 3.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\SEMEAC, Victorine\\Semeac Victorine 3.jpg",
+      "Url": null
+    },
+    {
+      "ImageName": "SEMEAC, Victorine",
+      "FileName": "SEMEAC, Victorine.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\SEMEAC, Victorine\\SEMEAC, Victorine.jpg",
+      "Url": null
+    }
+  ]
 }

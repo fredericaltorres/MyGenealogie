@@ -17,5 +17,13 @@
     "Day": 31
   },
   "DeathDate": null,
-  "BirthDate": null
+  "BirthDate": null,
+  "Images": [
+    {
+      "ImageName": "BEAUDUN, Pierre",
+      "FileName": "BEAUDUN, Pierre.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\BEAUDUN, Pierre\\BEAUDUN, Pierre.jpg",
+      "Url": null
+    }
+  ]
 }

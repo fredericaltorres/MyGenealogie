@@ -17,5 +17,13 @@
     "Day": 24
   },
   "DeathDate": null,
-  "BirthDate": null
+  "BirthDate": null,
+  "Images": [
+    {
+      "ImageName": "CONSTANT, Etienne",
+      "FileName": "CONSTANT, Etienne.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\CONSTANT, Etienne\\CONSTANT, Etienne.jpg",
+      "Url": null
+    }
+  ]
 }

@@ -8,6 +8,14 @@ using System.Threading.Tasks;
 
 namespace MyGenealogie
 {
+    public class PersonImage
+    {
+        public string ImageName;
+        public string FileName;
+        public string LocalFileName;
+        public string Url;
+    }
+
     public class PersonDate {
         public int Year;
         public int Month;
@@ -37,6 +45,8 @@ namespace MyGenealogie
         public PersonDate CreationDate;
         public PersonDate DeathDate;
         public PersonDate BirthDate;
+
+        public List<PersonImage> Images;
     }
 
     public class Person
@@ -61,6 +71,24 @@ namespace MyGenealogie
         private string GetPropertiesJsonFile()
         {
             return GetPropertiesFile("p.json");
+        }
+
+        public List<PersonImage> LoadImages()
+        {
+            var l = new List<PersonImage>();
+            var images = Directory.GetFiles(this._folder, "*.jpg").ToList();
+            foreach(var i in images)
+            {
+                var pi = new PersonImage {
+                    ImageName = Path.GetFileNameWithoutExtension(i),
+                    FileName = Path.GetFileName(i),
+                    LocalFileName = i,
+                    Url = null,
+                };
+                l.Add(pi);
+            }
+            this.Properties.Images = l;
+            return l;
         }
 
         public static void LoadNamesInfoFromFolder(Person p)
@@ -92,6 +120,7 @@ namespace MyGenealogie
             {
                 LoadFromXmlFile(p);
                 LoadNamesInfoFromFolder(p);
+                p.LoadImages();
             }
             return p;
         }
