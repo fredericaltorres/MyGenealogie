@@ -43,5 +43,41 @@ namespace MyGenealogie.Lib.tests
             expected = @"C:\DVT\MyGenealogie\person.db\beaudun9semeac0marie-louise1josette-annette";
             Assert.AreEqual(expected, p.GetNewFullPathSanitized());
         }
+        [TestMethod]
+        public void LoadNamesInfoFromFolderSyntaxNumberAsSeparator_WithMaidenName()
+        {
+            var p = new Person(@"C:\DVT\MyGenealogie\person.db\beaudun9semeac0marie-louise");
+            Person.LoadNamesInfoFromFolderSyntaxNumberAsSeparator(p);
+            Assert.AreEqual("beaudun", p.Properties.LastName);
+            Assert.AreEqual("semeac", p.Properties.MaidenName);
+            Assert.AreEqual("marie-louise", p.Properties.FirstName);
+            Assert.AreEqual(null, p.Properties.MiddleName);
+
+            p = new Person(@"C:\DVT\MyGenealogie\person.db\beaudun9semeac0marie-louise1josette-annette");
+            Person.LoadNamesInfoFromFolderSyntaxNumberAsSeparator(p);
+            Assert.AreEqual("beaudun", p.Properties.LastName);
+            Assert.AreEqual("semeac", p.Properties.MaidenName);
+            Assert.AreEqual("marie-louise", p.Properties.FirstName);
+            Assert.AreEqual("josette-annette", p.Properties.MiddleName);
+        }
+
+        [TestMethod]
+        public void LoadNamesInfoFromFolderSyntaxNumberAsSeparator_NoMaidenName()
+        {
+            var p = new Person(@"C:\DVT\MyGenealogie\person.db\torres0frederic");
+            Person.LoadNamesInfoFromFolderSyntaxNumberAsSeparator(p);
+            Assert.AreEqual("torres", p.Properties.LastName);
+            Assert.AreEqual(null, p.Properties.MaidenName);
+            Assert.AreEqual("frederic", p.Properties.FirstName);
+            Assert.AreEqual(null, p.Properties.MiddleName);
+
+            p = new Person(@"C:\DVT\MyGenealogie\person.db\torres0frederic1antoine-leon");
+            Person.LoadNamesInfoFromFolderSyntaxNumberAsSeparator(p);
+            Assert.AreEqual("torres", p.Properties.LastName);
+            Assert.AreEqual(null, p.Properties.MaidenName);
+            Assert.AreEqual("frederic", p.Properties.FirstName);
+            Assert.AreEqual("antoine-leon", p.Properties.MiddleName);
+
+        }
     }
 }

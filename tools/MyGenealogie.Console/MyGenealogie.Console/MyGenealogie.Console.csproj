@@ -56,7 +56,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="storage.credentials" />
+    <None Include="storage.credentials">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MyGenealogie.Lib\MyGenealogie.Lib.csproj">

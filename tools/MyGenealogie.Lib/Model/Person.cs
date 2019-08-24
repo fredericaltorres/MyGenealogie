@@ -12,6 +12,10 @@ namespace MyGenealogie
     {
         public PersonProperties Properties = new PersonProperties();
         internal string _folder;
+        public Person()
+        {
+
+        }
 
         public Person(string folder)
         {
@@ -77,14 +81,14 @@ namespace MyGenealogie
                 var newPersonFolderName = this.GetNewFullPathSanitized();
                 if (this._folder != newPersonFolderName)
                 {
-                    Console.WriteLine($"Rename person from:{this._folder}, to:{this.GetNewFullPathSanitized()}");
+                    System.Console.WriteLine($"Rename person from:{this._folder}, to:{this.GetNewFullPathSanitized()}");
                     Directory.Move(this._folder, this.GetNewFullPathSanitized());
                 }
                 return true;
             }
             catch(Exception ex)
             {
-                Console.WriteLine($"Rename person folder error:{ex.Message}");
+                System.Console.WriteLine($"Rename person folder error:{ex.Message}");
                 return false;
             }
         }
@@ -116,7 +120,32 @@ namespace MyGenealogie
             return l;
         }
 
-        public static void LoadNamesInfoFromFolder(Person p)
+        public static void LoadNamesInfoFromFolderSyntaxNumberAsSeparator(Person p)
+        {
+            // beaudun9semeac0marie-louise1josette-annette
+            // torres0frederic1antoine-leon
+            var name = new DirectoryInfo(p._folder).Name;
+            var parts = name.Split(new char[] { '0' , '1' , '9' });
+            if(name.Contains("9"))
+            {
+                p.Properties.LastName = parts[0];
+                p.Properties.MaidenName = parts[1];
+                if (name.Contains("0"))
+                    p.Properties.FirstName = parts[2];
+                if (name.Contains("1"))
+                    p.Properties.MiddleName = parts[3];
+            }
+            else
+            {
+                p.Properties.LastName = parts[0];
+                if (name.Contains("0"))
+                    p.Properties.FirstName = parts[1];
+                if (name.Contains("1"))
+                    p.Properties.MiddleName = parts[2];
+            }
+        }
+
+        public static void LoadNamesInfoFromFolderSyntaxWithBrakets(Person p)
         {
             var name = new DirectoryInfo(p._folder).Name;
             var parts = name.Split(',');
@@ -141,10 +170,15 @@ namespace MyGenealogie
         public static Person LoadFromFolder(string folder)
         {
             var p = new Person(folder);
-            if (File.Exists(p.GetPropertiesXmlFile()))
+            if (File.Exists(p.GetPropertiesJsonFile()))
+            {
+                var json = File.ReadAllText(p.GetPropertiesJsonFile());
+                p = System.JSON.JSonObject.Deserialize<Person>(json);
+            }
+            else if (File.Exists(p.GetPropertiesXmlFile()))
             {
                 LoadFromXmlFile(p);
-                LoadNamesInfoFromFolder(p);
+                LoadNamesInfoFromFolderSyntaxWithBrakets(p);
                 p.LoadImages();
             }
             return p;

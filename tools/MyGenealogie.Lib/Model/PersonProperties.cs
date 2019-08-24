@@ -15,6 +15,8 @@ namespace MyGenealogie
         public string LastName;
         public string MaidenName;
         public string FirstName;
+        public string MiddleName;
+
 
         public Guid Guid;
         public Guid? FatherGuid;
