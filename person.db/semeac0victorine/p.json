@@ -5,9 +5,9 @@
   "DeathCity": null,
   "DeathCountry": null,
   "Comment": "Entree au couvant des Carmelite a 21 ans, morte de la turberculeuse. Les religieuses etant si stricte qu'elle n'a pu etre vu que par son oncle CONSTANT Elie docteur.",
-  "LastName": "SEMEAC",
+  "LastName": "semeac0victorine",
   "MaidenName": null,
-  "FirstName": "Victorine",
+  "FirstName": null,
   "Guid": "032118e7-9b93-4184-90d0-6fe2c9d28417",
   "FatherGuid": "a9efd6a4-a8f6-4ff7-acb2-4af495870002",
   "MotherGuid": "746f8df4-c808-4306-9e8c-356684f7361c",
@@ -22,19 +22,19 @@
     {
       "ImageName": "Semeac Victorine 2",
       "FileName": "Semeac Victorine 2.jpg",
-      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\SEMEAC, Victorine\\Semeac Victorine 2.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\semeac0victorine\\Semeac Victorine 2.jpg",
       "Url": null
     },
     {
       "ImageName": "Semeac Victorine 3",
       "FileName": "Semeac Victorine 3.jpg",
-      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\SEMEAC, Victorine\\Semeac Victorine 3.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\semeac0victorine\\Semeac Victorine 3.jpg",
       "Url": null
     },
     {
       "ImageName": "SEMEAC, Victorine",
       "FileName": "SEMEAC, Victorine.jpg",
-      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\SEMEAC, Victorine\\SEMEAC, Victorine.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\semeac0victorine\\SEMEAC, Victorine.jpg",
       "Url": null
     }
   ]

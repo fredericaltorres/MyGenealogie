@@ -5,9 +5,9 @@
   "DeathCity": null,
   "DeathCountry": null,
   "Comment": null,
-  "LastName": "CONSTANT",
-  "MaidenName": "SEMEAC",
-  "FirstName": "Helene",
+  "LastName": "constant9semeac0helene",
+  "MaidenName": null,
+  "FirstName": null,
   "Guid": "a3570044-820b-49cf-a974-cdb077a4d19a",
   "FatherGuid": "97af97af-1c3a-43ed-8951-cb2bc0673473",
   "MotherGuid": "dea136ed-2762-46e9-8f6e-328de655de6e",
@@ -22,19 +22,19 @@
     {
       "ImageName": "Constant helene 2",
       "FileName": "Constant helene 2.jpg",
-      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\CONSTANT [SEMEAC], Helene\\Constant helene 2.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\constant9semeac0helene\\Constant helene 2.jpg",
       "Url": null
     },
     {
       "ImageName": "Constant [Semeac] Helene 2",
       "FileName": "Constant [Semeac] Helene 2.jpg",
-      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\CONSTANT [SEMEAC], Helene\\Constant [Semeac] Helene 2.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\constant9semeac0helene\\Constant [Semeac] Helene 2.jpg",
       "Url": null
     },
     {
       "ImageName": "CONSTANT [SEMEAC], Helene",
       "FileName": "CONSTANT [SEMEAC], Helene.jpg",
-      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\CONSTANT [SEMEAC], Helene\\CONSTANT [SEMEAC], Helene.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\constant9semeac0helene\\CONSTANT [SEMEAC], Helene.jpg",
       "Url": null
     }
   ]

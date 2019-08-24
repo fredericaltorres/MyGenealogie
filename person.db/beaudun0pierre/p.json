@@ -5,9 +5,9 @@
   "DeathCity": null,
   "DeathCountry": null,
   "Comment": null,
-  "LastName": "BEAUDUN",
+  "LastName": "beaudun0pierre",
   "MaidenName": null,
-  "FirstName": "Pierre",
+  "FirstName": null,
   "Guid": "bd188b8b-390a-408c-a42c-039ae86848aa",
   "FatherGuid": null,
   "MotherGuid": null,
@@ -22,7 +22,7 @@
     {
       "ImageName": "BEAUDUN, Pierre",
       "FileName": "BEAUDUN, Pierre.jpg",
-      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\BEAUDUN, Pierre\\BEAUDUN, Pierre.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\beaudun0pierre\\BEAUDUN, Pierre.jpg",
       "Url": null
     }
   ]

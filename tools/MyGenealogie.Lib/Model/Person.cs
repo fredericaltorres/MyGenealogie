@@ -74,8 +74,12 @@ namespace MyGenealogie
         {
             try
             {
-                Console.WriteLine($"Rename person from:{this._folder}, to:{this.GetNewFullPathSanitized()}");
-                Directory.Move(this._folder, this.GetNewFullPathSanitized());
+                var newPersonFolderName = this.GetNewFullPathSanitized();
+                if (this._folder != newPersonFolderName)
+                {
+                    Console.WriteLine($"Rename person from:{this._folder}, to:{this.GetNewFullPathSanitized()}");
+                    Directory.Move(this._folder, this.GetNewFullPathSanitized());
+                }
                 return true;
             }
             catch(Exception ex)
@@ -149,6 +153,8 @@ namespace MyGenealogie
         public void SaveAsJsonFile()
         {
             var json = System.JSON.JSonObject.Serialize(this.Properties);
+            if (File.Exists(this.GetPropertiesJsonFile()))
+                File.Delete(this.GetPropertiesJsonFile());
             File.WriteAllText(this.GetPropertiesJsonFile(), json);
         }
 

@@ -5,9 +5,9 @@
   "DeathCity": null,
   "DeathCountry": null,
   "Comment": null,
-  "LastName": "VERGIER",
+  "LastName": "vergier0cyprien",
   "MaidenName": null,
-  "FirstName": "Cyprien",
+  "FirstName": null,
   "Guid": "609164d1-2e76-470d-bb3b-0364de8a2ff1",
   "FatherGuid": null,
   "MotherGuid": null,
@@ -22,13 +22,13 @@
     {
       "ImageName": "Vergier Cyprien",
       "FileName": "Vergier Cyprien.jpg",
-      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\VERGIER, Cyprien\\Vergier Cyprien.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\vergier0cyprien\\Vergier Cyprien.jpg",
       "Url": null
     },
     {
       "ImageName": "VERGIER, Cyprien",
       "FileName": "VERGIER, Cyprien.jpg",
-      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\VERGIER, Cyprien\\VERGIER, Cyprien.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\vergier0cyprien\\VERGIER, Cyprien.jpg",
       "Url": null
     }
   ]

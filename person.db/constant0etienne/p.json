@@ -5,9 +5,9 @@
   "DeathCity": null,
   "DeathCountry": null,
   "Comment": null,
-  "LastName": "CONSTANT",
+  "LastName": "constant0etienne",
   "MaidenName": null,
-  "FirstName": "Etienne",
+  "FirstName": null,
   "Guid": "d97347ed-c668-4f5f-aecd-6e9651f6c3d6",
   "FatherGuid": null,
   "MotherGuid": null,
@@ -22,7 +22,7 @@
     {
       "ImageName": "CONSTANT, Etienne",
       "FileName": "CONSTANT, Etienne.jpg",
-      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\CONSTANT, Etienne\\CONSTANT, Etienne.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\constant0etienne\\CONSTANT, Etienne.jpg",
       "Url": null
     }
   ]
