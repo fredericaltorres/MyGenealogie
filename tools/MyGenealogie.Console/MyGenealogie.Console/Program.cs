@@ -15,20 +15,23 @@ namespace MyGenealogie.Console
              ///// new ConvertPersonXmlToJson().Run(dbPath);
 
             var storageKey = File.ReadAllText(@".\storage.credentials");
-            var db = new PersonDBInAzureStorage(dbPath, "mygenealogie", storageKey);
+            var storageName = "mygenealogie";
+            var db = new PersonDB(dbPath, storageName, storageKey);
 
             var reUploadDatabase = false;
             var verifyAzurePersonDB = true;
 
             if (reUploadDatabase && !verifyAzurePersonDB)
             {
-                db.LoadPersonsFromLocalDB();
+                db.LoadFromLocalDB();
                 db.Upload();
             }
 
             if(verifyAzurePersonDB && !reUploadDatabase)
             {
-                db.LoadPersonsFromAzureStorageDB();
+                //db.LoadFromAzureStorageDB();
+                //db.UpdatePersonDBJsonSummary();
+                var newDb = PersonDB.LoadPersonDBSummaryFromAzureStorageDB(storageName, storageKey);
             }
 
             

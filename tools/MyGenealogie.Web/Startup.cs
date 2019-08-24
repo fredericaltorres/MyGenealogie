@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MyGenealogie.Console;
+using System.IO;
 
 namespace MyGenealogie.Web
 {
@@ -26,6 +28,12 @@ namespace MyGenealogie.Web
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
+            });
+            services.AddSingleton<IPersonDB, PersonDB>((ctx) => {
+                var storageKey = File.ReadAllText(@".\storage.credentials");
+                var storageName = "mygenealogie";
+                var db = PersonDB.LoadPersonDBSummaryFromAzureStorageDB(storageName, storageKey);
+                return db;
             });
         }
 

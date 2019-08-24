@@ -53,9 +53,10 @@
     <Compile Include="fAzureCore\AzureStorageBaseClass.cs" />
     <Compile Include="fAzureCore\ContainerManager.cs" />
     <Compile Include="fAzureCore\BlobManager.cs" />
+    <Compile Include="Model\IPersonDB.cs" />
     <Compile Include="Model\Person.cs" />
     <Compile Include="Model\PersonDate.cs" />
-    <Compile Include="Model\PersonDBInAzureStorage.cs" />
+    <Compile Include="Model\PersonDB.cs" />
     <Compile Include="Model\PersonImage.cs" />
     <Compile Include="Model\PersonProperties.cs" />
     <Compile Include="Model\Persons.cs" />
