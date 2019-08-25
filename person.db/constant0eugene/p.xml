@@ -1,16 +1,16 @@
 <Person>
 	<Guid>97af97af-1c3a-43ed-8951-cb2bc0673473</Guid>
 	<Sexe>M</Sexe>
-	<BirthDate></BirthDate>
+	<BirthDate>1829</BirthDate>
 	<BirthCity></BirthCity>
 	<BirthCountry></BirthCountry>
-	<DeathDate></DeathDate>
+	<DeathDate>1913</DeathDate>
 	<DeathCity></DeathCity>
 	<DeathCountry></DeathCountry>
-	<Comment></Comment>
+	<Comment>Ferblantier a Salon de provence</Comment>
 	
-	<FatherGuid></FatherGuid>	
-	<MotherGuid></MotherGuid>	
+	<FatherGuid></FatherGuid>
+	<MotherGuid></MotherGuid>
 	
 	<CreationDate>2004-40-24</CreationDate>
 </Person>

@@ -14,6 +14,11 @@ function emptyStringOnNull(v) {
     return v;
 };
 
+function replaceDash(s) {
+
+    return s.replace(new RegExp('-', 'g'), ' ');
+}
+
 class Home extends Component {
     
     state = {
@@ -21,31 +26,61 @@ class Home extends Component {
         selectedOption: null
     };
 
-
-
     componentDidMount() {
 
         this.reloadData();
     }
 
     handleChange = (selectedOption) => {
-
+        console.log(`handleChange  ${JSON.stringify(selectedOption)}`);
         this.updateState("selectedOption", selectedOption);
         console.log(`Option selected:`, selectedOption);
     };
+
+
+    selectSpouse = () => {
+
+        var spouse = this.getSpouseForPersonSelected(this.getPersonSelected());
+        const option = { value: spouse.guid, label: this.getPersonFullName(spouse) };
+        this.handleChange(option);
+    }
+       
+    getPersonFullName(p) {
+
+        const maidenName = p.maidenName ? ` [${p.maidenName}]` : ``;
+        const middleName = replaceDash(p.middleName ? `${p.middleName}` : ``);
+        const firstName = replaceDash(p.firstName);
+        return `${p.lastName}${maidenName}, ${firstName}${middleName}`;
+    }
+
+    getPersonFromGuid(guid) {
+
+        var c = this.state.persons.find((p) => p.guid === guid);
+        console.dir(c);
+        return c;
+    }
 
     getPersonSelected() {
 
         if (this.state.selectedOption) {
 
             var guid = this.state.selectedOption.value;
-            var c = this.state.persons.find((p) => p.guid === guid);
-            console.dir(c);
-            return c;
+            return this.getPersonFromGuid(guid);
         }
         return null;
     }
-       
+    
+    isPersonHasSpouse(p) {
+
+        return p.spouseGuid !== null;
+    }
+
+    getSpouseForPersonSelected(personSelected) {
+
+        var c = this.state.persons.find((p) => p.spouseGuid === personSelected.guid);
+        return c;
+    }
+
     reloadData = () => {
 
         return fetch('api/MyGenealogie/GetPersons').then(response => response.json())
@@ -81,11 +116,23 @@ class Home extends Component {
     }
 
     getPersonImagesHtml(person) {
+
         return person.images.map((image) => {
             return <img src={image.url} width={150} />;
         });
     }
+
+    getPersonSpouseSummaryHtml(person) {
+
+        if (this.isPersonHasSpouse(person)) {
+            const spouse = this.getSpouseForPersonSelected(person);
+            return this.getPersonFullName(spouse);
+        }
+        return null;
+    }
+
     getPersonHtml(person) {
+
         return (
             <form>
                 <div className="form-group">
@@ -104,6 +151,14 @@ class Home extends Component {
                     <label htmlFor="txtMiddleName">MiddleName</label>
                     <input type="text" className="form-control-sm" id="txtFirstName" value={emptyStringOnNull(person.middleName)} />
                 </div>
+                <div className="form-group">
+                    <label htmlFor="txtComment">Comment</label>
+                    <textarea cols="80" rows="4"  className="form-control-sm" id="txtComment" value={emptyStringOnNull(person.comment)} / >
+                </div>
+                {this.isPersonHasSpouse(person) && (<div>
+                    {this.getPersonSpouseSummaryHtml(person)}
+                    <button type="button" class="btn btn-primary" onClick={this.selectSpouse}> View </button>
+                </div>)}
             </form>
             );
     }

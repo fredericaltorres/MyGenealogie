@@ -2,9 +2,9 @@
   "Sexe": "M",
   "BirthCity": null,
   "BirthCountry": null,
-  "DeathCity": null,
+  "DeathCity": "Salon de provence",
   "DeathCountry": null,
-  "Comment": null,
+  "Comment": "\r\n- Sorti de l'ecole Polytechnique \"12eme dans la botte\" sur 250 ingenieur des ponts et chaussees\r\n- Professeur a l'ecole nationale des ponts et chaussees\r\n- Directeur a la SNFC\r\n- Directeur general des Chemins de fer du Maroc\r\n- President directeur general du Tanger - Fez\r\n- President directeur general de la Compagnie des Transports Marocains\r\n  ",
   "LastName": "semeac",
   "MaidenName": null,
   "FirstName": "leon",
@@ -12,13 +12,22 @@
   "Guid": "eb6db547-abee-42ec-89c3-da273f8e30f3",
   "FatherGuid": "4d87103b-10c0-4193-a2e7-42a4e0d9ad15",
   "MotherGuid": "a3570044-820b-49cf-a974-cdb077a4d19a",
+  "SpouseGuid": "96026fa3-866c-4465-876f-0c76b153c616",
   "CreationDate": {
     "Year": 2004,
     "Month": 1,
     "Day": 24
   },
-  "DeathDate": null,
-  "BirthDate": null,
+  "DeathDate": {
+    "Year": 1988,
+    "Month": 0,
+    "Day": 0
+  },
+  "BirthDate": {
+    "Year": 1896,
+    "Month": 0,
+    "Day": 0
+  },
   "Images": [
     {
       "ImageName": "Semac Leon - date~1897",
@@ -63,10 +72,16 @@
       "Url": "https://mygenealogie.blob.core.windows.net/semeac0leon/Semeac Leon, Date-1906.jpg"
     },
     {
-      "ImageName": "SEMEAC, Leon",
-      "FileName": "SEMEAC, Leon.jpg",
-      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\semeac0leon\\SEMEAC, Leon.jpg",
-      "Url": "https://mygenealogie.blob.core.windows.net/semeac0leon/SEMEAC, Leon.jpg"
+      "ImageName": "Semeac leon, date~1897, comment-avec la nourrice",
+      "FileName": "Semeac leon, date~1897, comment-avec la nourrice.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\semeac0leon\\Semeac leon, date~1897, comment-avec la nourrice.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/semeac0leon/Semeac leon, date~1897, comment-avec la nourrice.jpg"
+    },
+    {
+      "ImageName": "Semeac leon, date~1897",
+      "FileName": "Semeac leon, date~1897.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\semeac0leon\\Semeac leon, date~1897.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/semeac0leon/Semeac leon, date~1897.jpg"
     }
   ]
 }

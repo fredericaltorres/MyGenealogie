@@ -1,13 +1,13 @@
 <Person>
 	<Guid>609164d1-2e76-470d-bb3b-0364de8a2ff1</Guid>
 	<Sexe>M</Sexe>
-	<BirthDate></BirthDate>
+	<BirthDate>1809</BirthDate>
 	<BirthCity></BirthCity>
 	<BirthCountry></BirthCountry>
-	<DeathDate></DeathDate>
-	<DeathCity></DeathCity>
+	<DeathDate>1881</DeathDate>
+	<DeathCity>Salon de provence</DeathCity>
 	<DeathCountry></DeathCountry>
-	<Comment></Comment>
+	<Comment>Filateur de soie a Nyons</Comment>
 	
 	<FatherGuid></FatherGuid>	
 	<MotherGuid></MotherGuid>	

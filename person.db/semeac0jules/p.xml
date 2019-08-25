@@ -2,7 +2,7 @@
   <Guid>4d87103b-10c0-4193-a2e7-42a4e0d9ad15</Guid>
   <Sexe>M</Sexe>
   <BirthDate>1867</BirthDate>
-  <BirthCity>~Salon de provence</BirthCity>
+  <BirthCity>Salon de provence</BirthCity>
   <BirthCountry>
   </BirthCountry>
   <DeathDate>1930</DeathDate>
@@ -12,5 +12,6 @@
   <Comment>Negociant en huile d'holive a Salon de provence</Comment>
   <FatherGuid>a9efd6a4-a8f6-4ff7-acb2-4af495870002</FatherGuid>
   <MotherGuid>746f8df4-c808-4306-9e8c-356684f7361c</MotherGuid>
+  <SpouseGuid>a3570044-820b-49cf-a974-cdb077a4d19a</SpouseGuid>
   <CreationDate>2004-40-24</CreationDate>
 </Person>

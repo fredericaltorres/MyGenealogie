@@ -1,21 +1,18 @@
 <Person>
   <Guid>96026fa3-866c-4465-876f-0c76b153c616</Guid>
   <Sexe>F</Sexe>
-  <BirthDate>
-  </BirthDate>
+  <BirthDate>1899</BirthDate>
   <BirthCity>
   </BirthCity>
   <BirthCountry>
   </BirthCountry>
-  <DeathDate>
-  </DeathDate>
-  <DeathCity>
-  </DeathCity>
+  <DeathDate>1975</DeathDate>
+  <DeathCity>Salon de provence</DeathCity>
   <DeathCountry>
   </DeathCountry>
-  <Comment>
-  </Comment>
+  <Comment>Son pere Desire Beaudun etait entrepreneur de travaux public</Comment>
   <FatherGuid>d952516f-211e-44f5-b75f-168dfae8ff17</FatherGuid>
   <MotherGuid>dcb7d1b7-a415-4e2b-93cb-bc02e5fdd00f</MotherGuid>
+  <SpouseGuid>eb6db547-abee-42ec-89c3-da273f8e30f3</SpouseGuid>
   <CreationDate>2004-40-24</CreationDate>
 </Person>

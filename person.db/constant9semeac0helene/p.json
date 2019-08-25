@@ -2,9 +2,9 @@
   "Sexe": "F",
   "BirthCity": null,
   "BirthCountry": null,
-  "DeathCity": null,
+  "DeathCity": "Salon de provence",
   "DeathCountry": null,
-  "Comment": null,
+  "Comment": "Son pere Eugene Constant etait ferblantier a Salon de provence",
   "LastName": "semeac",
   "MaidenName": "constant",
   "FirstName": "helene",
@@ -12,13 +12,22 @@
   "Guid": "a3570044-820b-49cf-a974-cdb077a4d19a",
   "FatherGuid": "97af97af-1c3a-43ed-8951-cb2bc0673473",
   "MotherGuid": "dea136ed-2762-46e9-8f6e-328de655de6e",
+  "SpouseGuid": "4d87103b-10c0-4193-a2e7-42a4e0d9ad15",
   "CreationDate": {
     "Year": 2004,
     "Month": 1,
     "Day": 24
   },
-  "DeathDate": null,
-  "BirthDate": null,
+  "DeathDate": {
+    "Year": 1941,
+    "Month": 0,
+    "Day": 0
+  },
+  "BirthDate": {
+    "Year": 1876,
+    "Month": 0,
+    "Day": 0
+  },
   "Images": [
     {
       "ImageName": "Constant helene 2",

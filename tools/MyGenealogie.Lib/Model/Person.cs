@@ -242,6 +242,7 @@ namespace MyGenealogie
             p.Properties.Guid = ParseFromGuid(personXmlNode, "Guid").Value;
             p.Properties.FatherGuid = ParseFromGuid(personXmlNode, "FatherGuid");
             p.Properties.MotherGuid = ParseFromGuid(personXmlNode, "MotherGuid");
+            p.Properties.SpouseGuid = ParseFromGuid(personXmlNode, "SpouseGuid");
             p.Properties.CreationDate = ParseFromDate(personXmlNode, "CreationDate");
             p.Properties.BirthDate = ParseFromDate(personXmlNode, "BirthDate");
             p.Properties.DeathDate = ParseFromDate(personXmlNode, "DeathDate");
@@ -264,10 +265,13 @@ namespace MyGenealogie
         private static Guid? ParseFromGuid(XmlNode xmlNode, string property)
         {
             var node = xmlNode.SelectSingleNode(property);
-            if(!string.IsNullOrEmpty(node.InnerText))
+            if (node != null)
             {
-                var g = Guid.Parse(node.InnerText);
-                return g;
+                if (!string.IsNullOrEmpty(node.InnerText))
+                {
+                    var g = Guid.Parse(node.InnerText);
+                    return g;
+                }
             }
             return null;
         }

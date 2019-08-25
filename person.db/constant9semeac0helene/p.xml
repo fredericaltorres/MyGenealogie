@@ -1,21 +1,18 @@
 <Person>
   <Guid>a3570044-820b-49cf-a974-cdb077a4d19a</Guid>
   <Sexe>F</Sexe>
-  <BirthDate>
-  </BirthDate>
+  <BirthDate>1876</BirthDate>
   <BirthCity>
   </BirthCity>
   <BirthCountry>
   </BirthCountry>
-  <DeathDate>
-  </DeathDate>
-  <DeathCity>
-  </DeathCity>
+  <DeathDate>1941</DeathDate>
+  <DeathCity>Salon de provence</DeathCity>
   <DeathCountry>
   </DeathCountry>
-  <Comment>
-  </Comment>
+  <Comment>Son pere Eugene Constant etait ferblantier a Salon de provence</Comment>
   <FatherGuid>97af97af-1c3a-43ed-8951-cb2bc0673473</FatherGuid>
   <MotherGuid>dea136ed-2762-46e9-8f6e-328de655de6e</MotherGuid>
+  <SpouseGuid>4d87103b-10c0-4193-a2e7-42a4e0d9ad15</SpouseGuid>
   <CreationDate>2004-40-24</CreationDate>
 </Person>

@@ -4,7 +4,7 @@
   "BirthCountry": null,
   "DeathCity": null,
   "DeathCountry": null,
-  "Comment": null,
+  "Comment": "Entrepreneur de travaux public. il achetat le Chateau de Riche Bois a Salon de provence ",
   "LastName": "beaudun",
   "MaidenName": null,
   "FirstName": "desire",
@@ -12,13 +12,22 @@
   "Guid": "d952516f-211e-44f5-b75f-168dfae8ff17",
   "FatherGuid": "bd188b8b-390a-408c-a42c-039ae86848aa",
   "MotherGuid": null,
+  "SpouseGuid": null,
   "CreationDate": {
     "Year": 2004,
     "Month": 1,
     "Day": 24
   },
-  "DeathDate": null,
-  "BirthDate": null,
+  "DeathDate": {
+    "Year": 1841,
+    "Month": 0,
+    "Day": 0
+  },
+  "BirthDate": {
+    "Year": 1867,
+    "Month": 0,
+    "Day": 0
+  },
   "Images": [
     {
       "ImageName": "BEAUDUN, Desire",

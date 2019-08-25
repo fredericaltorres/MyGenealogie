@@ -4,7 +4,7 @@
   "BirthCountry": null,
   "DeathCity": null,
   "DeathCountry": null,
-  "Comment": null,
+  "Comment": "Ferblantier a Salon de provence",
   "LastName": "constant",
   "MaidenName": null,
   "FirstName": "eugene",
@@ -12,13 +12,22 @@
   "Guid": "97af97af-1c3a-43ed-8951-cb2bc0673473",
   "FatherGuid": null,
   "MotherGuid": null,
+  "SpouseGuid": null,
   "CreationDate": {
     "Year": 2004,
     "Month": 1,
     "Day": 24
   },
-  "DeathDate": null,
-  "BirthDate": null,
+  "DeathDate": {
+    "Year": 1913,
+    "Month": 0,
+    "Day": 0
+  },
+  "BirthDate": {
+    "Year": 1829,
+    "Month": 0,
+    "Day": 0
+  },
   "Images": [
     {
       "ImageName": "Constant Eugene, comment-Photo prise a salon devant la maison du gardien, on reconnait la fenetre et les barreaux prise par leon semac",

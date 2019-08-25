@@ -1,21 +1,25 @@
 <Person>
   <Guid>eb6db547-abee-42ec-89c3-da273f8e30f3</Guid>
   <Sexe>M</Sexe>
-  <BirthDate>
-  </BirthDate>
+  <BirthDate>1896</BirthDate>
   <BirthCity>
   </BirthCity>
   <BirthCountry>
   </BirthCountry>
-  <DeathDate>
-  </DeathDate>
-  <DeathCity>
-  </DeathCity>
+  <DeathDate>1988</DeathDate>
+  <DeathCity>Salon de provence</DeathCity>
   <DeathCountry>
   </DeathCountry>
   <Comment>
+- Sorti de l'ecole Polytechnique "12eme dans la botte" sur 250 ingenieur des ponts et chaussees
+- Professeur a l'ecole nationale des ponts et chaussees
+- Directeur a la SNFC
+- Directeur general des Chemins de fer du Maroc
+- President directeur general du Tanger - Fez
+- President directeur general de la Compagnie des Transports Marocains
   </Comment>
   <FatherGuid>4d87103b-10c0-4193-a2e7-42a4e0d9ad15</FatherGuid>
   <MotherGuid>a3570044-820b-49cf-a974-cdb077a4d19a</MotherGuid>
+  <SpouseGuid>96026fa3-866c-4465-876f-0c76b153c616</SpouseGuid>
   <CreationDate>2004-40-24</CreationDate>
 </Person>

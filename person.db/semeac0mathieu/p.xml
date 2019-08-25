@@ -1,17 +1,18 @@
 <Person>
 	<Guid>a9efd6a4-a8f6-4ff7-acb2-4af495870002</Guid>
 	<Sexe>M</Sexe>
-	<BirthDate></BirthDate>
-	<BirthCity></BirthCity>
+	<BirthDate>1830</BirthDate>
+	<BirthCity>Cathervielle</BirthCity>
 	<BirthCountry></BirthCountry>
-	<DeathDate></DeathDate>
-	<DeathCity></DeathCity>
+	<DeathDate>1897</DeathDate>
+	<DeathCity>Salon de provence</DeathCity>
 	<DeathCountry></DeathCountry>
-	<Comment></Comment>
+	<Comment>Commandant de la gendarmerie de salon de provence</Comment>
 	
 	<FatherGuid>fdece35e-0da7-49ac-a7cc-8b2d4175bd70</FatherGuid>
 	<MotherGuid>d56d9283-2ee1-4f0d-966a-9409dbecfce2</MotherGuid>
-	
+	<SpouseGuid>746f8df4-c808-4306-9e8c-356684f7361c</SpouseGuid>
+		
 	<CreationDate>2004-40-24</CreationDate>
 </Person>
 

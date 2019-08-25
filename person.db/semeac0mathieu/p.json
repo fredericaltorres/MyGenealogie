@@ -1,10 +1,10 @@
 {
   "Sexe": "M",
-  "BirthCity": null,
+  "BirthCity": "Cathervielle",
   "BirthCountry": null,
-  "DeathCity": null,
+  "DeathCity": "Salon de provence",
   "DeathCountry": null,
-  "Comment": null,
+  "Comment": "Commandant de la gendarmerie de salon de provence",
   "LastName": "semeac",
   "MaidenName": null,
   "FirstName": "mathieu",
@@ -12,13 +12,22 @@
   "Guid": "a9efd6a4-a8f6-4ff7-acb2-4af495870002",
   "FatherGuid": "fdece35e-0da7-49ac-a7cc-8b2d4175bd70",
   "MotherGuid": "d56d9283-2ee1-4f0d-966a-9409dbecfce2",
+  "SpouseGuid": "746f8df4-c808-4306-9e8c-356684f7361c",
   "CreationDate": {
     "Year": 2004,
     "Month": 1,
     "Day": 24
   },
-  "DeathDate": null,
-  "BirthDate": null,
+  "DeathDate": {
+    "Year": 1897,
+    "Month": 0,
+    "Day": 0
+  },
+  "BirthDate": {
+    "Year": 1830,
+    "Month": 0,
+    "Day": 0
+  },
   "Images": [
     {
       "ImageName": "Semeac Mathieu , Gensdarmes",

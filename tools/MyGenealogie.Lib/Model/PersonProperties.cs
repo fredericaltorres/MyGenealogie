@@ -21,6 +21,7 @@ namespace MyGenealogie
         public Guid Guid;
         public Guid? FatherGuid;
         public Guid? MotherGuid;
+        public Guid? SpouseGuid;
         public PersonDate CreationDate;
         public PersonDate DeathDate;
         public PersonDate BirthDate;

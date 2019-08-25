@@ -12,6 +12,7 @@
   "Guid": "a143c2de-99a2-41ae-8591-1b4de5dbf8ed",
   "FatherGuid": "15fd4dd8-ea47-4a5e-a273-be97e49416f1",
   "MotherGuid": "d72f8da5-e4e5-49bd-9c17-befdd758c77d",
+  "SpouseGuid": null,
   "CreationDate": {
     "Year": 2005,
     "Month": 1,

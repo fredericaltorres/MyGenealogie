@@ -1,6 +1,6 @@
 {
   "Sexe": "M",
-  "BirthCity": "~Salon de provence",
+  "BirthCity": "Salon de provence",
   "BirthCountry": null,
   "DeathCity": "Salon de provence",
   "DeathCountry": null,
@@ -12,6 +12,7 @@
   "Guid": "4d87103b-10c0-4193-a2e7-42a4e0d9ad15",
   "FatherGuid": "a9efd6a4-a8f6-4ff7-acb2-4af495870002",
   "MotherGuid": "746f8df4-c808-4306-9e8c-356684f7361c",
+  "SpouseGuid": "a3570044-820b-49cf-a974-cdb077a4d19a",
   "CreationDate": {
     "Year": 2004,
     "Month": 1,
@@ -45,18 +46,6 @@
       "FileName": "Semeac Jules, date~1877.jpg",
       "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\semeac0jules\\Semeac Jules, date~1877.jpg",
       "Url": "https://mygenealogie.blob.core.windows.net/semeac0jules/Semeac Jules, date~1877.jpg"
-    },
-    {
-      "ImageName": "Semeac leon, date~1897, comment-avec la nourrice",
-      "FileName": "Semeac leon, date~1897, comment-avec la nourrice.jpg",
-      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\semeac0jules\\Semeac leon, date~1897, comment-avec la nourrice.jpg",
-      "Url": "https://mygenealogie.blob.core.windows.net/semeac0jules/Semeac leon, date~1897, comment-avec la nourrice.jpg"
-    },
-    {
-      "ImageName": "Semeac leon, date~1897",
-      "FileName": "Semeac leon, date~1897.jpg",
-      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db\\semeac0jules\\Semeac leon, date~1897.jpg",
-      "Url": "https://mygenealogie.blob.core.windows.net/semeac0jules/Semeac leon, date~1897.jpg"
     },
     {
       "ImageName": "Semeac, Jules",
