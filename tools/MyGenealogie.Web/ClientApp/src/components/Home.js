@@ -19,6 +19,15 @@ function replaceDash(s) {
     return s.replace(new RegExp('-', 'g'), ' ');
 }
 
+function formatYear(d) {
+    if (!d) return '';
+    if (d.year === 0 && d.month === 0 && d.day === 0) return '';
+    if (d.year !== 0 && d.month === 0 && d.day === 0) return `${d.year}`;
+    if (d.year !== 0 && d.month !== 0 && d.day === 0) return `${d.year}-${d.month}`;
+    if (d.year !== 0 && d.month !== 0 && d.day !== 0) return `${d.year}-${d.month}-${d.day}`;
+    return 'date-issue';
+}
+
 class Home extends Component {
     
     state = {
@@ -53,6 +62,7 @@ class Home extends Component {
     selectPerson = (guid) => {
 
         const person = this.getPersonFromGuid(guid);
+        console.dir(person);
         const option = { value: person.guid, label: this.getPersonFullName(person) };
         this.handleChange(option);
     }
@@ -60,15 +70,14 @@ class Home extends Component {
     getPersonFullName(p) {
 
         const maidenName = p.maidenName ? ` [${p.maidenName}]` : ``;
-        const middleName = replaceDash(p.middleName ? `${p.middleName}` : ``);
+        const middleName = replaceDash(p.middleName ? ` ${p.middleName}` : ``);
         const firstName = replaceDash(p.firstName);
-        return `${p.lastName}${maidenName}, ${firstName}${middleName}`;
+        return `${p.lastName}${maidenName}, ${firstName}${middleName} - ${p.guid}`;
     }
 
     getPersonFromGuid(guid) {
 
         var c = this.state.persons.find((p) => p.guid === guid);
-        console.dir(c);
         return c;
     }
 
@@ -87,10 +96,30 @@ class Home extends Component {
         return p.spouseGuid !== null;
     }
 
+    isPersonHasFather(p) {
+
+        return p.fatherGuid !== null;
+    }
+
+    isPersonHasMother(p) {
+
+        return p.motherGuid !== null;
+    }
+
     getSpouseForPersonSelected(personSelected) {
 
-        var c = this.state.persons.find((p) => p.spouseGuid === personSelected.guid);
+        return this.state.persons.find((p) => p.spouseGuid === personSelected.guid);
+    }
+
+    getFatherForPersonSelected(personSelected) {
+
+        const c = this.state.persons.find((p) => p.guid === personSelected.fatherGuid);
         return c;
+    }
+
+    getMotherForPersonSelected(personSelected) {
+
+        return this.state.persons.find((p) => p.guid === personSelected.motherGuid);
     }
 
     getChildrenForPersonSelected(personSelected) {
@@ -101,11 +130,9 @@ class Home extends Component {
 
     reloadData = () => {
 
-        var s = this.state;
-
         return fetch('api/MyGenealogie/GetPersons').then(response => response.json())
             .then(data => {
-                console.log(`reloadData data:${JSON.stringify(data)}`);
+                // console.log(`reloadData data:${JSON.stringify(data)}`);
                 this.updateState('persons', data);
             });
     }
@@ -119,7 +146,7 @@ class Home extends Component {
 
         var r = this.state.persons.map((p) => {
             return (<li key={p.guid}>
-                {p.lastName}{p.maidenName ? ` [${p.maidenName}]` : ``}, {p.firstName} {p.middleName ? `, ${p.middleName}` : ``}
+                {this.getPersonFullName(p)}
             </li>);
         });
         return r;
@@ -129,7 +156,7 @@ class Home extends Component {
         var r = this.state.persons.map((p) => {
             return {
                 value: p.guid,
-                label: `${p.lastName}${p.maidenName ? `[${ p.maidenName }]` : ``} - ${p.firstName}`
+                label: this.getPersonFullName(p)
             };
         });
         return r;
@@ -146,10 +173,32 @@ class Home extends Component {
 
         if (this.isPersonHasSpouse(person)) {
             const spouse = this.getSpouseForPersonSelected(person);
-            return ( <span>
+            return (<span>
+                <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(this.getSpouseForPersonSelected(person).guid); }}> View </button> - 
                 {this.getPersonFullName(spouse)}
-                <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(this.getSpouseForPersonSelected(person).guid); }}> View </button>
             </span> );
+        }
+        return null;
+    }
+
+    getPersonFatherSummaryHtml(person) {
+        if (this.isPersonHasFather(person)) {
+            const father = this.getFatherForPersonSelected(person);
+            return (<span>
+                <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(this.getFatherForPersonSelected(person).guid); }}> View </button> -
+                {this.getPersonFullName(father)}
+            </span>);
+        }
+        return null;
+    }
+
+    getPersonMotherSummaryHtml(person) {
+        if (this.isPersonHasMother(person)) {
+            const mother = this.getMotherForPersonSelected(person);
+            return (<span>
+                <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(this.getMotherForPersonSelected(person).guid); }}> View </button> -
+                {this.getPersonFullName(mother)}
+            </span>);
         }
         return null;
     }
@@ -164,10 +213,10 @@ class Home extends Component {
 
         const children = this.getChildrenForPersonSelected(person);
         const childrenHtml = children.map((c) => {
-            return (<span>
+            return (<li>
+                <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(c.guid); }} > View </button> - 
                 {this.getPersonFullName(c)}
-                <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(c.guid); }} > View </button>
-            </span>);
+            </li>);
         });
         return <ul>{childrenHtml}</ul>;
     }
@@ -192,14 +241,32 @@ class Home extends Component {
                     <label htmlFor="txtMiddleName">MiddleName</label>
                     <input type="text" className="form-control-sm" id="txtFirstName" value={emptyStringOnNull(person.middleName)} />
                 </div>
+                
+                <div className="form-group">
+                    <label htmlFor="txtBirthDate">BirthDate</label>
+                    <input type="text" className="form-control-sm" id="txtBirthDate" value={formatYear(person.birthDate)} />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="txtDeathDate">DeathDate</label>
+                    <input type="text" className="form-control-sm" id="txtDeathDate" value={formatYear(person.deathDate)} />
+                </div>
+
                 <div className="form-group">
                     <label htmlFor="txtComment">Comment</label>
                     <textarea cols="80" rows="4"  className="form-control-sm" id="txtComment" value={emptyStringOnNull(person.comment)} / >
                 </div>
                 {this.isPersonHasSpouse(person) && (<div>
                     <b>Spouse</b>: {this.getPersonSpouseSummaryHtml(person)}
-                    
                 </div>)}
+
+                {this.isPersonHasFather(person) && (<div>
+                    <b>Father</b>: {this.getPersonFatherSummaryHtml(person)}
+                </div>)}
+
+                {this.isPersonHasMother(person) && (<div>
+                    <b>Mother</b>: {this.getPersonMotherSummaryHtml(person)}
+                </div>)}
+
                 {this.hasPersonChildren(person) && (<div>
                     <b>Children</b>: {this.getPersonChildrenSummaryHtml(person)}
                 </div>)}
@@ -212,7 +279,6 @@ class Home extends Component {
         return (
             <div>
                 <h1>My Genealogie</h1>
-                <button type="button" className="btn btn-primary" onClick={this.reloadData}> Reload </button>
                 <button type="button" className="btn btn-primary" onClick={
                     () => { this.goBackToPreviousPerson(); }
                 }> Back </button>
@@ -239,3 +305,4 @@ class Home extends Component {
 }
 
 export default connect()(Home);
+
