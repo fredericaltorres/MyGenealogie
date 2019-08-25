@@ -24,8 +24,17 @@ namespace fAzureHelper
         public void CreateContainer(string name)
         {
             var container = _cloudBlobClient.GetContainerReference(name);
-            //BlobContainerPublicAccessType accessType, BlobRequestOptions requestOptions = null, OperationContext operationContext = null
             container.CreateIfNotExists(BlobContainerPublicAccessType.Container);
+        }
+        public void DeleteContainer(string name)
+        {
+            var container = _cloudBlobClient.GetContainerReference(name);
+            if (container.Properties.LeaseState == LeaseState.Leased)
+            {
+                container.BreakLease(null);
+            }
+            var e = container.Exists();
+            container.Delete();
         }
     }
 }

@@ -152,8 +152,8 @@ namespace MyGenealogie
             var parts = name.Split(new char[] { '0' , '1' , '9' });
             if(name.Contains("9"))
             {
-                p.Properties.LastName = parts[0];
-                p.Properties.MaidenName = parts[1];
+                p.Properties.MaidenName = parts[0];
+                p.Properties.LastName = parts[1];
                 if (name.Contains("0"))
                     p.Properties.FirstName = parts[2];
                 if (name.Contains("1"))
@@ -191,16 +191,17 @@ namespace MyGenealogie
                 p.Properties.FirstName = parts[1].Trim();
         }
 
-        public static Person LoadFromFolder(string folder)
+        public static Person LoadFromFolder(string folder, bool loadXml = false)
         {
+            System.Console.WriteLine($"LoadFromFolder:{folder}");
             var p = new Person( PersonDBSource.LOCAL_FILE_SYSTEM, folder);
-            if (File.Exists(p.GetPropertiesJsonFile()))
+            if (!loadXml && File.Exists(p.GetPropertiesJsonFile()))
             {
                 p = LoadFromJsonFile(folder, p.GetPropertiesJsonFile(), PersonDBSource.LOCAL_FILE_SYSTEM);
             }
             else if (File.Exists(p.GetPropertiesXmlFile()))
             {
-                System.Diagnostics.Debugger.Break();
+                // System.Diagnostics.Debugger.Break();
                 LoadFromXmlFile(p);
                 LoadNamesInfoFromFolderSyntaxNumberAsSeparator(p);
                 p.LoadImages();

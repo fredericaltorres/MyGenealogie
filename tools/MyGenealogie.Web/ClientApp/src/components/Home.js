@@ -3,19 +3,27 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 
+// https://emotion.sh/docs/introduction
 // https://github.com/JedWatson/react-select
+import Select from 'react-select';
 
 class Home extends Component {
     
     state = {
-        persons : []
+        persons: [],
+        selectedOption: null
     };
 
     componentDidMount() {
 
         this.reloadData();
     }
-    
+
+    handleChange = (selectedOption) => {
+        this.updateState("selectedOption", selectedOption);
+        console.log(`Option selected:`, selectedOption);
+    };
+       
     reloadData = () => {
 
         return fetch('api/MyGenealogie/GetPersons').then(response => response.json())
@@ -40,13 +48,31 @@ class Home extends Component {
         return r;
     }
 
+    GetPersonsDataForCombo() {
+        var r = this.state.persons.map((p) => {
+            return {
+                value: p.puid,
+                label: `${p.lastName} - ${p.firstName}`
+            };
+        });
+        return r;
+    }
+
     render() {
         return (
             <div>
-                <h1>Hello, world!</h1>
-                someting
+                <h1>My Genealogie</h1>
                 <button onClick={this.reloadData}> RELOAD </button>
                 <hr />
+
+                <Select
+                    value={this.state.selectedOption}
+                    onChange={this.handleChange}
+                    options={this.GetPersonsDataForCombo()}
+                />
+
+                <hr />
+
                 <ul>
                     {this.GetPersonsSelector()}
                 </ul>

@@ -12,29 +12,40 @@ namespace MyGenealogie.Console
         static void Main(string[] args)
         {
             var dbPath = @"C:\DVT\MyGenealogie\person.db";
-             ///// new ConvertPersonXmlToJson().Run(dbPath);
-
             var storageKey = File.ReadAllText(@".\storage.credentials");
             var storageName = "mygenealogie";
+
+            var veryFirstConvertion = false;
+            var reUploadAzureDatabase = false;
+            var verifyAzurePersonDB = true;
+            var deleteAzureDatabase = false;
+
+            if (veryFirstConvertion)
+            {
+                new ConvertPersonXmlToJson().Run(dbPath);
+            }
+
             var db = new PersonDB(dbPath, storageName, storageKey);
 
-            var reUploadDatabase = false;
-            var verifyAzurePersonDB = true;
-
-            if (reUploadDatabase && !verifyAzurePersonDB)
+            if (reUploadAzureDatabase && !verifyAzurePersonDB)
             {
                 db.LoadFromLocalDB();
                 db.Upload();
             }
 
-            if(verifyAzurePersonDB && !reUploadDatabase)
+            if(verifyAzurePersonDB && !reUploadAzureDatabase)
             {
-                //db.LoadFromAzureStorageDB();
-                //db.UpdatePersonDBJsonSummary();
+                db.LoadFromAzureStorageDB();
+                db.UpdatePersonDBJsonSummary();
                 var newDb = PersonDB.LoadPersonDBSummaryFromAzureStorageDB(storageName, storageKey);
             }
 
-            
+            if(deleteAzureDatabase)
+            {
+                var dbDelete = new PersonDB(null, storageName, storageKey);
+                dbDelete.DeleteAzureStorageDB();
+            }
+                       
 
             System.Console.WriteLine("Done");
             System.Console.ReadLine();
