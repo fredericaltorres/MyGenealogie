@@ -31,17 +31,29 @@ class Home extends Component {
         this.reloadData();
     }
 
+    personHistory = []; // guid list of all person viewed
+
     handleChange = (selectedOption) => {
+
         console.log(`handleChange  ${JSON.stringify(selectedOption)}`);
+        this.personHistory.push(selectedOption.value); // add guid
         this.updateState("selectedOption", selectedOption);
-        console.log(`Option selected:`, selectedOption);
+        console.log(`personHistory  ${JSON.stringify(this.personHistory)}`);
     };
 
+    goBackToPreviousPerson = () => {
+        
+        if (this.personHistory.length > 1) {
+            var currentPersonGuid = this.personHistory.pop();
+            var previousPersonGuid = this.personHistory.pop();
+            this.selectPerson(previousPersonGuid);
+        }
+    }
 
-    selectSpouse = () => {
+    selectPerson = (guid) => {
 
-        var spouse = this.getSpouseForPersonSelected(this.getPersonSelected());
-        const option = { value: spouse.guid, label: this.getPersonFullName(spouse) };
+        const person = this.getPersonFromGuid(guid);
+        const option = { value: person.guid, label: this.getPersonFullName(person) };
         this.handleChange(option);
     }
        
@@ -81,7 +93,15 @@ class Home extends Component {
         return c;
     }
 
+    getChildrenForPersonSelected(personSelected) {
+
+        var children = this.state.persons.filter((p) => p.fatherGuid === personSelected.guid || p.motherGuid === personSelected.guid);
+        return children;
+    }
+
     reloadData = () => {
+
+        var s = this.state;
 
         return fetch('api/MyGenealogie/GetPersons').then(response => response.json())
             .then(data => {
@@ -126,9 +146,30 @@ class Home extends Component {
 
         if (this.isPersonHasSpouse(person)) {
             const spouse = this.getSpouseForPersonSelected(person);
-            return this.getPersonFullName(spouse);
+            return ( <span>
+                {this.getPersonFullName(spouse)}
+                <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(this.getSpouseForPersonSelected(person).guid); }}> View </button>
+            </span> );
         }
         return null;
+    }
+
+    hasPersonChildren(person) {
+
+        const children = this.getChildrenForPersonSelected(person);
+        return children.length > 0;
+    }
+
+    getPersonChildrenSummaryHtml(person) {
+
+        const children = this.getChildrenForPersonSelected(person);
+        const childrenHtml = children.map((c) => {
+            return (<span>
+                {this.getPersonFullName(c)}
+                <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(c.guid); }} > View </button>
+            </span>);
+        });
+        return <ul>{childrenHtml}</ul>;
     }
 
     getPersonHtml(person) {
@@ -156,8 +197,11 @@ class Home extends Component {
                     <textarea cols="80" rows="4"  className="form-control-sm" id="txtComment" value={emptyStringOnNull(person.comment)} / >
                 </div>
                 {this.isPersonHasSpouse(person) && (<div>
-                    {this.getPersonSpouseSummaryHtml(person)}
-                    <button type="button" class="btn btn-primary" onClick={this.selectSpouse}> View </button>
+                    <b>Spouse</b>: {this.getPersonSpouseSummaryHtml(person)}
+                    
+                </div>)}
+                {this.hasPersonChildren(person) && (<div>
+                    <b>Children</b>: {this.getPersonChildrenSummaryHtml(person)}
                 </div>)}
             </form>
             );
@@ -168,7 +212,10 @@ class Home extends Component {
         return (
             <div>
                 <h1>My Genealogie</h1>
-                <button type="button" class="btn btn-primary" onClick={this.reloadData}> RELOAD </button>
+                <button type="button" className="btn btn-primary" onClick={this.reloadData}> Reload </button>
+                <button type="button" className="btn btn-primary" onClick={
+                    () => { this.goBackToPreviousPerson(); }
+                }> Back </button>
                 <hr />
 
                 <Select
