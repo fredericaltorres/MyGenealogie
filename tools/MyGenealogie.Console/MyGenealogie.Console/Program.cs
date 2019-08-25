@@ -16,7 +16,7 @@ namespace MyGenealogie.Console
             var storageName = "mygenealogie";
 
             var veryFirstConvertion = false;
-            var reUploadAzureDatabase = false;
+            var reUploadAzureDatabase = true;
             var verifyAzurePersonDB = true;
             var deleteAzureDatabase = false;
 
@@ -27,13 +27,13 @@ namespace MyGenealogie.Console
 
             var db = new PersonDB(dbPath, storageName, storageKey);
 
-            if (reUploadAzureDatabase && !verifyAzurePersonDB)
+            if (reUploadAzureDatabase)
             {
                 db.LoadFromLocalDB();
                 db.Upload();
             }
 
-            if(verifyAzurePersonDB && !reUploadAzureDatabase)
+            if(verifyAzurePersonDB)
             {
                 db.LoadFromAzureStorageDB();
                 db.UpdatePersonDBJsonSummary();

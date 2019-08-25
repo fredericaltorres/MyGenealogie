@@ -36,9 +36,9 @@ namespace MyGenealogie
         //        Person.SanitizeNameForAzureContainerName("TORRES [McCowan], Karin, Gene"));
 
 
-        private static string BuildImageUrl(string fileName)
+        private static string BuildImageUrl(string fileName, string folderName)
         {
-            return $"https://mygenealogie.blob.core.windows.net/antonin0philippi/{fileName}";
+            return $"https://mygenealogie.blob.core.windows.net/{folderName}/{fileName}";
         }
 
         public static string SanitizeNameForAzureContainerName(string n)
@@ -129,7 +129,7 @@ namespace MyGenealogie
                         ImageName = Path.GetFileNameWithoutExtension(i),
                         FileName = Path.GetFileName(i),
                         LocalFileName = i,
-                        Url = null,
+                        Url = BuildImageUrl(Path.GetFileName(i), this.GetFolderName()),
                     };
                     l.Add(pi);
                 }
@@ -137,10 +137,8 @@ namespace MyGenealogie
             }
             else if (this.Source == PersonDBSource.AZURE_STORAGE)
             {
-                foreach(var im in this.Properties.Images)
-                {
-                    im.Url = BuildImageUrl(im.FileName);
-                }
+                //foreach(var im in this.Properties.Images)
+                //    im.Url = BuildImageUrl(im.FileName, this.GetFolderName());
             }
         }
 
@@ -198,6 +196,9 @@ namespace MyGenealogie
             if (!loadXml && File.Exists(p.GetPropertiesJsonFile()))
             {
                 p = LoadFromJsonFile(folder, p.GetPropertiesJsonFile(), PersonDBSource.LOCAL_FILE_SYSTEM);
+                LoadNamesInfoFromFolderSyntaxNumberAsSeparator(p);
+                p.LoadImages();
+
             }
             else if (File.Exists(p.GetPropertiesXmlFile()))
             {

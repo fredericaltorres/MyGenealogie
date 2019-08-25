@@ -124,6 +124,7 @@ namespace MyGenealogie.Console
             foreach (var personFolder in personFolders)
             {
                 var p = Person.LoadFromFolder(personFolder);
+                p.SaveAsJsonFile();
                 this.Persons.Add(p);
             }
         }
