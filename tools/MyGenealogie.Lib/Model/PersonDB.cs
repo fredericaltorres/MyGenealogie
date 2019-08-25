@@ -67,7 +67,7 @@ namespace MyGenealogie.Console
             var bm = new BlobManager(this._storageName, this._storageKey, personDBContainer);
             bm.UploadJsonFileAsync(tmpPersonDBJsonFile, overide: true).GetAwaiter().GetResult();
         }
-
+        
         public static PersonDB LoadPersonDBSummaryFromAzureStorageDB(string storageName, string storageKey)
         {
             var personDB = new PersonDB(null, storageName, storageKey);
@@ -103,6 +103,16 @@ namespace MyGenealogie.Console
                 this.Persons.Add(p);
                 p.LoadImages();
                 this.Trace($"");
+            }
+        }
+
+        public void DeleteAzureStorageDB()
+        {
+            var containers = LoadContainerList();
+            foreach(var c in containers)
+            {
+                System.Console.WriteLine($"Deleting container:{c}");
+                this._containerManager.DeleteContainer(personDBContainer);
             }
         }
 

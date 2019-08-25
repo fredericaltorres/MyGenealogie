@@ -18,7 +18,7 @@ namespace MyGenealogie
             foreach(var personFolder in personFolders)
             {
                 System.Console.WriteLine($"Processing {personFolder}");
-                var p = Person.LoadFromFolder(personFolder);
+                var p = Person.LoadFromFolder(personFolder, true);
                 p.SaveAsJsonFile();
                 if (!p.RenamePersonFolderToSanitizedName())
                     renameCounterError += 1;
