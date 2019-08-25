@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 
+// https://github.com/JedWatson/react-select
+
 class Home extends Component {
     
     state = {
@@ -10,6 +12,7 @@ class Home extends Component {
     };
 
     componentDidMount() {
+
         this.reloadData();
     }
     
@@ -28,6 +31,7 @@ class Home extends Component {
     }
 
     GetPersonsSelector() {
+
         var r = this.state.persons.map((p) => {
             return (<li key={p.guid}>
                 {p.lastName} {p.maidenName ? ` [${p.maidenName}]` : ``} - {p.firstName} {p.middleName ? ` - ${p.middleName}` : ``}
