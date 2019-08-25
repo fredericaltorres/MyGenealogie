@@ -82,7 +82,7 @@ class Home extends Component {
 
     getPersonImagesHtml(person) {
         return person.images.map((image) => {
-            return <img src={image.url} />;
+            return <img src={image.url} width={150} />;
         });
     }
     getPersonHtml(person) {
