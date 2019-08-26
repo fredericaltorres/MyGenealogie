@@ -28,8 +28,11 @@ function formatYear(d) {
     return 'date-issue';
 }
 
+const DEFAULT_IMAGE_WIDTH = 150;
+const DEFAULT_PERSON_TO_SELECT = "eb6db547-abee-42ec-89c3-da273f8e30f3";
+
 class Home extends Component {
-    
+
     state = {
         persons: [],
         selectedOption: null
@@ -51,7 +54,7 @@ class Home extends Component {
     };
 
     goBackToPreviousPerson = () => {
-        
+
         if (this.personHistory.length > 1) {
             var currentPersonGuid = this.personHistory.pop();
             var previousPersonGuid = this.personHistory.pop();
@@ -66,7 +69,7 @@ class Home extends Component {
         const option = { value: person.guid, label: this.getPersonFullName(person) };
         this.handleChange(option);
     }
-       
+
     getPersonFullName(p) {
 
         const maidenName = p.maidenName ? ` [${p.maidenName}]` : ``;
@@ -90,7 +93,7 @@ class Home extends Component {
         }
         return null;
     }
-    
+
     isPersonHasSpouse(p) {
 
         return p.spouseGuid !== null;
@@ -133,13 +136,17 @@ class Home extends Component {
         return fetch('api/MyGenealogie/GetPersons').then(response => response.json())
             .then(data => {
                 // console.log(`reloadData data:${JSON.stringify(data)}`);
-                this.updateState('persons', data);
+                this.updateState('persons', data, () => {
+
+                    if (DEFAULT_PERSON_TO_SELECT)
+                        this.selectPerson(DEFAULT_PERSON_TO_SELECT);
+                });
             });
     }
 
-    updateState = (property, value) => {
+    updateState = (property, value, callBack = () => { }) => {
 
-        this.setState({ ...this.state, [property]: value });
+        this.setState({ ...this.state, [property]: value }, callBack);
     }
 
     GetPersonsSelector() {
@@ -149,7 +156,7 @@ class Home extends Component {
                 {this.getPersonFullName(p)}
             </li>);
         });
-        return r;
+        return <ul>{r}</ul>;
     }
 
     GetPersonsDataForCombo() {
@@ -165,7 +172,7 @@ class Home extends Component {
     getPersonImagesHtml(person) {
 
         return person.images.map((image) => {
-            return <img src={image.url} width={150} />;
+            return <img key={image.url} src={image.url} width={DEFAULT_IMAGE_WIDTH} />;
         });
     }
 
@@ -213,7 +220,7 @@ class Home extends Component {
 
         const children = this.getChildrenForPersonSelected(person);
         const childrenHtml = children.map((c) => {
-            return (<li>
+            return (<li key={c.guid}>
                 <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(c.guid); }} > View </button> - 
                 {this.getPersonFullName(c)}
             </li>);
@@ -221,35 +228,27 @@ class Home extends Component {
         return <ul>{childrenHtml}</ul>;
     }
 
+    getFieldRow(fieldName, fieldValue) {
+        
+        fieldValue = emptyStringOnNull(fieldValue);
+        return ( <div className="form-group row">
+            <label htmlFor={fieldName} className="col-sm-2 col-form-label">{fieldName}</label>
+            <div className="col-sm-10">
+                <input type="text" className="form-control" id={fieldName} value={fieldValue} />
+            </div>
+        </div> );
+    }
+
     getPersonHtml(person) {
 
         return (
             <form>
-                <div className="form-group">
-                    <label htmlFor="txtLastName">LastName </label>
-                    <input type="text" className="form-control-sm" id="txtLastName" value={person.lastName} />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="txtMaidenName">MaidenName</label>
-                    <input type="text" className="form-control-sm" id="txtMaidenName" value={emptyStringOnNull(person.maidenName)} />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="txtFirstName">FirstName</label>
-                    <input type="text" className="form-control-sm" id="txtFirstName" value={emptyStringOnNull(person.firstName)} />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="txtMiddleName">MiddleName</label>
-                    <input type="text" className="form-control-sm" id="txtFirstName" value={emptyStringOnNull(person.middleName)} />
-                </div>
-                
-                <div className="form-group">
-                    <label htmlFor="txtBirthDate">BirthDate</label>
-                    <input type="text" className="form-control-sm" id="txtBirthDate" value={formatYear(person.birthDate)} />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="txtDeathDate">DeathDate</label>
-                    <input type="text" className="form-control-sm" id="txtDeathDate" value={formatYear(person.deathDate)} />
-                </div>
+                {this.getFieldRow("lastName", person.lastName)}
+                {this.getFieldRow("MaidenName", person.maidenName)}
+                {this.getFieldRow("FirstName", person.firstName)}
+                {this.getFieldRow("MiddleName", person.middleName)}
+                {this.getFieldRow("BirthDate", person.birthDate)}
+                {this.getFieldRow("DeathDate", person.deathDate)}
 
                 <div className="form-group">
                     <label htmlFor="txtComment">Comment</label>
@@ -278,27 +277,19 @@ class Home extends Component {
         const personSelected = this.getPersonSelected();
         return (
             <div>
-                <h1>My Genealogie</h1>
-                <button type="button" className="btn btn-primary" onClick={
-                    () => { this.goBackToPreviousPerson(); }
-                }> Back </button>
-                <hr />
-
+                <h2>MyGenealogie</h2>
+                <button type="button" className="btn btn-primary" onClick={() => { this.goBackToPreviousPerson(); }}> Back </button>
                 <Select
                     isClearable={true} isSearchable={true}
                     value={this.state.selectedOption}
                     onChange={this.handleChange}
                     options={this.GetPersonsDataForCombo()}
                 />
-
-                <hr />
-                {personSelected && this.getPersonHtml(personSelected)}
-                <hr />
+                <hr/>
+                {personSelected && this.getPersonHtml(personSelected)}              
                 {personSelected && this.getPersonImagesHtml(personSelected)}
 
-                <ul>
-                    {this.GetPersonsSelector()}
-                </ul>
+                {this.GetPersonsSelector()}
             </div>
         );
     }
