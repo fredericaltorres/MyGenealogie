@@ -2,11 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
+import isObject from 'lodash/isObject';
 
 // https://emotion.sh/docs/introduction
 // https://github.com/JedWatson/react-select
 import Select from 'react-select';
 
+function isPersonDate(d) {
+    return isObject(d) && d.year;
+}
 
 function emptyStringOnNull(v) {
     if (v === null || v === undefined)
@@ -15,7 +19,6 @@ function emptyStringOnNull(v) {
 };
 
 function replaceDash(s) {
-
     return s.replace(new RegExp('-', 'g'), ' ');
 }
 
@@ -28,14 +31,23 @@ function formatYear(d) {
     return 'date-issue';
 }
 
+function stringDateToPersonDate(d) {
+    var parts = d.split('-');
+    return {
+        year: parts[0] === undefined ? 0 : parseInt(parts[0]),
+        month: parts[1] === undefined ? 0 : parseInt(parts[1]),
+        day: parts[2] === undefined ? 0 : parseInt(parts[2])
+    };
+}
+
 const DEFAULT_IMAGE_WIDTH = 150;
 const DEFAULT_PERSON_TO_SELECT = "eb6db547-abee-42ec-89c3-da273f8e30f3";
 
 class Home extends Component {
 
     state = {
-        persons: [],
-        selectedOption: null
+        persons: [],        
+        selectedPerson: null,
     };
 
     componentDidMount() {
@@ -45,13 +57,42 @@ class Home extends Component {
 
     personHistory = []; // guid list of all person viewed
 
-    handleChange = (selectedOption) => {
+    userError(errorMessage) {
+        alert(`ERROR:${errorMessage}`);
+    }
 
-        console.log(`handleChange  ${JSON.stringify(selectedOption)}`);
-        this.personHistory.push(selectedOption.value); // add guid
-        this.updateState("selectedOption", selectedOption);
-        console.log(`personHistory  ${JSON.stringify(this.personHistory)}`);
+    handleChange = (guid) => {
+        if (guid === null) {
+            this.updateState("selectedPerson", null);
+            return;
+        }
+
+        if (isObject(guid)) { // Coming from react-select combobox
+            guid = guid.value;
+        }
+
+        var selectedPerson = { ...this.getPersonFromGuid(guid) }; // Make a physical copy
+        if (selectedPerson) {
+
+            console.log(`handleChange  ${JSON.stringify(selectedPerson)}`);
+
+            this.personHistory.push(selectedPerson.guid);
+            console.log(`personHistory  ${JSON.stringify(this.personHistory)}`);
+
+            this.updateState("selectedPerson", selectedPerson);
+        }
+        else {
+            this.userError(`Cannot select person guid:${guid}`);
+        }        
     };
+
+    updateSelectedPerson = () => {
+
+        const person = { ...this.state.selectedPerson };
+        person.birthDate = stringDateToPersonDate(person.birthDate);
+        person.deathDate = stringDateToPersonDate(person.deathDate);
+        alert(`UPDATE ${JSON.stringify(person)}`);
+    }
 
     goBackToPreviousPerson = () => {
 
@@ -63,11 +104,8 @@ class Home extends Component {
     }
 
     selectPerson = (guid) => {
-
-        const person = this.getPersonFromGuid(guid);
-        console.dir(person);
-        const option = { value: person.guid, label: this.getPersonFullName(person) };
-        this.handleChange(option);
+        
+        this.handleChange(guid);
     }
 
     getPersonFullName(p) {
@@ -86,11 +124,9 @@ class Home extends Component {
 
     getPersonSelected() {
 
-        if (this.state.selectedOption) {
+        if (this.state.selectedPerson)
+            return this.state.selectedPerson;
 
-            var guid = this.state.selectedOption.value;
-            return this.getPersonFromGuid(guid);
-        }
         return null;
     }
 
@@ -138,15 +174,26 @@ class Home extends Component {
                 // console.log(`reloadData data:${JSON.stringify(data)}`);
                 this.updateState('persons', data, () => {
 
-                    if (DEFAULT_PERSON_TO_SELECT)
+                    if (DEFAULT_PERSON_TO_SELECT) {                        
                         this.selectPerson(DEFAULT_PERSON_TO_SELECT);
+                    }
                 });
             });
     }
 
     updateState = (property, value, callBack = () => { }) => {
 
-        this.setState({ ...this.state, [property]: value }, callBack);
+        if(typeof(property)==='string')
+            this.setState({ ...this.state, [property]: value }, callBack);
+
+        if (typeof (property) === 'object') {
+            let newState = { ...this.state };
+            Object.key(property).forEach((key) => {
+                newState = { ...newState, [key]: property[key]};
+            });
+            console.log(`new state:${JSON.stringify(newState)}`);
+            this.setState(newState, callBack);
+        }
     }
 
     GetPersonsSelector() {
@@ -181,30 +228,32 @@ class Home extends Component {
         if (this.isPersonHasSpouse(person)) {
             const spouse = this.getSpouseForPersonSelected(person);
             return (<span>
-                <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(this.getSpouseForPersonSelected(person).guid); }}> View </button> - 
-                {this.getPersonFullName(spouse)}
+                <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(this.getSpouseForPersonSelected(person).guid); }}> View </button> 
+                &nbsp;{this.getPersonFullName(spouse)}
             </span> );
         }
         return null;
     }
 
     getPersonFatherSummaryHtml(person) {
+
         if (this.isPersonHasFather(person)) {
             const father = this.getFatherForPersonSelected(person);
             return (<span>
-                <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(this.getFatherForPersonSelected(person).guid); }}> View </button> -
-                {this.getPersonFullName(father)}
+                <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(this.getFatherForPersonSelected(person).guid); }}> View </button> 
+                &nbsp;{this.getPersonFullName(father)}
             </span>);
         }
         return null;
     }
 
     getPersonMotherSummaryHtml(person) {
+
         if (this.isPersonHasMother(person)) {
             const mother = this.getMotherForPersonSelected(person);
             return (<span>
-                <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(this.getMotherForPersonSelected(person).guid); }}> View </button> -
-                {this.getPersonFullName(mother)}
+                <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(this.getMotherForPersonSelected(person).guid); }}> View </button>
+                &nbsp;{this.getPersonFullName(mother)}
             </span>);
         }
         return null;
@@ -212,76 +261,114 @@ class Home extends Component {
 
     hasPersonChildren(person) {
 
-        const children = this.getChildrenForPersonSelected(person);
-        return children.length > 0;
+        return this.getChildrenForPersonSelected(person).length > 0;
     }
 
     getPersonChildrenSummaryHtml(person) {
 
-        const children = this.getChildrenForPersonSelected(person);
-        const childrenHtml = children.map((c) => {
+        const childrenHtml = this.getChildrenForPersonSelected(person).map((c) => {
             return (<li key={c.guid}>
-                <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(c.guid); }} > View </button> - 
-                {this.getPersonFullName(c)}
+                <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(c.guid); }} > View </button>  
+                &nbsp;{this.getPersonFullName(c)}
             </li>);
         });
         return <ul>{childrenHtml}</ul>;
     }
 
-    getFieldRow(fieldName, fieldValue) {
-        
-        fieldValue = emptyStringOnNull(fieldValue);
-        return ( <div className="form-group row">
+    getBlockRow(fieldName, jsx) {
+
+        return (<div className="form-group row">
             <label htmlFor={fieldName} className="col-sm-2 col-form-label">{fieldName}</label>
             <div className="col-sm-10">
-                <input type="text" className="form-control" id={fieldName} value={fieldValue} />
+                {jsx}
             </div>
-        </div> );
+        </div>);
+    }
+
+    onFieldChange = (e, fieldName, isDate) => {
+                
+        const value = e.target.value;
+        console.log(`${fieldName} = ${value}`);
+
+        const selectedPerson = this.state.selectedPerson;
+        selectedPerson[fieldName] = value;
+        const newState = { ...this.state, selectedPerson};
+        this.setState(newState);
+    }
+
+    getFieldRow(fieldName, fieldValue, isMultiLine = false, isDate) {
+
+        if (isPersonDate(fieldValue))
+            fieldValue = formatYear(fieldValue);
+
+        fieldValue = emptyStringOnNull(fieldValue);
+
+        if (isMultiLine) {
+            return (<div className="form-group row">
+                <label htmlFor={fieldName} className="col-sm-2 col-form-label">{fieldName}</label>
+                <div className="col-sm-10">
+                    <textarea cols="80" rows="4" className="form-control-sm" id={fieldName} value={fieldValue}
+                        onChange={(e) => { this.onFieldChange(e, fieldName); }}
+                    />
+                </div>
+            </div>);
+        }
+        else {
+            
+            return (<div className="form-group row">
+                <label htmlFor={fieldName} className="col-sm-2 col-form-label">{fieldName} : </label>
+                <div className="col-sm-10">
+                    <input type="text" pattern="[0-9. -]*" className="form-control" id={fieldName} value={fieldValue}
+                        onChange={(e) => { this.onFieldChange(e, fieldName, isDate); }}
+                    />
+                </div>
+            </div>);
+        }
     }
 
     getPersonHtml(person) {
 
-        return (
-            <form>
-                {this.getFieldRow("lastName", person.lastName)}
-                {this.getFieldRow("MaidenName", person.maidenName)}
-                {this.getFieldRow("FirstName", person.firstName)}
-                {this.getFieldRow("MiddleName", person.middleName)}
-                {this.getFieldRow("BirthDate", person.birthDate)}
-                {this.getFieldRow("DeathDate", person.deathDate)}
+        return (<form>
+            {this.getFieldRow("lastName", person.lastName)}
+            {this.getFieldRow("maidenName", person.maidenName)}
+            {this.getFieldRow("firstName", person.firstName)}
+            {this.getFieldRow("middleName", person.middleName)}
+            {this.getFieldRow("birthDate", person.birthDate, false, true)}
+            {this.getFieldRow("deathDate", person.deathDate, false, true)}
+            {this.getFieldRow("comment", person.comment, true)}
 
-                <div className="form-group">
-                    <label htmlFor="txtComment">Comment</label>
-                    <textarea cols="80" rows="4"  className="form-control-sm" id="txtComment" value={emptyStringOnNull(person.comment)} / >
-                </div>
-                {this.isPersonHasSpouse(person) && (<div>
-                    <b>Spouse</b>: {this.getPersonSpouseSummaryHtml(person)}
-                </div>)}
+            {this.isPersonHasSpouse(person) &&
+                this.getBlockRow("Spouse", this.getPersonSpouseSummaryHtml(person))}
+            {this.isPersonHasFather(person) &&
+                this.getBlockRow("Father", this.getPersonFatherSummaryHtml(person))}
+            {this.isPersonHasMother(person) &&
+                this.getBlockRow("Mother", this.getPersonMotherSummaryHtml(person))}
+            {this.hasPersonChildren(person) &&
+                this.getBlockRow("Children", this.getPersonChildrenSummaryHtml(person))}
 
-                {this.isPersonHasFather(person) && (<div>
-                    <b>Father</b>: {this.getPersonFatherSummaryHtml(person)}
-                </div>)}
-
-                {this.isPersonHasMother(person) && (<div>
-                    <b>Mother</b>: {this.getPersonMotherSummaryHtml(person)}
-                </div>)}
-
-                {this.hasPersonChildren(person) && (<div>
-                    <b>Children</b>: {this.getPersonChildrenSummaryHtml(person)}
-                </div>)}
-            </form>
-            );
+            <button type="button" className="btn btn-primary" onClick={this.updateSelectedPerson}> Update </button> 
+        </form>);
     }
 
     render() {
+        let selectionForComboBox = null;
         const personSelected = this.getPersonSelected();
+
+        if (personSelected) {
+
+            selectionForComboBox = {
+                value: personSelected.guid,
+                label: this.getPersonFullName(personSelected)
+            };
+        }
+                
         return (
             <div>
                 <h2>MyGenealogie</h2>
                 <button type="button" className="btn btn-primary" onClick={() => { this.goBackToPreviousPerson(); }}> Back </button>
                 <Select
                     isClearable={true} isSearchable={true}
-                    value={this.state.selectedOption}
+                    value={selectionForComboBox}
                     onChange={this.handleChange}
                     options={this.GetPersonsDataForCombo()}
                 />
