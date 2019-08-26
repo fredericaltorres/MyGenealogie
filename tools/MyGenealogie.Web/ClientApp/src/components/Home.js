@@ -19,6 +19,8 @@ function emptyStringOnNull(v) {
 };
 
 function replaceDash(s) {
+    if (!s)
+        return s;
     return s.replace(new RegExp('-', 'g'), ' ');
 }
 
@@ -332,7 +334,7 @@ class Home extends Component {
             {this.getFieldRow("lastName", person.lastName)}
             {this.getFieldRow("maidenName", person.maidenName)}
             {this.getFieldRow("firstName", person.firstName)}
-            {this.getFieldRow("middleName", person.middleName)}
+            {this.getFieldRow("middleName", replaceDash(person.middleName))}
             {this.getFieldRow("birthDate", person.birthDate, false, true)}
             {this.getFieldRow("deathDate", person.deathDate, false, true)}
             {this.getFieldRow("comment", person.comment, true)}

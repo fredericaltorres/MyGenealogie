@@ -142,6 +142,23 @@ namespace MyGenealogie
             }
         }
 
+        public void CopyImagesWithGuidPrefix(string destination)
+        {
+            if (this.Source == PersonDBSource.LOCAL_FILE_SYSTEM)
+            {
+                foreach(var im in this.Properties.Images)
+                {
+                    System.Console.WriteLine($"Copying image {Path.GetFileName(im.LocalFileName)}");
+                    var finalFileName = $"{this.Properties.Guid}.{Path.GetFileName(im.LocalFileName)}";
+                    File.Copy(im.LocalFileName, Path.Combine(destination, finalFileName));
+                }
+            }
+            else if (this.Source == PersonDBSource.AZURE_STORAGE)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public static void LoadNamesInfoFromFolderSyntaxNumberAsSeparator(Person p)
         {
             // beaudun9semeac0marie-louise1josette-annette
@@ -224,12 +241,14 @@ namespace MyGenealogie
             return p;
         }
 
-        public void SaveAsJsonFile()
+        public void SaveAsJsonFile(string outputJsonFileName = null)
         {
+            if (outputJsonFileName == null)
+                outputJsonFileName = this.GetPropertiesJsonFile();
             var json = System.JSON.JSonObject.Serialize(this.Properties);
-            if (File.Exists(this.GetPropertiesJsonFile()))
-                File.Delete(this.GetPropertiesJsonFile());
-            File.WriteAllText(this.GetPropertiesJsonFile(), json);
+            if (File.Exists(outputJsonFileName))
+                File.Delete(outputJsonFileName);
+            File.WriteAllText(outputJsonFileName, json);
         }
 
         private static void LoadFromXmlFile(Person p)

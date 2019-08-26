@@ -12,17 +12,18 @@ namespace MyGenealogie.Console
         static void Main(string[] args)
         {
             var dbPath = @"C:\DVT\MyGenealogie\person.db";
+            var db2Path = @"C:\DVT\MyGenealogie\person.db2";
             var storageKey = File.ReadAllText(@".\storage.credentials");
             var storageName = "mygenealogie";
 
-            var veryFirstConvertion = false;
+            var veryFirstConvertion = true;
             var reUploadAzureDatabase = true;
             var verifyAzurePersonDB = true;
             var deleteAzureDatabase = false;
 
             if (veryFirstConvertion)
             {
-                new ConvertPersonXmlToJson().Run(dbPath);
+                new ConvertPersonXmlToJson().Run(dbPath, db2Path);
             }
 
             var db = new PersonDB(dbPath, storageName, storageKey);
