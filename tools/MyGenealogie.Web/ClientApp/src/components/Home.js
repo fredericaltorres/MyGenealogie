@@ -4,6 +4,9 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import isObject from 'lodash/isObject';
 
+// https://react-bootstrap.github.io/components/dropdowns/
+import Dropdown from 'react-bootstrap/Dropdown';
+
 // https://emotion.sh/docs/introduction
 // https://github.com/JedWatson/react-select
 import Select from 'react-select';
@@ -47,6 +50,12 @@ function stringDateToPersonDate(d) {
 
 const DEFAULT_IMAGE_WIDTH = 150;
 const DEFAULT_PERSON_TO_SELECT = "eb6db547-abee-42ec-89c3-da273f8e30f3";
+const PASTE_OPERATION_AS = {
+    Mother: 'Mother',
+    Father: 'Father',
+    Child: 'Child',
+    Spouse: 'Spouse',
+};
 
 class Home extends Component {
 
@@ -101,6 +110,19 @@ class Home extends Component {
         this.updatePersonApi(person);
     }
 
+    
+    pasteSelectedPersonFromClipboardAs = (pasteAsEnum) => {
+        if (this.state.clipBoardPerson !== null) {
+            console.log(`Paste '${this.getPersonFullName(this.state.clipBoardPerson)}' as ${pasteAsEnum} into '${this.getPersonFullName(this.state.selectedPerson)}'`);
+            switch (pasteAsEnum) {
+                case PASTE_OPERATION_AS.Father: break;
+                case PASTE_OPERATION_AS.Mother: break;
+                case PASTE_OPERATION_AS.Child: break;
+                case PASTE_OPERATION_AS.Spouse: break;
+            }
+        }
+    }
+
     copySelectedPersonToClipboard = () => {
 
         this.state.clipBoardPerson = { ...this.state.selectedPerson };
@@ -124,6 +146,8 @@ class Home extends Component {
 
     getPersonFullName(p) {
 
+        if (!p)
+            return null;
         const maidenName = p.maidenName ? ` [${p.maidenName}]` : ``;
         const middleName = replaceDash(p.middleName ? ` ${p.middleName}` : ``);
         const firstName = replaceDash(p.firstName);
@@ -409,31 +433,31 @@ class Home extends Component {
                 label: this.getPersonFullName(personSelected)
             };
         }
-        const dropDownMenuStyles = {
-            position: 'absolute',
-            transform: 'translate3d(111px, 0px, 0px)',
-            top: '0px',
-            left: '0px',
-            'will-change': 'transform'
-        };
+        
         return (
             <div>
                 <h2>MyGenealogie</h2>
-                <button type="button" className="btn btn-primary" onClick={() => { this.goBackToPreviousPerson(); }}> Back </button> &nbsp;
-                <button type="button" className="btn btn-primary" onClick={() => { this.copySelectedPersonToClipboard(); }}> Copy To Clipboard </button>
 
+                <table>
+                <tr>
+                    <td><button type="button" className="btn btn-primary" onClick={() => { this.goBackToPreviousPerson(); }}> Back </button> &nbsp;</td>
+                    <td><button type="button" className="btn btn-primary" onClick={() => { this.copySelectedPersonToClipboard(); }}> Copy To Clipboard </button></td>
+                    <td>
+                        <Dropdown>
+                            <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                Operations - {this.getPersonFullName(this.state.clipBoardPerson)}
+                            </Dropdown.Toggle>
 
-                <div className="dropdown open">
-                    <button className="btn btn-secondary dropdown-toggle"
-                        type="button" id="dropdownMenu4" data-toggle="dropdown"
-                        aria-haspopup aria-expanded > Dropdown
-                    </button>
-                    <div className="dropdown-menu">
-                        <span className="dropdown-item-text">Dropdown item text</span>
-                        <a className="dropdown-item" href="#!">Action</a>
-                        <a className="dropdown-item" href="#!">Another action</a>
-                    </div>
-                </div>
+                            <Dropdown.Menu>
+                                <Dropdown.Item onClick={() => { this.pasteSelectedPersonFromClipboardAs(PASTE_OPERATION_AS.Father); }} >Paste as Father </Dropdown.Item>
+                                <Dropdown.Item onClick={() => { this.pasteSelectedPersonFromClipboardAs(PASTE_OPERATION_AS.Mother); }} >Paste as Mother </Dropdown.Item>
+                                <Dropdown.Item onClick={() => { this.pasteSelectedPersonFromClipboardAs(PASTE_OPERATION_AS.Child); }} >Paste as child </Dropdown.Item>
+                                <Dropdown.Item onClick={() => { this.pasteSelectedPersonFromClipboardAs(PASTE_OPERATION_AS.Spouse); }} >Paste as Spouse </Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </td>
+                </tr>
+                </table>
 
                 <Select
                     isClearable isSearchable
@@ -452,4 +476,5 @@ class Home extends Component {
 }
 
 export default connect()(Home);
+
 
