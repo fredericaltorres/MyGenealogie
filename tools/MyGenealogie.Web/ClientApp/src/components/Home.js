@@ -53,6 +53,7 @@ class Home extends Component {
     state = {
         persons: [],        
         selectedPerson: null,
+        clipBoardPerson: null,
     };
 
     componentDidMount() {
@@ -98,6 +99,13 @@ class Home extends Component {
         person.deathDate = stringDateToPersonDate(person.deathDate);
         // alert(`UPDATE ${JSON.stringify(person)}`);
         this.updatePersonApi(person);
+    }
+
+    copySelectedPersonToClipboard = () => {
+
+        this.state.clipBoardPerson = { ...this.state.selectedPerson };
+        console.log(`Copied to clipboard person:${this.getPersonFullName(this.state.clipBoardPerson)}`);
+        this.updateState("clipBoardPerson", this.state.clipBoardPerson);
     }
 
     goBackToPreviousPerson = () => {
@@ -180,7 +188,7 @@ class Home extends Component {
                 // console.log(`reloadData data:${JSON.stringify(data)}`);
                 this.updateState('persons', data, () => {
 
-                    if (DEFAULT_PERSON_TO_SELECT) {                        
+                    if (DEFAULT_PERSON_TO_SELECT) {
                         this.selectPerson(DEFAULT_PERSON_TO_SELECT);
                     }
                 });
@@ -189,6 +197,7 @@ class Home extends Component {
 
     replacePersonInState = (person) => {
 
+        console.log(`Update in memory person:${this.getPersonFullName(person)}`);
         var persons = this.state.persons;
         const index = persons.findIndex((p) => { return p.guid === person.guid; });
         if (index === -1) {
@@ -203,18 +212,20 @@ class Home extends Component {
     };
 
     updatePersonApi = (person) => {
-        debugger;
+
+        console.log(`Call to back end to update person:${this.getPersonFullName(person)}`);
+        
         return fetch('api/MyGenealogie/UpdatePerson', {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(person) // body data type must match "Content-Type" header
         })
-            .then(response => {
-                debugger;
-                console.log(response);
-                this.replacePersonInState(person);
+        .then(response => {
+            console.log(response);
+            console.log(`back end update Ok:${response.ok} person:${this.getPersonFullName(person)}`);
+            this.replacePersonInState(person);
         });
     }
 
@@ -398,13 +409,34 @@ class Home extends Component {
                 label: this.getPersonFullName(personSelected)
             };
         }
-                
+        const dropDownMenuStyles = {
+            position: 'absolute',
+            transform: 'translate3d(111px, 0px, 0px)',
+            top: '0px',
+            left: '0px',
+            'will-change': 'transform'
+        };
         return (
             <div>
                 <h2>MyGenealogie</h2>
-                <button type="button" className="btn btn-primary" onClick={() => { this.goBackToPreviousPerson(); }}> Back </button>
+                <button type="button" className="btn btn-primary" onClick={() => { this.goBackToPreviousPerson(); }}> Back </button> &nbsp;
+                <button type="button" className="btn btn-primary" onClick={() => { this.copySelectedPersonToClipboard(); }}> Copy To Clipboard </button>
+
+
+                <div className="dropdown open">
+                    <button className="btn btn-secondary dropdown-toggle"
+                        type="button" id="dropdownMenu4" data-toggle="dropdown"
+                        aria-haspopup aria-expanded > Dropdown
+                    </button>
+                    <div className="dropdown-menu">
+                        <span className="dropdown-item-text">Dropdown item text</span>
+                        <a className="dropdown-item" href="#!">Action</a>
+                        <a className="dropdown-item" href="#!">Another action</a>
+                    </div>
+                </div>
+
                 <Select
-                    isClearable={true} isSearchable={true}
+                    isClearable isSearchable
                     value={selectionForComboBox}
                     onChange={this.handleChange}
                     options={this.GetPersonsDataForCombo()}

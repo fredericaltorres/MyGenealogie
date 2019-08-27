@@ -51,7 +51,8 @@ namespace MyGenealogie.Console
             var containerName = PersonDB.personDBContainer;
             this.Trace($"Upload json metadata file {p.Properties.Guid} {p.Properties.LastName} {p.Properties.FirstName}");
             var bm = new BlobManager(this._storageName, this._storageKey, containerName);
-            var tmpJsonFile = Path.Combine(Environment.GetEnvironmentVariable("TEMP"), p.GetPropertiesJsonFile());
+            p._folder = Environment.GetEnvironmentVariable("TEMP");
+            var tmpJsonFile = p.GetPropertiesJsonFile();
             p.SaveAsJsonFile(tmpJsonFile);
             bm.UploadJsonFileAsync(tmpJsonFile, overide: true).GetAwaiter().GetResult();
         }
