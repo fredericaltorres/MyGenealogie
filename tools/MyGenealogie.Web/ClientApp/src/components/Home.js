@@ -12,35 +12,40 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Select from 'react-select';
 
 function isPersonDate(d) {
+
     return isObject(d) && d.year;
 }
 
 function emptyStringOnNull(v) {
     if (v === null || v === undefined)
         return '';
+
     return v;
 };
 
 function replaceDash(s) {
     if (!s)
         return s;
+
     return s.replace(new RegExp('-', 'g'), ' ');
 }
 
 function formatYear(d) {
+
     if (!d) return '';
     if (d.year === 0 && d.month === 0 && d.day === 0) return '';
     if (d.year !== 0 && d.month === 0 && d.day === 0) return `${d.year}`;
     if (d.year !== 0 && d.month !== 0 && d.day === 0) return `${d.year}-${d.month}`;
     if (d.year !== 0 && d.month !== 0 && d.day !== 0) return `${d.year}-${d.month}-${d.day}`;
+
     return 'date-issue';
 }
 
 function stringDateToPersonDate(d) {
 
     if (isObject(d)) return d; // If the field was never updated it is still an object
-
     var parts = d.split('-');
+
     return {
         year: parts[0] === undefined ? 0 : parseInt(parts[0]),
         month: parts[1] === undefined ? 0 : parseInt(parts[1]),
@@ -50,6 +55,7 @@ function stringDateToPersonDate(d) {
 
 const DEFAULT_IMAGE_WIDTH = 150;
 const DEFAULT_PERSON_TO_SELECT = "eb6db547-abee-42ec-89c3-da273f8e30f3";
+
 const PASTE_OPERATION_AS = {
     Mother: 'Mother',
     Father: 'Father',
@@ -70,15 +76,18 @@ class Home extends Component {
         this.reloadData();
     }
 
-    personHistory = []; // guid list of all person viewed
+    personHistory = []; // guid list of all persons viewed
 
     userError(errorMessage) {
+
         alert(`ERROR:${errorMessage}`);
     }
 
     handleChange = (guid) => {
+
         if (guid === null) {
             this.updateState("selectedPerson", null);
+
             return;
         }
 
@@ -106,15 +115,17 @@ class Home extends Component {
         const person = { ...this.state.selectedPerson };
         person.birthDate = stringDateToPersonDate(person.birthDate);
         person.deathDate = stringDateToPersonDate(person.deathDate);
-        // alert(`UPDATE ${JSON.stringify(person)}`);
         this.updatePersonApi(person);
     }
-
-    
+        
     pasteSelectedPersonFromClipboardAs = (pasteAsEnum) => {
+
         if (this.state.clipBoardPerson !== null) {
+
             console.log(`Paste '${this.getPersonFullName(this.state.clipBoardPerson)}' as ${pasteAsEnum} into '${this.getPersonFullName(this.state.selectedPerson)}'`);
+
             switch (pasteAsEnum) {
+
                 case PASTE_OPERATION_AS.Father: break;
                 case PASTE_OPERATION_AS.Mother: break;
                 case PASTE_OPERATION_AS.Child: break;
@@ -133,6 +144,7 @@ class Home extends Component {
     goBackToPreviousPerson = () => {
 
         if (this.personHistory.length > 1) {
+
             var currentPersonGuid = this.personHistory.pop();
             var previousPersonGuid = this.personHistory.pop();
             this.selectPerson(previousPersonGuid);
@@ -148,16 +160,17 @@ class Home extends Component {
 
         if (!p)
             return null;
+
         const maidenName = p.maidenName ? ` [${p.maidenName}]` : ``;
         const middleName = replaceDash(p.middleName ? ` ${p.middleName}` : ``);
         const firstName = replaceDash(p.firstName);
+
         return `${p.lastName}${maidenName}, ${firstName}${middleName} - ${p.guid}`;
     }
 
     getPersonFromGuid(guid) {
 
-        var c = this.state.persons.find((p) => p.guid === guid);
-        return c;
+        return this.state.persons.find((p) => p.guid === guid);
     }
 
     getPersonSelected() {
@@ -190,8 +203,7 @@ class Home extends Component {
 
     getFatherForPersonSelected(personSelected) {
 
-        const c = this.state.persons.find((p) => p.guid === personSelected.fatherGuid);
-        return c;
+        return this.state.persons.find((p) => p.guid === personSelected.fatherGuid);
     }
 
     getMotherForPersonSelected(personSelected) {
@@ -201,8 +213,7 @@ class Home extends Component {
 
     getChildrenForPersonSelected(personSelected) {
 
-        var children = this.state.persons.filter((p) => p.fatherGuid === personSelected.guid || p.motherGuid === personSelected.guid);
-        return children;
+        return this.state.persons.filter((p) => p.fatherGuid === personSelected.guid || p.motherGuid === personSelected.guid);
     }
 
     reloadData = () => {
@@ -225,12 +236,16 @@ class Home extends Component {
         var persons = this.state.persons;
         const index = persons.findIndex((p) => { return p.guid === person.guid; });
         if (index === -1) {
+
             this.userError(`Cannot find person in memory guid:${person.guid}, fullName:${this.getPersonFullName(person)} `);
+
             return false;
         }
         else {
+
             persons[index] = person;
             this.updateState("persons", persons);
+
             return true;
         }
     };
@@ -259,6 +274,7 @@ class Home extends Component {
             this.setState({ ...this.state, [property]: value }, callBack);
 
         if (typeof (property) === 'object') {
+
             let newState = { ...this.state };
             Object.key(property).forEach((key) => {
                 newState = { ...newState, [key]: property[key]};
@@ -275,16 +291,19 @@ class Home extends Component {
                 {this.getPersonFullName(p)}
             </li>);
         });
+
         return <ul>{r}</ul>;
     }
 
     GetPersonsDataForCombo() {
+
         var r = this.state.persons.map((p) => {
             return {
                 value: p.guid,
                 label: this.getPersonFullName(p)
             };
         });
+
         return r;
     }
 
@@ -304,6 +323,7 @@ class Home extends Component {
                 &nbsp;{this.getPersonFullName(spouse)}
             </span> );
         }
+
         return null;
     }
 
@@ -316,6 +336,7 @@ class Home extends Component {
                 &nbsp;{this.getPersonFullName(father)}
             </span>);
         }
+
         return null;
     }
 
@@ -328,6 +349,7 @@ class Home extends Component {
                 &nbsp;{this.getPersonFullName(mother)}
             </span>);
         }
+
         return null;
     }
 
@@ -344,6 +366,7 @@ class Home extends Component {
                 &nbsp;{this.getPersonFullName(c)}
             </li>);
         });
+
         return <ul>{childrenHtml}</ul>;
     }
 
@@ -423,6 +446,7 @@ class Home extends Component {
     }
 
     render() {
+
         let selectionForComboBox = null;
         const personSelected = this.getPersonSelected();
 
@@ -476,5 +500,3 @@ class Home extends Component {
 }
 
 export default connect()(Home);
-
-
