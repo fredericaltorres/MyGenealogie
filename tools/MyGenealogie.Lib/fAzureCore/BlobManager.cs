@@ -13,14 +13,15 @@ namespace fAzureHelper
         private CloudBlobContainer _cloudBlobContainer = null;
         private CloudBlobClient _cloudBlobClient = null;
 
-        public BlobManager(string storageAccountName, string storageAccessKey, string containerName) : base(storageAccountName, storageAccessKey)
+        public BlobManager(string storageAccountName, string storageAccessKey, string containerName, bool create = true) : base(storageAccountName, storageAccessKey)
         {
             this.ContainerName = containerName.ToLowerInvariant();
 
             this._cloudBlobClient = _storageAccount.CreateCloudBlobClient();
             this._cloudBlobContainer = _cloudBlobClient.GetContainerReference(containerName);
 
-            CreatePublicContainerIfNotExistsAsync(this._cloudBlobContainer).GetAwaiter().GetResult();
+            if(create)
+                CreatePublicContainerIfNotExistsAsync(this._cloudBlobContainer).GetAwaiter().GetResult();
         }
 
         private async Task<CloudBlobContainer> CreatePublicContainerIfNotExistsAsync(CloudBlobContainer container)

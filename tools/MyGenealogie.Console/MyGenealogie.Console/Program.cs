@@ -16,8 +16,8 @@ namespace MyGenealogie.Console
             var storageKey = File.ReadAllText(@".\storage.credentials");
             var storageName = "mygenealogie";
 
-            var veryFirstConvertion = true;
-            var reUploadAzureDatabase = true;
+            var veryFirstConvertion = false;
+            var reUploadAzureDatabase = false;
             var verifyAzurePersonDB = true;
             var deleteAzureDatabase = false;
 
@@ -26,19 +26,19 @@ namespace MyGenealogie.Console
                 new ConvertPersonXmlToJson().Run(dbPath, db2Path);
             }
 
-            var db = new PersonDB(dbPath, storageName, storageKey);
+            var db = new PersonDB(db2Path, storageName, storageKey);
 
             if (reUploadAzureDatabase)
             {
                 db.LoadFromLocalDB();
-                db.Upload();
+                db.UploadFromLocalFolder();
             }
 
             if(verifyAzurePersonDB)
             {
                 db.LoadFromAzureStorageDB();
-                db.UpdatePersonDBJsonSummary();
-                var newDb = PersonDB.LoadPersonDBSummaryFromAzureStorageDB(storageName, storageKey);
+                // db.UpdatePersonDBJsonSummary();
+                //var newDb = PersonDB.LoadPersonDBSummaryFromAzureStorageDB(storageName, storageKey);
             }
 
             if(deleteAzureDatabase)

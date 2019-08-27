@@ -1,0 +1,24 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "mauries",
+  "MaidenName": null,
+  "FirstName": "marcian",
+  "MiddleName": null,
+  "Guid": "de4845a0-3308-4bfe-83d7-2788bc65b91e",
+  "FatherGuid": null,
+  "MotherGuid": null,
+  "SpouseGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": null,
+  "BirthDate": null,
+  "Images": []
+}

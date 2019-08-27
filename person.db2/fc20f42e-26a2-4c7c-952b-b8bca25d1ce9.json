@@ -1,0 +1,31 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "beaudun",
+  "MaidenName": null,
+  "FirstName": "desire-ii",
+  "MiddleName": null,
+  "Guid": "fc20f42e-26a2-4c7c-952b-b8bca25d1ce9",
+  "FatherGuid": null,
+  "MotherGuid": null,
+  "SpouseGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": null,
+  "BirthDate": null,
+  "Images": [
+    {
+      "ImageName": "fc20f42e-26a2-4c7c-952b-b8bca25d1ce9.BEAUDUN, Desire II",
+      "FileName": "fc20f42e-26a2-4c7c-952b-b8bca25d1ce9.BEAUDUN, Desire II.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\fc20f42e-26a2-4c7c-952b-b8bca25d1ce9.BEAUDUN, Desire II.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/fc20f42e-26a2-4c7c-952b-b8bca25d1ce9.BEAUDUN, Desire II.jpg"
+    }
+  ]
+}

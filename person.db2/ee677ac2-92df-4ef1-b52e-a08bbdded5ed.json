@@ -1,0 +1,24 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "mauries",
+  "MaidenName": null,
+  "FirstName": "jean-max",
+  "MiddleName": null,
+  "Guid": "ee677ac2-92df-4ef1-b52e-a08bbdded5ed",
+  "FatherGuid": "de4845a0-3308-4bfe-83d7-2788bc65b91e",
+  "MotherGuid": "9db390a6-55a8-44b5-a4a6-a1b74891a3fa",
+  "SpouseGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 26
+  },
+  "DeathDate": null,
+  "BirthDate": null,
+  "Images": []
+}

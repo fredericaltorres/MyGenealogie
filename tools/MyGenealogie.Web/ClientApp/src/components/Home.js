@@ -34,6 +34,9 @@ function formatYear(d) {
 }
 
 function stringDateToPersonDate(d) {
+
+    if (isObject(d)) return d; // If the field was never updated it is still an object
+
     var parts = d.split('-');
     return {
         year: parts[0] === undefined ? 0 : parseInt(parts[0]),
@@ -89,11 +92,12 @@ class Home extends Component {
     };
 
     updateSelectedPerson = () => {
-
+        
         const person = { ...this.state.selectedPerson };
         person.birthDate = stringDateToPersonDate(person.birthDate);
         person.deathDate = stringDateToPersonDate(person.deathDate);
-        alert(`UPDATE ${JSON.stringify(person)}`);
+        // alert(`UPDATE ${JSON.stringify(person)}`);
+        this.updatePersonApi(person);
     }
 
     goBackToPreviousPerson = () => {
@@ -181,6 +185,37 @@ class Home extends Component {
                     }
                 });
             });
+    }
+
+    replacePersonInState = (person) => {
+
+        var persons = this.state.persons;
+        const index = persons.findIndex((p) => { return p.guid === person.guid; });
+        if (index === -1) {
+            this.userError(`Cannot find person in memory guid:${person.guid}, fullName:${this.getPersonFullName(person)} `);
+            return false;
+        }
+        else {
+            persons[index] = person;
+            this.updateState("persons", persons);
+            return true;
+        }
+    };
+
+    updatePersonApi = (person) => {
+        debugger;
+        return fetch('api/MyGenealogie/UpdatePerson', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(person) // body data type must match "Content-Type" header
+        })
+            .then(response => {
+                debugger;
+                console.log(response);
+                this.replacePersonInState(person);
+        });
     }
 
     updateState = (property, value, callBack = () => { }) => {

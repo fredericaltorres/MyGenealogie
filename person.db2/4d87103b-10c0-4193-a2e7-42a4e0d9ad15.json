@@ -1,0 +1,57 @@
+{
+  "Sexe": "M",
+  "BirthCity": "Salon de provence",
+  "BirthCountry": null,
+  "DeathCity": "Salon de provence",
+  "DeathCountry": null,
+  "Comment": "Negociant en huile d'holive a Salon de provence",
+  "LastName": "semeac",
+  "MaidenName": null,
+  "FirstName": "jules",
+  "MiddleName": null,
+  "Guid": "4d87103b-10c0-4193-a2e7-42a4e0d9ad15",
+  "FatherGuid": "a9efd6a4-a8f6-4ff7-acb2-4af495870002",
+  "MotherGuid": "746f8df4-c808-4306-9e8c-356684f7361c",
+  "SpouseGuid": "a3570044-820b-49cf-a974-cdb077a4d19a",
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": {
+    "Year": 1930,
+    "Month": 0,
+    "Day": 0
+  },
+  "BirthDate": {
+    "Year": 1867,
+    "Month": 0,
+    "Day": 0
+  },
+  "Images": [
+    {
+      "ImageName": "4d87103b-10c0-4193-a2e7-42a4e0d9ad15.Semeac Jules ,date~1890",
+      "FileName": "4d87103b-10c0-4193-a2e7-42a4e0d9ad15.Semeac Jules ,date~1890.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\4d87103b-10c0-4193-a2e7-42a4e0d9ad15.Semeac Jules ,date~1890.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/4d87103b-10c0-4193-a2e7-42a4e0d9ad15.Semeac Jules ,date~1890.jpg"
+    },
+    {
+      "ImageName": "4d87103b-10c0-4193-a2e7-42a4e0d9ad15.Semeac Jules, date-1914_18",
+      "FileName": "4d87103b-10c0-4193-a2e7-42a4e0d9ad15.Semeac Jules, date-1914_18.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\4d87103b-10c0-4193-a2e7-42a4e0d9ad15.Semeac Jules, date-1914_18.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/4d87103b-10c0-4193-a2e7-42a4e0d9ad15.Semeac Jules, date-1914_18.jpg"
+    },
+    {
+      "ImageName": "4d87103b-10c0-4193-a2e7-42a4e0d9ad15.Semeac Jules, date~1877",
+      "FileName": "4d87103b-10c0-4193-a2e7-42a4e0d9ad15.Semeac Jules, date~1877.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\4d87103b-10c0-4193-a2e7-42a4e0d9ad15.Semeac Jules, date~1877.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/4d87103b-10c0-4193-a2e7-42a4e0d9ad15.Semeac Jules, date~1877.jpg"
+    },
+    {
+      "ImageName": "4d87103b-10c0-4193-a2e7-42a4e0d9ad15.Semeac, Jules",
+      "FileName": "4d87103b-10c0-4193-a2e7-42a4e0d9ad15.Semeac, Jules.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\4d87103b-10c0-4193-a2e7-42a4e0d9ad15.Semeac, Jules.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/4d87103b-10c0-4193-a2e7-42a4e0d9ad15.Semeac, Jules.jpg"
+    }
+  ]
+}

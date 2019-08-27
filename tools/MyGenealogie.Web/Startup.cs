@@ -32,7 +32,8 @@ namespace MyGenealogie.Web
             services.AddSingleton<IPersonDB, PersonDB>((ctx) => {
                 var storageKey = File.ReadAllText(@".\storage.credentials");
                 var storageName = "mygenealogie";
-                var db = PersonDB.LoadPersonDBSummaryFromAzureStorageDB(storageName, storageKey);
+                var db = new PersonDB(null, storageName, storageKey);
+                db.LoadFromAzureStorageDB();
                 return db;
             });
         }

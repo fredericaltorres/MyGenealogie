@@ -36,5 +36,13 @@ namespace fAzureHelper
             var e = container.Exists();
             container.Delete();
         }
+        public List<string> GetFiles(string name, string extension)
+        {
+            extension = extension.ToLowerInvariant();
+            var container = _cloudBlobClient.GetContainerReference(name);
+            var list = container.ListBlobs();
+            var files = list.OfType<CloudBlockBlob>().Where(f => f.Name.ToLowerInvariant().EndsWith(extension)).Select(b => b.Name).ToList();
+            return files;
+        }
     }
 }

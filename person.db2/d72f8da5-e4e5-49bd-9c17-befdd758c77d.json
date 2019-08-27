@@ -1,0 +1,32 @@
+{
+  "Sexe": "F",
+  "BirthCity": "Chomerac (Ardeche)",
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": "Fille de Frederic Morly et Rosalie Rochette",
+  "LastName": "vouly",
+  "MaidenName": null,
+  "FirstName": "emilie-sophie",
+  "MiddleName": null,
+  "Guid": "d72f8da5-e4e5-49bd-9c17-befdd758c77d",
+  "FatherGuid": null,
+  "MotherGuid": null,
+  "SpouseGuid": null,
+  "CreationDate": {
+    "Year": 2005,
+    "Month": 1,
+    "Day": 21
+  },
+  "DeathDate": {
+    "Year": 1928,
+    "Month": 4,
+    "Day": 23
+  },
+  "BirthDate": {
+    "Year": 1840,
+    "Month": 2,
+    "Day": 23
+  },
+  "Images": []
+}

@@ -1,0 +1,24 @@
+{
+  "Sexe": "F",
+  "BirthCity": "Marseille",
+  "BirthCountry": "France",
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "torres",
+  "MaidenName": "semeac",
+  "FirstName": "simone",
+  "MiddleName": "juilliete",
+  "Guid": "0fd7eccc-f61c-4e86-9a78-4edf0b003fbc",
+  "FatherGuid": "eb6db547-abee-42ec-89c3-da273f8e30f3",
+  "MotherGuid": "96026fa3-866c-4465-876f-0c76b153c616",
+  "SpouseGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": null,
+  "BirthDate": null,
+  "Images": []
+}

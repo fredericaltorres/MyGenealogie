@@ -1,0 +1,24 @@
+{
+  "Sexe": "F",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "torres",
+  "MaidenName": null,
+  "FirstName": "manuella",
+  "MiddleName": null,
+  "Guid": "4c94f562-1c6c-436a-b67c-c6dafd96320f",
+  "FatherGuid": "56d68061-8b25-4762-b809-32198ceede6c",
+  "MotherGuid": "b4ce89bc-4638-4ad9-819f-f38827c96d6c",
+  "SpouseGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": null,
+  "BirthDate": null,
+  "Images": []
+}

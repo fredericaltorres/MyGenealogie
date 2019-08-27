@@ -1,0 +1,31 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "brandis",
+  "MaidenName": null,
+  "FirstName": "paul",
+  "MiddleName": null,
+  "Guid": "8b3df27e-1b51-4631-8778-58804a8f9d43",
+  "FatherGuid": null,
+  "MotherGuid": null,
+  "SpouseGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 3,
+    "Day": 31
+  },
+  "DeathDate": null,
+  "BirthDate": null,
+  "Images": [
+    {
+      "ImageName": "8b3df27e-1b51-4631-8778-58804a8f9d43.BRANDIS, Paul",
+      "FileName": "8b3df27e-1b51-4631-8778-58804a8f9d43.BRANDIS, Paul.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\8b3df27e-1b51-4631-8778-58804a8f9d43.BRANDIS, Paul.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/8b3df27e-1b51-4631-8778-58804a8f9d43.BRANDIS, Paul.jpg"
+    }
+  ]
+}

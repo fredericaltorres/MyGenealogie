@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Threading.Tasks;
+using MyGenealogie.Console;
 
 namespace MyGenealogie
 {
@@ -80,7 +81,7 @@ namespace MyGenealogie
         }
         public string GetPropertiesJsonFile()
         {
-            return GetPropertiesFile("p.json");
+            return GetPropertiesFile($"{this.Properties.Guid}.json");
         }
 
         public bool RenamePersonFolderToSanitizedName()
@@ -116,12 +117,14 @@ namespace MyGenealogie
             return Path.Combine(parentPathFolder, newFolderName);
         }
 
-        public void LoadImages()
+        public void LoadImages(string folder = null, string fileMask = "*.jpg")
         {
+            if (folder == null)
+                folder = this._folder;
             if (this.Source == PersonDBSource.LOCAL_FILE_SYSTEM)
             {
                 var l = new List<PersonImage>();
-                var images = Directory.GetFiles(this._folder, "*.jpg").ToList();
+                var images = Directory.GetFiles(folder, fileMask).ToList();
                 foreach (var i in images)
                 {
                     var pi = new PersonImage
@@ -129,7 +132,7 @@ namespace MyGenealogie
                         ImageName = Path.GetFileNameWithoutExtension(i),
                         FileName = Path.GetFileName(i),
                         LocalFileName = i,
-                        Url = BuildImageUrl(Path.GetFileName(i), this.GetFolderName()),
+                        Url = BuildImageUrl(Path.GetFileName(i), PersonDB.personDBContainer),
                     };
                     l.Add(pi);
                 }

@@ -1,0 +1,39 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "chapuis",
+  "MaidenName": null,
+  "FirstName": "charles-samuel",
+  "MiddleName": null,
+  "Guid": "15fd4dd8-ea47-4a5e-a273-be97e49416f1",
+  "FatherGuid": null,
+  "MotherGuid": null,
+  "SpouseGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 3,
+    "Day": 31
+  },
+  "DeathDate": {
+    "Year": 1922,
+    "Month": 0,
+    "Day": 0
+  },
+  "BirthDate": {
+    "Year": 1841,
+    "Month": 0,
+    "Day": 0
+  },
+  "Images": [
+    {
+      "ImageName": "15fd4dd8-ea47-4a5e-a273-be97e49416f1.CHAPUIS, Charles, samuel",
+      "FileName": "15fd4dd8-ea47-4a5e-a273-be97e49416f1.CHAPUIS, Charles, samuel.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\15fd4dd8-ea47-4a5e-a273-be97e49416f1.CHAPUIS, Charles, samuel.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/15fd4dd8-ea47-4a5e-a273-be97e49416f1.CHAPUIS, Charles, samuel.jpg"
+    }
+  ]
+}

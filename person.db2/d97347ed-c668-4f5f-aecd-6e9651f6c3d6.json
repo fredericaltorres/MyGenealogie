@@ -1,0 +1,31 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "constant",
+  "MaidenName": null,
+  "FirstName": "etienne",
+  "MiddleName": null,
+  "Guid": "d97347ed-c668-4f5f-aecd-6e9651f6c3d6",
+  "FatherGuid": null,
+  "MotherGuid": null,
+  "SpouseGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": null,
+  "BirthDate": null,
+  "Images": [
+    {
+      "ImageName": "d97347ed-c668-4f5f-aecd-6e9651f6c3d6.CONSTANT, Etienne",
+      "FileName": "d97347ed-c668-4f5f-aecd-6e9651f6c3d6.CONSTANT, Etienne.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\d97347ed-c668-4f5f-aecd-6e9651f6c3d6.CONSTANT, Etienne.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/d97347ed-c668-4f5f-aecd-6e9651f6c3d6.CONSTANT, Etienne.jpg"
+    }
+  ]
+}

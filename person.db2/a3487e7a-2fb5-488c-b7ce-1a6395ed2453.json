@@ -1,0 +1,35 @@
+{
+  "Sexe": "M",
+  "BirthCity": "Aix-en-provence",
+  "BirthCountry": "France",
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": "la persone qui a mis cette genealogie sur ordinateur!",
+  "LastName": "torres",
+  "MaidenName": null,
+  "FirstName": "frederic",
+  "MiddleName": "antoine-leon",
+  "Guid": "a3487e7a-2fb5-488c-b7ce-1a6395ed2453",
+  "FatherGuid": "12095c1d-ad9c-4963-bdac-7b4eeffd2dc0",
+  "MotherGuid": "0fd7eccc-f61c-4e86-9a78-4edf0b003fbc",
+  "SpouseGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": null,
+  "BirthDate": {
+    "Year": 1964,
+    "Month": 12,
+    "Day": 11
+  },
+  "Images": [
+    {
+      "ImageName": "a3487e7a-2fb5-488c-b7ce-1a6395ed2453.Torres Frederic, date-1964, comment-Avis de naissance",
+      "FileName": "a3487e7a-2fb5-488c-b7ce-1a6395ed2453.Torres Frederic, date-1964, comment-Avis de naissance.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\a3487e7a-2fb5-488c-b7ce-1a6395ed2453.Torres Frederic, date-1964, comment-Avis de naissance.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/a3487e7a-2fb5-488c-b7ce-1a6395ed2453.Torres Frederic, date-1964, comment-Avis de naissance.jpg"
+    }
+  ]
+}
