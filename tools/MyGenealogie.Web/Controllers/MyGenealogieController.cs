@@ -31,12 +31,11 @@ namespace MyGenealogie.Web.Controllers
             var person = this.personDB.GetPersonByGuid(personProperties.Guid);
             if (person == null)
                 return BadRequest($"Person guid:{personProperties.Guid}, Lastname:{personProperties.LastName}, FirstName:{personProperties.FirstName} not found in backend memory");
-
-            person.Properties = personProperties;
-            this.personDB.UpdatePersonJsonFileInAzure(person);
-            this.personDB.SaveJsonDBInAzure();
-
-            return Ok();
+            
+            if(this.personDB.UpdatePerson(personProperties))
+                return Ok();
+            else
+                return new NotFoundObjectResult(personProperties.Guid); // TODO: Improve
         }
 
         [HttpDelete("[action]")]
@@ -52,7 +51,7 @@ namespace MyGenealogie.Web.Controllers
         public IActionResult NewPerson()
         {
             var person = this.personDB.NewPerson();
-            return new OkObjectResult(person.Properties.Guid);
+            return new OkObjectResult(person.Properties);
         }
     }
 }

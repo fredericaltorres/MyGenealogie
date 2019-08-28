@@ -86,39 +86,98 @@ class PersonDBClient {
 
         return `${p.lastName}${maidenName}, ${firstName}${middleName} - ${p.guid}`;
     }
+    handleErrors(response) {
+        if (!response.ok) {
+            throw Error(response.statusText);
+        }
+        return response;
+    }
     newPerson() {
 
-        this.trace(`new person`);
-        return fetch(this.__buildUrl('NewPerson'), {
-            method: 'POST',
-            headers: JSON_CONTENT_TYPE,
-            body: JSON.stringify('')
-        })
-        .then(response => {
-            console.log(`back end update Ok:${response.ok}`);
-            if (response.ok) {
-                response.text().then((guidString) => {
-                    const guid = JSON.parse(guidString);
-                    console.log(`New guid:${guid}`);
+        return new Promise((resolve, reject) => {
+
+            this.trace(`new person`);
+            return fetch(this.__buildUrl('NewPerson'), { // << create block factory
+                method: 'POST',
+                headers: JSON_CONTENT_TYPE,
+                body: JSON.stringify('')
+            })
+            .then(this.handleErrors)
+            .then(response => {
+                response.text().then((personJson) => {
+                    const person = JSON.parse(personJson);
+                    console.log(`New person:${this.getPersonFullName(person)}`);
+                    resolve(person);
                 });
-            }
+            })
+            .catch(function (error) {
+                console.log(error);
+                reject(error);
+            });
         });
     }
     deletePerson(person) {
-        debugger;
-        this.trace(`delete person ${this.getPersonFullName(person)}`);
-        return fetch(this.__buildUrl('DeletePerson'), {
-            method: 'DELETE',
-            headers: JSON_CONTENT_TYPE,
-            body: JSON.stringify(person.guid)
+        
+        return new Promise((resolve, reject) => {
+            
+            this.trace(`delete person ${this.getPersonFullName(person)}`);
+            return fetch(this.__buildUrl('DeletePerson'), {
+                method: 'DELETE',
+                headers: JSON_CONTENT_TYPE,
+                body: JSON.stringify(person.guid)
+            })
+            .then(this.handleErrors)
+            .then(response => {
+                resolve(true);
+            })
+            .catch(function (error) {
+                console.log(error);
+                reject(error);
+            });
+        });
+    }
+    updatePerson(person) {
+
+        return new Promise((resolve, reject) => {
+
+            this.trace(`update person ${this.getPersonFullName(person)}`);
+            return fetch(this.__buildUrl('UpdatePerson'), { // << create block factory
+                method: 'PUT',
+                headers: JSON_CONTENT_TYPE,
+                body: JSON.stringify(person)
+            })
+            .then(this.handleErrors)
+            .then(response => {
+                if (response.ok)
+                    resolve(person);
+                else
+                    reject(person);
+            })
+            .catch(function (error) {
+                console.log(error);
+                reject(error);
+            });
+        });
+    }
+
+    updatePersonApi = (person) => {
+
+        console.log(`Call to back end to update person:${__personDBClient.getPersonFullName(person)}`);
+
+        return fetch('api/MyGenealogie/UpdatePerson', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(person) // body data type must match "Content-Type" header
         })
             .then(response => {
-                console.log(`back end delete Ok:${response.ok}`);
-                if (response.ok) {
-                    console.log(`Deleted`);
-                }
+                console.log(response);
+                console.log(`back end update Ok:${response.ok} person:${__personDBClient.getPersonFullName(person)}`);
+                this.onPersonUpdated(person);
             });
     }
+
 }
 
 const __personDBClient = new PersonDBClient();
@@ -175,9 +234,9 @@ class Home extends Component {
         const person = { ...this.state.selectedPerson };
         person.birthDate = stringDateToPersonDate(person.birthDate);
         person.deathDate = stringDateToPersonDate(person.deathDate);
-        this.updatePersonApi(person);
+        return __personDBClient.updatePerson(person); // Return promise
     }
-        
+
     pasteSelectedPersonFromClipboardAs = (pasteAsEnum) => {
 
         if (this.state.clipBoardPerson !== null) {
@@ -215,7 +274,6 @@ class Home extends Component {
         
         this.handleChange(guid);
     }
-
 
     getPersonFromGuid(guid) {
 
@@ -265,33 +323,34 @@ class Home extends Component {
         return this.state.persons.filter((p) => p.fatherGuid === personSelected.guid || p.motherGuid === personSelected.guid);
     }
 
+    selectDefaultPerson() {
+        if (DEFAULT_PERSON_TO_SELECT) {
+            this.selectPerson(DEFAULT_PERSON_TO_SELECT);
+        }
+    }
+
     reloadData = () => {
 
         return fetch('api/MyGenealogie/GetPersons').then(response => response.json())
             .then(data => {
                 // console.log(`reloadData data:${JSON.stringify(data)}`);
                 this.updateState('persons', data, () => {
-
-                    if (DEFAULT_PERSON_TO_SELECT) {
-                        this.selectPerson(DEFAULT_PERSON_TO_SELECT);
-                    }
+                    this.selectDefaultPerson();
                 });
             });
     }
 
-    replacePersonInState = (person) => {
+    onPersonUpdated = (person) => {
 
-        console.log(`Update in memory person:${__personDBClient.getPersonFullName(person)}`);
+        console.log(`onPersonUpdated person:${__personDBClient.getPersonFullName(person)}`);
         var persons = this.state.persons;
         const index = persons.findIndex((p) => { return p.guid === person.guid; });
         if (index === -1) {
-
             this.userError(`Cannot find person in memory guid:${person.guid}, fullName:${__personDBClient.getPersonFullName(person)} `);
 
             return false;
         }
         else {
-
             persons[index] = person;
             this.updateState("persons", persons);
 
@@ -299,23 +358,31 @@ class Home extends Component {
         }
     };
 
-    updatePersonApi = (person) => {
+    onPersonCreated = (person) => {
 
-        console.log(`Call to back end to update person:${__personDBClient.getPersonFullName(person)}`);
-        
-        return fetch('api/MyGenealogie/UpdatePerson', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(person) // body data type must match "Content-Type" header
-        })
-        .then(response => {
-            console.log(response);
-            console.log(`back end update Ok:${response.ok} person:${__personDBClient.getPersonFullName(person)}`);
-            this.replacePersonInState(person);
-        });
-    }
+        console.log(`onPersonCreated person:${__personDBClient.getPersonFullName(person)}`);
+        var persons = this.state.persons;
+        persons.push(person);
+        this.updateState("persons", persons);
+
+        return true;
+    };
+
+    onPersonDeleted = (person) => {
+
+        person = this.getPersonFromGuid(person.guid); // Get the extact instance from the state
+        console.log(`onPersonDeleted person:${__personDBClient.getPersonFullName(person)}`);
+        var persons = this.state.persons;
+        const index = persons.indexOf(person);
+        if (index === -1) {
+            console.error(`Cannot delete person from state person:${__personDBClient.getPersonFullName(person)}`);
+        }
+        else {
+            persons.splice(index, 1);
+            this.updateState("persons", persons);
+        }
+        return true;
+    };
 
     updateState = (property, value, callBack = () => { }) => {
 
@@ -492,7 +559,12 @@ class Home extends Component {
             {this.hasPersonChildren(person) &&
                 this.getBlockRow("Children", this.getPersonChildrenSummaryHtml(person))}
 
-            <button type="button" className="btn btn-primary" onClick={this.updateSelectedPerson}> Update </button> 
+            <button type="button" className="btn btn-primary" onClick={
+                () => {
+                    this.updateSelectedPerson().then((person) => {
+                        this.onPersonUpdated(person);
+                    });
+                }}> Update </button> 
         </form>);
     }
 
@@ -533,8 +605,23 @@ class Home extends Component {
                         </td>
                         <td>
                             <ButtonGroup aria-label="Basic example">
-                                <Button variant="secondary" onClick={() => { __personDBClient.newPerson(); }}>New</Button>
-                                <Button variant="secondary" onClick={() => { __personDBClient.deletePerson(this.getPersonSelected()); }}>Delete</Button>
+                                <Button variant="secondary" onClick={() => {
+                                    __personDBClient.newPerson()
+                                        .then((newPerson) => {
+                                            this.onPersonCreated(newPerson);
+                                        });
+                                }}> New </Button>
+                                <Button variant="secondary" onClick={() => {
+
+                                    const person = this.getPersonSelected();
+                                    if (window.confirm(`Delete ${__personDBClient.getPersonFullName(person)}`)) {
+
+                                        __personDBClient.deletePerson(this.getPersonSelected()).then(() => {
+                                            this.onPersonDeleted(person);
+                                            this.selectDefaultPerson();
+                                        });
+                                    }
+                                }}> Delete </Button>
                                 <Button variant="secondary">Clone</Button>
                             </ButtonGroup>
                         </td>

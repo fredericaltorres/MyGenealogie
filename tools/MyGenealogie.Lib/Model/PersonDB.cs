@@ -45,6 +45,24 @@ namespace MyGenealogie.Console
             }
         }
 
+        public bool UpdatePerson(PersonProperties personProperties)
+        {
+            var person = this.GetPersonByGuid(personProperties.Guid);
+            if (person == null)
+                return false;
+
+            person.Properties = personProperties;
+
+            person.SaveAsJsonLocalFile(); // Save as JSON local file
+            GetBlobManager().UploadJsonFileAsync(person.GetPropertiesJsonFile()).GetAwaiter().GetResult();
+            
+            this.SaveJsonDBInAzure();
+            person.Source = PersonDBSource.LOCAL_FILE_SYSTEM; // Force to delete on file system
+            File.Delete(person.GetPropertiesJsonFile());
+
+            return true;
+        }
+
         public bool DeletePerson(Guid guid)
         {
             var person = this.GetPersonByGuid(guid);
@@ -97,7 +115,7 @@ namespace MyGenealogie.Console
             p.Properties.FirstName = p.Properties.LastName;
             p.Properties.Guid = Guid.NewGuid();
             p.Properties.CreationDate = new PersonDate().SetToNow();
-            p.SaveAsJsonLocalFile();
+            p.SaveAsJsonLocalFile(); // Save as JSON local file
             GetBlobManager().UploadJsonFileAsync(p.GetPropertiesJsonFile()).GetAwaiter().GetResult();
 
             this.Persons.Add(p);
@@ -146,6 +164,7 @@ namespace MyGenealogie.Console
             this.Persons = new Persons(PersonDBSource.AZURE_STORAGE);
 
             var jsonFiles = this._containerManager.GetFiles(personDBContainer, ".json");
+            jsonFiles.Remove(this.GetPersonJsonDBFileName());
 
             var bm = GetBlobManager();
 
