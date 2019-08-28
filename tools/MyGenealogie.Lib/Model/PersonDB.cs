@@ -118,6 +118,9 @@ namespace MyGenealogie.Console
             p.Properties.LastName = $"New {Environment.TickCount}";
             p.Properties.FirstName = p.Properties.LastName;
             p.Properties.Guid = Guid.NewGuid();
+            p.Properties.BirthDate = new PersonDate().SetToNow();
+            p.Properties.DeathDate = new PersonDate().SetToNow();
+            p.Properties.CreationDate = new PersonDate().SetToNow();
             p.Properties.CreationDate = new PersonDate().SetToNow();
             p.SaveAsJsonLocalFile(); // Save as JSON local file
             GetBlobManager().UploadJsonFileAsync(p.GetPropertiesJsonFile()).GetAwaiter().GetResult();
@@ -210,4 +213,5 @@ namespace MyGenealogie.Console
         }
     }
 }
+
 

@@ -14,6 +14,8 @@ import Alert from 'react-bootstrap/Alert';
 // https://github.com/JedWatson/react-select
 import Select from 'react-select';
 
+const PERSON_TO_DATE_NULL = { year: 0, month: 0, day: 0 };
+
 function isPersonDate(d) {
 
     return isObject(d) && d.year;
@@ -49,6 +51,8 @@ function formatYear(d) {
 function stringDateToPersonDate(d) {
 
     if (isObject(d)) return d; // If the field was never updated it is still an object
+    if (!d) return PERSON_TO_DATE_NULL;
+    
     var parts = d.split('-');
 
     return {
@@ -96,16 +100,19 @@ class PersonDBClient {
         }
         return response;
     }
+    __buildFetchBlock(method, data) {
+        return {
+            method,
+            headers: JSON_CONTENT_TYPE,
+            body: JSON.stringify(data)
+        };
+    }
     newPerson() {
 
         return new Promise((resolve, reject) => {
 
             this.trace(`new person`);
-            return fetch(this.__buildUrl('NewPerson'), { // << create block factory
-                method: 'POST',
-                headers: JSON_CONTENT_TYPE,
-                body: JSON.stringify('')
-            })
+            return fetch(this.__buildUrl('NewPerson'), this.__buildFetchBlock('POST', ''))
             .then(this.handleErrors)
             .then(response => {
                 response.text().then((personJson) => {
@@ -125,11 +132,7 @@ class PersonDBClient {
         return new Promise((resolve, reject) => {
             
             this.trace(`delete person ${this.getPersonFullName(person)}`);
-            return fetch(this.__buildUrl('DeletePerson'), {
-                method: 'DELETE',
-                headers: JSON_CONTENT_TYPE,
-                body: JSON.stringify(person.guid)
-            })
+            return fetch(this.__buildUrl('DeletePerson'), this.__buildFetchBlock('DELETE', person.guid))
             .then(this.handleErrors)
             .then(response => {
                 resolve(true);
@@ -145,11 +148,7 @@ class PersonDBClient {
         return new Promise((resolve, reject) => {
 
             this.trace(`update person ${this.getPersonFullName(person)}`);
-            return fetch(this.__buildUrl('UpdatePerson'), { // << create block factory
-                method: 'PUT',
-                headers: JSON_CONTENT_TYPE,
-                body: JSON.stringify(person)
-            })
+            return fetch(this.__buildUrl('UpdatePerson'), this.__buildFetchBlock('PUT', person))
             .then(this.handleErrors)
             .then(response => {
                 if (response.ok)
