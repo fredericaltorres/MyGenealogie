@@ -87,11 +87,35 @@ export class PersonDBClient {
     }
     __buildFetchBlock(method, data) {
 
+        if (method === 'GET')
+            return {
+                method,
+                headers: JSON_CONTENT_TYPE,
+            };
+
         return {
             method,
             headers: JSON_CONTENT_TYPE,
             body: JSON.stringify(data)
         };
+    }
+    loadPersons() {
+
+        return new Promise((resolve, reject) => {
+            debugger;
+            this.trace(`Load persons`);
+            return fetch(this.__buildUrl('GetPersons'), this.__buildFetchBlock('GET', ''))
+                .then(this.handleErrors)
+                .then(response => {
+                    response.json().then((persons) => {
+                        resolve(persons);
+                    });
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    reject(error);
+                });
+        });
     }
     newPerson() {
 

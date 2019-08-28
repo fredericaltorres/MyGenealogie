@@ -31,7 +31,7 @@ const APP_STATUS_READY = "Ready...";
 const APP_STATUS_BUSY = "Busy...";
 
 
-class GenealogieMainUI extends Component {
+class GenealogyMainUI extends Component {
 
     state = {
         persons: [],
@@ -48,7 +48,7 @@ class GenealogieMainUI extends Component {
     personHistory = []; // guid list of all persons viewed
 
     setAppStatus(status) {
-        
+
         this.updateState("applicationStatus", status);
     }
 
@@ -81,11 +81,11 @@ class GenealogieMainUI extends Component {
         }
         else {
             this.userError(`Cannot select person guid:${guid}`);
-        }        
+        }
     };
 
     updateSelectedPerson = () => {
-        
+
         const person = { ...this.state.selectedPerson };
         person.birthDate = stringDateToPersonDate(person.birthDate);
         person.deathDate = stringDateToPersonDate(person.deathDate);
@@ -126,7 +126,7 @@ class GenealogieMainUI extends Component {
     }
 
     selectPerson = (guid) => {
-        
+
         this.handleChange(guid);
     }
 
@@ -179,21 +179,30 @@ class GenealogieMainUI extends Component {
     }
 
     selectDefaultPerson() {
-        if (DEFAULT_PERSON_TO_SELECT) {
+
+        if (DEFAULT_PERSON_TO_SELECT)
             this.selectPerson(DEFAULT_PERSON_TO_SELECT);
-        }
     }
 
     reloadData = () => {
-
-        return fetch('api/MyGenealogie/GetPersons').then(response => response.json())
-            .then(data => {
-                // console.log(`reloadData data:${JSON.stringify(data)}`);
-                this.updateState('persons', data, () => {
-                    this.selectDefaultPerson();
-                    this.setAppStatus(APP_STATUS_READY);
-                });
+        // +++
+        this.setAppStatus(APP_STATUS_BUSY);
+        debugger;
+        __personDBClient.loadPersons().then((persons) => {
+            this.updateState('persons', persons, () => {
+                this.selectDefaultPerson();
+                this.setAppStatus(APP_STATUS_READY);
             });
+        });
+
+        //return fetch('api/MyGenealogie/GetPersons').then(response => response.json())
+        //    .then(data => {
+        //        // console.log(`reloadData data:${JSON.stringify(data)}`);
+        //        this.updateState('persons', data, () => {
+        //            this.selectDefaultPerson();
+        //            this.setAppStatus(APP_STATUS_READY);
+        //        });
+        //    });
     }
 
     onPersonUpdated = (person) => {
@@ -242,14 +251,14 @@ class GenealogieMainUI extends Component {
 
     updateState = (property, value, callBack = () => { }) => {
 
-        if(typeof(property)==='string')
+        if (typeof (property) === 'string')
             this.setState({ ...this.state, [property]: value }, callBack);
 
         if (typeof (property) === 'object') {
 
             let newState = { ...this.state };
             Object.key(property).forEach((key) => {
-                newState = { ...newState, [key]: property[key]};
+                newState = { ...newState, [key]: property[key] };
             });
             console.log(`new state:${JSON.stringify(newState)}`);
             this.setState(newState, callBack);
@@ -293,9 +302,9 @@ class GenealogieMainUI extends Component {
         if (this.isPersonHasSpouse(person)) {
             const spouse = this.getSpouseForPersonSelected(person);
             return (<span>
-                <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(this.getSpouseForPersonSelected(person).guid); }}> View </button> 
+                <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(this.getSpouseForPersonSelected(person).guid); }}> View </button>
                 &nbsp;{__personDBClient.getPersonFullName(spouse)}
-            </span> );
+            </span>);
         }
 
         return null;
@@ -306,7 +315,7 @@ class GenealogieMainUI extends Component {
         if (this.isPersonHasFather(person)) {
             const father = this.getFatherForPersonSelected(person);
             return (<span>
-                <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(this.getFatherForPersonSelected(person).guid); }}> View </button> 
+                <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(this.getFatherForPersonSelected(person).guid); }}> View </button>
                 &nbsp;{__personDBClient.getPersonFullName(father)}
             </span>);
         }
@@ -336,7 +345,7 @@ class GenealogieMainUI extends Component {
 
         const childrenHtml = this.getChildrenForPersonSelected(person).map((c) => {
             return (<li key={c.guid}>
-                <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(c.guid); }} > View </button>  
+                <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(c.guid); }} > View </button>
                 &nbsp;{__personDBClient.getPersonFullName(c)}
             </li>);
         });
@@ -355,13 +364,13 @@ class GenealogieMainUI extends Component {
     }
 
     onFieldChange = (e, fieldName, isDate) => {
-                
+
         const value = e.target.value;
         console.log(`${fieldName} = ${value}`);
 
         const selectedPerson = this.state.selectedPerson;
         selectedPerson[fieldName] = value;
-        const newState = { ...this.state, selectedPerson};
+        const newState = { ...this.state, selectedPerson };
         this.setState(newState);
     }
 
@@ -383,7 +392,7 @@ class GenealogieMainUI extends Component {
             </div>);
         }
         else {
-            
+
             return (<div className="form-group row">
                 <label htmlFor={fieldName} className="col-sm-2 col-form-label">{fieldName} : </label>
                 <div className="col-sm-10">
@@ -431,71 +440,71 @@ class GenealogieMainUI extends Component {
                 label: __personDBClient.getPersonFullName(personSelected)
             };
         }
-        
+
         return (
             <div>
-                <h2>MyGenealogie</h2>
-                
+                <h2>MyGenealogy</h2>
+
                 <Alert variant='primary'>
                     {this.state.applicationStatus}
                 </Alert>
 
                 <table>
                     <tbody>
-                <tr>
-                    <td><button type="button" className="btn btn-primary" onClick={() => { this.goBackToPreviousPerson(); }}> Back </button> &nbsp;</td>
-                    <td><button type="button" className="btn btn-primary" onClick={() => { this.copySelectedPersonToClipboard(); }}> Copy To Clipboard </button></td>
-                    <td>
-                    <button type="button" className="btn btn-primary" onClick={() => {
-                            this.setAppStatus(APP_STATUS_BUSY);
-                            this.updateSelectedPerson().then((person) => {
-                                this.onPersonUpdated(person);
-                                this.setAppStatus(APP_STATUS_READY);
-                            });
-                                }}> Update </button> 
-                    </td>
-                    <td>
-                        <Dropdown>
-                            <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                    Operations - {__personDBClient.getPersonFullName(this.state.clipBoardPerson)}
-                            </Dropdown.Toggle>
-
-                            <Dropdown.Menu>
-                                <Dropdown.Item onClick={() => { this.pasteSelectedPersonFromClipboardAs(PASTE_OPERATION_AS.Father); }} >Paste as Father </Dropdown.Item>
-                                <Dropdown.Item onClick={() => { this.pasteSelectedPersonFromClipboardAs(PASTE_OPERATION_AS.Mother); }} >Paste as Mother </Dropdown.Item>
-                                <Dropdown.Item onClick={() => { this.pasteSelectedPersonFromClipboardAs(PASTE_OPERATION_AS.Child); }} >Paste as child </Dropdown.Item>
-                                <Dropdown.Item onClick={() => { this.pasteSelectedPersonFromClipboardAs(PASTE_OPERATION_AS.Spouse); }} >Paste as Spouse </Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
-                        </td>
-                        <td>
-                            <ButtonGroup aria-label="Basic example">
-                                <Button variant="secondary" onClick={() => {
+                        <tr>
+                            <td><button type="button" className="btn btn-primary" onClick={() => { this.goBackToPreviousPerson(); }}> Back </button> &nbsp;</td>
+                            <td><button type="button" className="btn btn-primary" onClick={() => { this.copySelectedPersonToClipboard(); }}> Copy To Clipboard </button></td>
+                            <td>
+                                <button type="button" className="btn btn-primary" onClick={() => {
                                     this.setAppStatus(APP_STATUS_BUSY);
-                                    __personDBClient.newPerson().then((newPerson) => {
+                                    this.updateSelectedPerson().then((person) => {
+                                        this.onPersonUpdated(person);
+                                        this.setAppStatus(APP_STATUS_READY);
+                                    });
+                                }}> Update </button>
+                            </td>
+                            <td>
+                                <Dropdown>
+                                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                        Operations - {__personDBClient.getPersonFullName(this.state.clipBoardPerson)}
+                                    </Dropdown.Toggle>
+
+                                    <Dropdown.Menu>
+                                        <Dropdown.Item onClick={() => { this.pasteSelectedPersonFromClipboardAs(PASTE_OPERATION_AS.Father); }} >Paste as Father </Dropdown.Item>
+                                        <Dropdown.Item onClick={() => { this.pasteSelectedPersonFromClipboardAs(PASTE_OPERATION_AS.Mother); }} >Paste as Mother </Dropdown.Item>
+                                        <Dropdown.Item onClick={() => { this.pasteSelectedPersonFromClipboardAs(PASTE_OPERATION_AS.Child); }} >Paste as child </Dropdown.Item>
+                                        <Dropdown.Item onClick={() => { this.pasteSelectedPersonFromClipboardAs(PASTE_OPERATION_AS.Spouse); }} >Paste as Spouse </Dropdown.Item>
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                            </td>
+                            <td>
+                                <ButtonGroup aria-label="Basic example">
+                                    <Button variant="secondary" onClick={() => {
+                                        this.setAppStatus(APP_STATUS_BUSY);
+                                        __personDBClient.newPerson().then((newPerson) => {
 
                                             this.onPersonCreated(newPerson);
                                             this.setAppStatus(APP_STATUS_READY);
                                         });
-                                }}> New </Button>
-                                <Button variant="secondary" onClick={() => {
-                                    this.setAppStatus(APP_STATUS_BUSY);
-                                    const person = this.getPersonSelected();
-                                    if (window.confirm(`Delete ${__personDBClient.getPersonFullName(person)}`)) {
+                                    }}> New </Button>
+                                    <Button variant="secondary" onClick={() => {
+                                        this.setAppStatus(APP_STATUS_BUSY);
+                                        const person = this.getPersonSelected();
+                                        if (window.confirm(`Delete ${__personDBClient.getPersonFullName(person)}`)) {
 
-                                        __personDBClient.deletePerson(this.getPersonSelected()).then(() => {
+                                            __personDBClient.deletePerson(this.getPersonSelected()).then(() => {
 
-                                            this.onPersonDeleted(person);
-                                            this.selectDefaultPerson();
-                                            this.setAppStatus(APP_STATUS_READY);
-                                        });
-                                    }
-                                }}> Delete </Button>
-                                <Button variant="secondary">Clone</Button>
-                            </ButtonGroup>
-                        </td>
+                                                this.onPersonDeleted(person);
+                                                this.selectDefaultPerson();
+                                                this.setAppStatus(APP_STATUS_READY);
+                                            });
+                                        }
+                                    }}> Delete </Button>
+                                    <Button variant="secondary">Clone</Button>
+                                </ButtonGroup>
+                            </td>
                         </tr>
-                        </tbody>
+                    </tbody>
                 </table>
 
                 <Select
@@ -504,8 +513,8 @@ class GenealogieMainUI extends Component {
                     onChange={this.handleChange}
                     options={this.GetPersonsDataForCombo()}
                 />
-                <hr/>
-                {personSelected && this.getPersonHtml(personSelected)}              
+                <hr />
+                {personSelected && this.getPersonHtml(personSelected)}
                 {personSelected && this.getPersonImagesHtml(personSelected)}
 
                 {this.GetPersonsSelector()}
@@ -514,4 +523,4 @@ class GenealogieMainUI extends Component {
     }
 }
 
-export default connect()(GenealogieMainUI);
+export default connect()(GenealogyMainUI);

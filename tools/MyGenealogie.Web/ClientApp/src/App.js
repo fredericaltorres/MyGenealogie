@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import { Route } from 'react-router';
 import Layout from './components/Layout';
-import Home from './components/GenealogieMainUI';
+import Home from './components/GenealogyMainUI';
 import Counter from './components/Counter';
 import FetchData from './components/FetchData';
 
