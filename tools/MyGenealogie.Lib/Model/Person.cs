@@ -191,6 +191,25 @@ namespace MyGenealogie
             }
         }
 
+        private static string replaceDash(string s)
+        {
+            if (s == null)
+                return s;
+
+            return s.Replace("-", " ");
+        }
+
+        public string GetFullName()
+        {
+            var pp = this.Properties;
+
+            var maidenName = pp.MaidenName != null ? $" [{pp.MaidenName}]" : "";
+            var middleName = replaceDash(pp.MiddleName != null ? $"{pp.MiddleName}" : "");
+            var firstName = replaceDash(pp.FirstName);
+
+            return $"{pp.LastName}{maidenName}, {firstName}{middleName} - {pp.Guid}";
+        }
+
         public static void LoadNamesInfoFromFolderSyntaxWithBrakets(Person p)
         {
             var name = new DirectoryInfo(p._folder).Name;

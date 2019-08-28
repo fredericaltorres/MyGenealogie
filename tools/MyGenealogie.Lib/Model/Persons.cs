@@ -26,10 +26,22 @@ namespace MyGenealogie
         {
 
         }
-
         public Persons(PersonDBSource source)
         {
             Source = source;
+        }
+
+        public void Sort()
+        {
+            var sorted = this.OrderBy(p => p.GetFullName()).ToList();
+            this.Set(sorted);
+        }
+        
+        private void Set(List<Person> persons)
+        {
+            this.Clear();
+            foreach (var p in persons)
+                this.Add(p);
         }
         public Person Add(Person p)
         {

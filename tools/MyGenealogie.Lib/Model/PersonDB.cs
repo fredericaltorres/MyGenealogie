@@ -158,6 +158,7 @@ namespace MyGenealogie.Console
                 p.Properties = prop;
                 personDB.Persons.Add(p);
             }
+            personDB.Persons.Sort();
             return personDB;
         }
 
