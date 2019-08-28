@@ -34,8 +34,25 @@ namespace MyGenealogie.Web.Controllers
 
             person.Properties = personProperties;
             this.personDB.UpdatePersonJsonFileInAzure(person);
+            this.personDB.SaveJsonDBInAzure();
 
             return Ok();
+        }
+
+        [HttpDelete("[action]")]
+        public IActionResult DeletePerson([FromBody] string guid)
+        {
+            if (this.personDB.DeletePerson(Guid.Parse(guid)))
+                return Ok();
+            else
+                return new NotFoundObjectResult(guid); // TODO: Improve
+        }
+
+        [HttpPost("[action]")]
+        public IActionResult NewPerson()
+        {
+            var person = this.personDB.NewPerson();
+            return new OkObjectResult(person.Properties.Guid);
         }
     }
 }

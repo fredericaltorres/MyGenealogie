@@ -81,7 +81,11 @@ namespace MyGenealogie
         }
         public string GetPropertiesJsonFile()
         {
-            return GetPropertiesFile($"{this.Properties.Guid}.json");
+            if(this.Source == PersonDBSource.LOCAL_FILE_SYSTEM)
+                return GetPropertiesFile($"{this.Properties.Guid}.json");
+            else if (this.Source == PersonDBSource.AZURE_STORAGE)
+                return $"{this.Properties.Guid}.json";
+            throw new ArgumentException();
         }
 
         public bool RenamePersonFolderToSanitizedName()
@@ -244,7 +248,7 @@ namespace MyGenealogie
             return p;
         }
 
-        public void SaveAsJsonFile(string outputJsonFileName = null)
+        public void SaveAsJsonLocalFile(string outputJsonFileName = null)
         {
             if (outputJsonFileName == null)
                 outputJsonFileName = this.GetPropertiesJsonFile();

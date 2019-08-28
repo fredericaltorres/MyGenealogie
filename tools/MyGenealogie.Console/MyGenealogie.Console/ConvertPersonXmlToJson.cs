@@ -19,10 +19,10 @@ namespace MyGenealogie
             {
                 System.Console.WriteLine($"Processing {personFolder}");
                 var p = Person.LoadFromFolder(personFolder, true);
-                p.SaveAsJsonFile();
+                p.SaveAsJsonLocalFile();
                 p.CopyImagesWithGuidPrefix(dbPath2);
                 p.LoadImages(dbPath2,$"{p.Properties.Guid}.*.jpg");
-                p.SaveAsJsonFile(Path.Combine(dbPath2,  $"{p.Properties.Guid}.json"));
+                p.SaveAsJsonLocalFile(Path.Combine(dbPath2,  $"{p.Properties.Guid}.json"));
                                 
                 if (!p.RenamePersonFolderToSanitizedName())
                     renameCounterError += 1;

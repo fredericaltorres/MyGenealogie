@@ -37,8 +37,9 @@ namespace MyGenealogie.Console
             if(verifyAzurePersonDB)
             {
                 db.LoadFromAzureStorageDB();
-                // db.UpdatePersonDBJsonSummary();
-                //var newDb = PersonDB.LoadPersonDBSummaryFromAzureStorageDB(storageName, storageKey);
+                db.SaveJsonDBInAzure();
+                var newDb = PersonDB.LoadSaveJsonDB(storageName, storageKey);
+                var ok = db.Persons.Count == newDb.Persons.Count;
             }
 
             if(deleteAzureDatabase)

@@ -27,14 +27,13 @@ namespace MyGenealogie.Console
 
         public void UploadFromLocalFolder()
         {
-            var containerName = PersonDB.personDBContainer;
-            this.Trace($"Create container {containerName}");
-            this._containerManager.CreateContainer(containerName);
+            this.Trace($"Create container {PersonDB.personDBContainer}");
+            this._containerManager.CreateContainer(PersonDB.personDBContainer);
 
             foreach (var p in Persons)
             {
                 this.Trace($"Upload json metadata file {p.GetPropertiesJsonFile()}");
-                var bm = new BlobManager(this._storageName, this._storageKey, containerName);
+                var bm = GetBlobManager();
                 bm.UploadJsonFileAsync(p.GetPropertiesJsonFile(), overide: true).GetAwaiter().GetResult();
                 
                 foreach (var image in p.Properties.Images)
@@ -46,14 +45,31 @@ namespace MyGenealogie.Console
             }
         }
 
+        public bool DeletePerson(Guid guid)
+        {
+            var person = this.GetPersonByGuid(guid);
+            if (person == null)
+                return false;
+
+            // TODO: refactor in one function
+            var bm = GetBlobManager();
+            if (bm.FileExistAsync(person.GetPropertiesJsonFile()).GetAwaiter().GetResult())
+            {
+                bm.DeleteFileAsync(person.GetPropertiesJsonFile()).GetAwaiter().GetResult();
+            }
+            this.Persons.Remove(person);
+            this.SaveJsonDBInAzure();
+            return true;
+        }
+
         public void UpdatePersonJsonFileInAzure(Person p)
         {
             var containerName = PersonDB.personDBContainer;
             this.Trace($"Upload json metadata file {p.Properties.Guid} {p.Properties.LastName} {p.Properties.FirstName}");
-            var bm = new BlobManager(this._storageName, this._storageKey, containerName);
+            var bm = GetBlobManager();
             p._folder = Environment.GetEnvironmentVariable("TEMP");
             var tmpJsonFile = p.GetPropertiesJsonFile();
-            p.SaveAsJsonFile(tmpJsonFile);
+            p.SaveAsJsonLocalFile(tmpJsonFile);
             bm.UploadJsonFileAsync(tmpJsonFile, overide: true).GetAwaiter().GetResult();
         }
 
@@ -64,36 +80,62 @@ namespace MyGenealogie.Console
             return containers;
         }
 
-        //public void UpdatePersonDBJsonSummary()
-        //{
-        //    var tmpPersonDBJsonFile = Path.Combine(Environment.GetEnvironmentVariable("TEMP"), $"{personDBContainer}.json");
-        //    var json = System.JSON.JSonObject.Serialize(this.Persons.Select(p => p.Properties).ToList());
-        //    if (File.Exists(tmpPersonDBJsonFile))
-        //        File.Delete(tmpPersonDBJsonFile);
-        //    File.WriteAllText(tmpPersonDBJsonFile, json);
-            
-        //    this._containerManager.CreateContainer(personDBContainer);
+        private string GetPersonJsonDBFileName()
+        {
+            return $"{personDBContainer}.json";
+        }
 
-        //    var bm = new BlobManager(this._storageName, this._storageKey, personDBContainer);
-        //    bm.UploadJsonFileAsync(tmpPersonDBJsonFile, overide: true).GetAwaiter().GetResult();
-        //}
-        
-        //public static PersonDB LoadPersonDBSummaryFromAzureStorageDB(string storageName, string storageKey)
-        //{
-        //    var personDB = new PersonDB(null, storageName, storageKey);
-        //    personDB.Persons = new Persons(PersonDBSource.AZURE_STORAGE);
-        //    var bm = new BlobManager(storageName, storageKey, personDBContainer);
-        //    var propertiesJson = bm.GetTextAsync($"{personDBContainer}.json").GetAwaiter().GetResult();
-        //    var properties = System.JSON.JSonObject.Deserialize<List<PersonProperties>>(propertiesJson);
-        //    foreach(var prop in properties)
-        //    {
-        //        var p = new Person(PersonDBSource.AZURE_STORAGE, null);
-        //        p.Properties = prop;
-        //        personDB.Persons.Add(p);
-        //    }
-        //    return personDB;
-        //}
-        
+        private BlobManager GetBlobManager()
+        {
+            return new BlobManager(this._storageName, this._storageKey, PersonDB.personDBContainer);
+        }
+
+        public Person NewPerson()
+        {
+            var p = new Person(PersonDBSource.LOCAL_FILE_SYSTEM, Environment.GetEnvironmentVariable("TEMP"));
+            p.Properties.LastName = $"New {Environment.TickCount}";
+            p.Properties.FirstName = p.Properties.LastName;
+            p.Properties.Guid = Guid.NewGuid();
+            p.Properties.CreationDate = new PersonDate().SetToNow();
+            p.SaveAsJsonLocalFile();
+            GetBlobManager().UploadJsonFileAsync(p.GetPropertiesJsonFile()).GetAwaiter().GetResult();
+
+            this.Persons.Add(p);
+            this.SaveJsonDBInAzure();
+            p.Source = PersonDBSource.LOCAL_FILE_SYSTEM; // Force to delete on file system
+            File.Delete(p.GetPropertiesJsonFile());
+
+            return p;
+        }
+
+        public void SaveJsonDBInAzure()
+        {
+            var tmpPersonDBJsonFile = Path.Combine(Environment.GetEnvironmentVariable("TEMP"), $"{this.GetPersonJsonDBFileName()}");
+            var json = System.JSON.JSonObject.Serialize(this.Persons.Select(p => p.Properties).ToList());
+            if (File.Exists(tmpPersonDBJsonFile))
+                File.Delete(tmpPersonDBJsonFile);
+            File.WriteAllText(tmpPersonDBJsonFile, json);
+
+            var bm = GetBlobManager();
+            bm.UploadJsonFileAsync(tmpPersonDBJsonFile, overide: true).GetAwaiter().GetResult();
+        }
+
+        public static PersonDB LoadSaveJsonDB(string storageName, string storageKey)
+        {
+            var personDB = new PersonDB(null, storageName, storageKey);
+            personDB.Persons = new Persons(PersonDBSource.AZURE_STORAGE);
+            var bm = personDB.GetBlobManager();
+            var propertiesJson = bm.GetTextAsync($"{personDBContainer}.json").GetAwaiter().GetResult();
+            var properties = System.JSON.JSonObject.Deserialize<List<PersonProperties>>(propertiesJson);
+            foreach (var prop in properties)
+            {
+                var p = new Person(PersonDBSource.AZURE_STORAGE, null);
+                p.Properties = prop;
+                personDB.Persons.Add(p);
+            }
+            return personDB;
+        }
+
         private void Trace(string m)
         {
             System.Console.WriteLine(m);
@@ -105,7 +147,7 @@ namespace MyGenealogie.Console
 
             var jsonFiles = this._containerManager.GetFiles(personDBContainer, ".json");
 
-            var bm = new BlobManager(this._storageName, this._storageKey, personDBContainer, create: false);
+            var bm = GetBlobManager();
 
             foreach (var jsonFile in jsonFiles)
             {
@@ -145,3 +187,4 @@ namespace MyGenealogie.Console
         }
     }
 }
+

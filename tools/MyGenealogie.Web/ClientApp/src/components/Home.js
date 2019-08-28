@@ -6,6 +6,8 @@ import isObject from 'lodash/isObject';
 
 // https://react-bootstrap.github.io/components/dropdowns/
 import Dropdown from 'react-bootstrap/Dropdown';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Button from 'react-bootstrap/Button';
 
 // https://emotion.sh/docs/introduction
 // https://github.com/JedWatson/react-select
@@ -17,6 +19,7 @@ function isPersonDate(d) {
 }
 
 function emptyStringOnNull(v) {
+
     if (v === null || v === undefined)
         return '';
 
@@ -24,6 +27,7 @@ function emptyStringOnNull(v) {
 };
 
 function replaceDash(s) {
+
     if (!s)
         return s;
 
@@ -63,10 +67,66 @@ const PASTE_OPERATION_AS = {
     Spouse: 'Spouse',
 };
 
+const JSON_CONTENT_TYPE = { 'Content-Type': 'application/json' };
+class PersonDBClient {
+    trace(m) {
+        console.log(m);
+    }
+    __buildUrl(urlAction) {
+        return `api/MyGenealogie/${urlAction}`;
+    }
+    getPersonFullName(p) {
+
+        if (!p)
+            return null;
+
+        const maidenName = p.maidenName ? ` [${p.maidenName}]` : ``;
+        const middleName = replaceDash(p.middleName ? ` ${p.middleName}` : ``);
+        const firstName = replaceDash(p.firstName);
+
+        return `${p.lastName}${maidenName}, ${firstName}${middleName} - ${p.guid}`;
+    }
+    newPerson() {
+
+        this.trace(`new person`);
+        return fetch(this.__buildUrl('NewPerson'), {
+            method: 'POST',
+            headers: JSON_CONTENT_TYPE,
+            body: JSON.stringify('')
+        })
+        .then(response => {
+            console.log(`back end update Ok:${response.ok}`);
+            if (response.ok) {
+                response.text().then((guidString) => {
+                    const guid = JSON.parse(guidString);
+                    console.log(`New guid:${guid}`);
+                });
+            }
+        });
+    }
+    deletePerson(person) {
+        debugger;
+        this.trace(`delete person ${this.getPersonFullName(person)}`);
+        return fetch(this.__buildUrl('DeletePerson'), {
+            method: 'DELETE',
+            headers: JSON_CONTENT_TYPE,
+            body: JSON.stringify(person.guid)
+        })
+            .then(response => {
+                console.log(`back end delete Ok:${response.ok}`);
+                if (response.ok) {
+                    console.log(`Deleted`);
+                }
+            });
+    }
+}
+
+const __personDBClient = new PersonDBClient();
+
 class Home extends Component {
 
     state = {
-        persons: [],        
+        persons: [],
         selectedPerson: null,
         clipBoardPerson: null,
     };
@@ -95,7 +155,7 @@ class Home extends Component {
             guid = guid.value;
         }
 
-        var selectedPerson = { ...this.getPersonFromGuid(guid) }; // Make a physical copy
+        var selectedPerson = { ...this.getPersonFromGuid(guid) };
         if (selectedPerson) {
 
             console.log(`handleChange  ${JSON.stringify(selectedPerson)}`);
@@ -122,7 +182,7 @@ class Home extends Component {
 
         if (this.state.clipBoardPerson !== null) {
 
-            console.log(`Paste '${this.getPersonFullName(this.state.clipBoardPerson)}' as ${pasteAsEnum} into '${this.getPersonFullName(this.state.selectedPerson)}'`);
+            console.log(`Paste '${__personDBClient.getPersonFullName(this.state.clipBoardPerson)}' as ${pasteAsEnum} into '${__personDBClient.getPersonFullName(this.state.selectedPerson)}'`);
 
             switch (pasteAsEnum) {
 
@@ -137,7 +197,7 @@ class Home extends Component {
     copySelectedPersonToClipboard = () => {
 
         this.state.clipBoardPerson = { ...this.state.selectedPerson };
-        console.log(`Copied to clipboard person:${this.getPersonFullName(this.state.clipBoardPerson)}`);
+        console.log(`Copied to clipboard person:${__personDBClient.getPersonFullName(this.state.clipBoardPerson)}`);
         this.updateState("clipBoardPerson", this.state.clipBoardPerson);
     }
 
@@ -156,17 +216,6 @@ class Home extends Component {
         this.handleChange(guid);
     }
 
-    getPersonFullName(p) {
-
-        if (!p)
-            return null;
-
-        const maidenName = p.maidenName ? ` [${p.maidenName}]` : ``;
-        const middleName = replaceDash(p.middleName ? ` ${p.middleName}` : ``);
-        const firstName = replaceDash(p.firstName);
-
-        return `${p.lastName}${maidenName}, ${firstName}${middleName} - ${p.guid}`;
-    }
 
     getPersonFromGuid(guid) {
 
@@ -232,12 +281,12 @@ class Home extends Component {
 
     replacePersonInState = (person) => {
 
-        console.log(`Update in memory person:${this.getPersonFullName(person)}`);
+        console.log(`Update in memory person:${__personDBClient.getPersonFullName(person)}`);
         var persons = this.state.persons;
         const index = persons.findIndex((p) => { return p.guid === person.guid; });
         if (index === -1) {
 
-            this.userError(`Cannot find person in memory guid:${person.guid}, fullName:${this.getPersonFullName(person)} `);
+            this.userError(`Cannot find person in memory guid:${person.guid}, fullName:${__personDBClient.getPersonFullName(person)} `);
 
             return false;
         }
@@ -252,7 +301,7 @@ class Home extends Component {
 
     updatePersonApi = (person) => {
 
-        console.log(`Call to back end to update person:${this.getPersonFullName(person)}`);
+        console.log(`Call to back end to update person:${__personDBClient.getPersonFullName(person)}`);
         
         return fetch('api/MyGenealogie/UpdatePerson', {
             method: 'PUT',
@@ -263,7 +312,7 @@ class Home extends Component {
         })
         .then(response => {
             console.log(response);
-            console.log(`back end update Ok:${response.ok} person:${this.getPersonFullName(person)}`);
+            console.log(`back end update Ok:${response.ok} person:${__personDBClient.getPersonFullName(person)}`);
             this.replacePersonInState(person);
         });
     }
@@ -288,7 +337,7 @@ class Home extends Component {
 
         var r = this.state.persons.map((p) => {
             return (<li key={p.guid}>
-                {this.getPersonFullName(p)}
+                {__personDBClient.getPersonFullName(p)}
             </li>);
         });
 
@@ -300,7 +349,7 @@ class Home extends Component {
         var r = this.state.persons.map((p) => {
             return {
                 value: p.guid,
-                label: this.getPersonFullName(p)
+                label: __personDBClient.getPersonFullName(p)
             };
         });
 
@@ -309,6 +358,8 @@ class Home extends Component {
 
     getPersonImagesHtml(person) {
 
+        if (!person.images)
+            return [];
         return person.images.map((image) => {
             return <img key={image.url} src={image.url} width={DEFAULT_IMAGE_WIDTH} />;
         });
@@ -320,7 +371,7 @@ class Home extends Component {
             const spouse = this.getSpouseForPersonSelected(person);
             return (<span>
                 <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(this.getSpouseForPersonSelected(person).guid); }}> View </button> 
-                &nbsp;{this.getPersonFullName(spouse)}
+                &nbsp;{__personDBClient.getPersonFullName(spouse)}
             </span> );
         }
 
@@ -333,7 +384,7 @@ class Home extends Component {
             const father = this.getFatherForPersonSelected(person);
             return (<span>
                 <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(this.getFatherForPersonSelected(person).guid); }}> View </button> 
-                &nbsp;{this.getPersonFullName(father)}
+                &nbsp;{__personDBClient.getPersonFullName(father)}
             </span>);
         }
 
@@ -346,7 +397,7 @@ class Home extends Component {
             const mother = this.getMotherForPersonSelected(person);
             return (<span>
                 <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(this.getMotherForPersonSelected(person).guid); }}> View </button>
-                &nbsp;{this.getPersonFullName(mother)}
+                &nbsp;{__personDBClient.getPersonFullName(mother)}
             </span>);
         }
 
@@ -363,7 +414,7 @@ class Home extends Component {
         const childrenHtml = this.getChildrenForPersonSelected(person).map((c) => {
             return (<li key={c.guid}>
                 <button type="button" className="btn btn-primary" onClick={() => { this.selectPerson(c.guid); }} > View </button>  
-                &nbsp;{this.getPersonFullName(c)}
+                &nbsp;{__personDBClient.getPersonFullName(c)}
             </li>);
         });
 
@@ -454,7 +505,7 @@ class Home extends Component {
 
             selectionForComboBox = {
                 value: personSelected.guid,
-                label: this.getPersonFullName(personSelected)
+                label: __personDBClient.getPersonFullName(personSelected)
             };
         }
         
@@ -469,7 +520,7 @@ class Home extends Component {
                     <td>
                         <Dropdown>
                             <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                Operations - {this.getPersonFullName(this.state.clipBoardPerson)}
+                                    Operations - {__personDBClient.getPersonFullName(this.state.clipBoardPerson)}
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
@@ -479,7 +530,14 @@ class Home extends Component {
                                 <Dropdown.Item onClick={() => { this.pasteSelectedPersonFromClipboardAs(PASTE_OPERATION_AS.Spouse); }} >Paste as Spouse </Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
-                    </td>
+                        </td>
+                        <td>
+                            <ButtonGroup aria-label="Basic example">
+                                <Button variant="secondary" onClick={() => { __personDBClient.newPerson(); }}>New</Button>
+                                <Button variant="secondary" onClick={() => { __personDBClient.deletePerson(this.getPersonSelected()); }}>Delete</Button>
+                                <Button variant="secondary">Clone</Button>
+                            </ButtonGroup>
+                        </td>
                 </tr>
                 </table>
 
