@@ -8,6 +8,7 @@ import isObject from 'lodash/isObject';
 import Dropdown from 'react-bootstrap/Dropdown';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 
 // https://emotion.sh/docs/introduction
 // https://github.com/JedWatson/react-select
@@ -59,6 +60,9 @@ function stringDateToPersonDate(d) {
 
 const DEFAULT_IMAGE_WIDTH = 150;
 const DEFAULT_PERSON_TO_SELECT = "eb6db547-abee-42ec-89c3-da273f8e30f3";
+
+const APP_STATUS_READY = "Ready...";
+const APP_STATUS_BUSY = "Busy...";
 
 const PASTE_OPERATION_AS = {
     Mother: 'Mother',
@@ -188,6 +192,7 @@ class Home extends Component {
         persons: [],
         selectedPerson: null,
         clipBoardPerson: null,
+        applicationStatus: "Loading...",
     };
 
     componentDidMount() {
@@ -196,6 +201,11 @@ class Home extends Component {
     }
 
     personHistory = []; // guid list of all persons viewed
+
+    setAppStatus(status) {
+        
+        this.updateState("applicationStatus", status);
+    }
 
     userError(errorMessage) {
 
@@ -336,6 +346,7 @@ class Home extends Component {
                 // console.log(`reloadData data:${JSON.stringify(data)}`);
                 this.updateState('persons', data, () => {
                     this.selectDefaultPerson();
+                    this.setAppStatus(APP_STATUS_READY);
                 });
             });
     }
@@ -559,12 +570,7 @@ class Home extends Component {
             {this.hasPersonChildren(person) &&
                 this.getBlockRow("Children", this.getPersonChildrenSummaryHtml(person))}
 
-            <button type="button" className="btn btn-primary" onClick={
-                () => {
-                    this.updateSelectedPerson().then((person) => {
-                        this.onPersonUpdated(person);
-                    });
-                }}> Update </button> 
+
         </form>);
     }
 
@@ -584,11 +590,24 @@ class Home extends Component {
         return (
             <div>
                 <h2>MyGenealogie</h2>
+                
+                <Alert variant='primary'>
+                    {this.state.applicationStatus}
+                </Alert>
 
                 <table>
                 <tr>
                     <td><button type="button" className="btn btn-primary" onClick={() => { this.goBackToPreviousPerson(); }}> Back </button> &nbsp;</td>
                     <td><button type="button" className="btn btn-primary" onClick={() => { this.copySelectedPersonToClipboard(); }}> Copy To Clipboard </button></td>
+                    <td>
+                    <button type="button" className="btn btn-primary" onClick={() => {
+                            this.setAppStatus(APP_STATUS_BUSY);
+                            this.updateSelectedPerson().then((person) => {
+                                this.onPersonUpdated(person);
+                                this.setAppStatus(APP_STATUS_READY);
+                            });
+                                }}> Update </button> 
+                    </td>
                     <td>
                         <Dropdown>
                             <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -606,19 +625,23 @@ class Home extends Component {
                         <td>
                             <ButtonGroup aria-label="Basic example">
                                 <Button variant="secondary" onClick={() => {
-                                    __personDBClient.newPerson()
-                                        .then((newPerson) => {
+                                    this.setAppStatus(APP_STATUS_BUSY);
+                                    __personDBClient.newPerson().then((newPerson) => {
+
                                             this.onPersonCreated(newPerson);
+                                            this.setAppStatus(APP_STATUS_READY);
                                         });
                                 }}> New </Button>
                                 <Button variant="secondary" onClick={() => {
-
+                                    this.setAppStatus(APP_STATUS_BUSY);
                                     const person = this.getPersonSelected();
                                     if (window.confirm(`Delete ${__personDBClient.getPersonFullName(person)}`)) {
 
                                         __personDBClient.deletePerson(this.getPersonSelected()).then(() => {
+
                                             this.onPersonDeleted(person);
                                             this.selectDefaultPerson();
+                                            this.setAppStatus(APP_STATUS_READY);
                                         });
                                     }
                                 }}> Delete </Button>

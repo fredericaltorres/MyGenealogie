@@ -51,14 +51,18 @@ namespace MyGenealogie.Console
             if (person == null)
                 return false;
 
+            var source = person.Source;
+            var folder = person._folder;
+            person.Source = PersonDBSource.LOCAL_FILE_SYSTEM;
+            person._folder = Environment.GetEnvironmentVariable("TEMP");
             person.Properties = personProperties;
-
             person.SaveAsJsonLocalFile(); // Save as JSON local file
-            GetBlobManager().UploadJsonFileAsync(person.GetPropertiesJsonFile()).GetAwaiter().GetResult();
-            
-            this.SaveJsonDBInAzure();
-            person.Source = PersonDBSource.LOCAL_FILE_SYSTEM; // Force to delete on file system
+            GetBlobManager().UploadJsonFileAsync(person.GetPropertiesJsonFile(), overide: true).GetAwaiter().GetResult();
             File.Delete(person.GetPropertiesJsonFile());
+
+            person.Source = source;
+            person._folder = folder;
+            this.SaveJsonDBInAzure();
 
             return true;
         }
