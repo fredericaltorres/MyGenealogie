@@ -1,0 +1,24 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "carriere",
+  "MaidenName": null,
+  "FirstName": "paul",
+  "MiddleName": null,
+  "Guid": "3d7a22e0-26fc-4312-95e8-395bbb915b43",
+  "FatherGuid": null,
+  "MotherGuid": "8a15a004-8a5e-416a-bd66-1fc5761ead11",
+  "SpouseGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": null,
+  "BirthDate": null,
+  "Images": []
+}

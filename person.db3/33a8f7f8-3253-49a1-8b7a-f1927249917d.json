@@ -1,0 +1,24 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "eggusier",
+  "MaidenName": null,
+  "FirstName": "andre",
+  "MiddleName": null,
+  "Guid": "33a8f7f8-3253-49a1-8b7a-f1927249917d",
+  "FatherGuid": null,
+  "MotherGuid": null,
+  "SpouseGuid": null,
+  "CreationDate": {
+    "Year": 2005,
+    "Month": 1,
+    "Day": 21
+  },
+  "DeathDate": null,
+  "BirthDate": null,
+  "Images": []
+}

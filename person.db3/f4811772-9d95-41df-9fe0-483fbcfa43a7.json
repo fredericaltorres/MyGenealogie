@@ -1,0 +1,24 @@
+{
+  "Sexe": null,
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "New 28504843",
+  "MaidenName": null,
+  "FirstName": "New 28504843",
+  "MiddleName": null,
+  "Guid": "f4811772-9d95-41df-9fe0-483fbcfa43a7",
+  "FatherGuid": null,
+  "MotherGuid": null,
+  "SpouseGuid": null,
+  "CreationDate": {
+    "Year": 2019,
+    "Month": 8,
+    "Day": 28
+  },
+  "DeathDate": null,
+  "BirthDate": null,
+  "Images": null
+}

@@ -1,0 +1,45 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": "Salon de provence",
+  "DeathCountry": null,
+  "Comment": "Filateur de soie a Nyons",
+  "LastName": "vergier",
+  "MaidenName": null,
+  "FirstName": "cyprien",
+  "MiddleName": null,
+  "Guid": "609164d1-2e76-470d-bb3b-0364de8a2ff1",
+  "FatherGuid": null,
+  "MotherGuid": null,
+  "SpouseGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": {
+    "Year": 1881,
+    "Month": 0,
+    "Day": 0
+  },
+  "BirthDate": {
+    "Year": 1809,
+    "Month": 0,
+    "Day": 0
+  },
+  "Images": [
+    {
+      "ImageName": "609164d1-2e76-470d-bb3b-0364de8a2ff1.Vergier Cyprien",
+      "FileName": "609164d1-2e76-470d-bb3b-0364de8a2ff1.Vergier Cyprien.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\609164d1-2e76-470d-bb3b-0364de8a2ff1.Vergier Cyprien.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/609164d1-2e76-470d-bb3b-0364de8a2ff1.Vergier Cyprien.jpg"
+    },
+    {
+      "ImageName": "609164d1-2e76-470d-bb3b-0364de8a2ff1.VERGIER, Cyprien",
+      "FileName": "609164d1-2e76-470d-bb3b-0364de8a2ff1.VERGIER, Cyprien.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\609164d1-2e76-470d-bb3b-0364de8a2ff1.VERGIER, Cyprien.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/609164d1-2e76-470d-bb3b-0364de8a2ff1.VERGIER, Cyprien.jpg"
+    }
+  ]
+}

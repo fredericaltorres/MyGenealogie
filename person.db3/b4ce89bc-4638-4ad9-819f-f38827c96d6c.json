@@ -1,0 +1,31 @@
+{
+  "Sexe": "F",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "torres",
+  "MaidenName": "cortez",
+  "FirstName": "rose",
+  "MiddleName": null,
+  "Guid": "b4ce89bc-4638-4ad9-819f-f38827c96d6c",
+  "FatherGuid": "e7f2576b-24c4-45e5-b624-488f8b9d89d3",
+  "MotherGuid": "8fded4e8-b462-43af-8417-761ae040dab3",
+  "SpouseGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": null,
+  "BirthDate": null,
+  "Images": [
+    {
+      "ImageName": "b4ce89bc-4638-4ad9-819f-f38827c96d6c.CORTEZ [TORRES], Rose",
+      "FileName": "b4ce89bc-4638-4ad9-819f-f38827c96d6c.CORTEZ [TORRES], Rose.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\b4ce89bc-4638-4ad9-819f-f38827c96d6c.CORTEZ [TORRES], Rose.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/b4ce89bc-4638-4ad9-819f-f38827c96d6c.CORTEZ [TORRES], Rose.jpg"
+    }
+  ]
+}

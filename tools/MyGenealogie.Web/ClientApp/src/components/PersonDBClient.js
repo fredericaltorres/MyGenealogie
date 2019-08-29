@@ -1,4 +1,5 @@
 import isObject from 'lodash/isObject';
+import isUndefined from 'lodash/isUndefined';
 
 const PERSON_TO_DATE_NULL = { year: 0, month: 0, day: 0 };
 
@@ -11,7 +12,7 @@ export const PASTE_OPERATION_AS = {
 
 export function isPersonDate(d) {
 
-    return isObject(d) && d.year;
+    return isObject(d) && !isUndefined(d.year);
 }
 
 export function emptyStringOnNull(v) {
@@ -49,9 +50,9 @@ export function stringDateToPersonDate(d) {
     var parts = d.split('-');
 
     return {
-        year: parts[0] === undefined ? 0 : parseInt(parts[0]),
-        month: parts[1] === undefined ? 0 : parseInt(parts[1]),
-        day: parts[2] === undefined ? 0 : parseInt(parts[2])
+        year:  (parts[0] === undefined || parts[0] === '') ? 0 : parseInt(parts[0]),
+        month: (parts[1] === undefined || parts[1] === '')  ? 0 : parseInt(parts[1]),
+        day:   (parts[2] === undefined || parts[20] === '')  ? 0 : parseInt(parts[2])
     };
 }
 

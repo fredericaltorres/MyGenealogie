@@ -1,0 +1,24 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "mestorino",
+  "MaidenName": null,
+  "FirstName": "arlette",
+  "MiddleName": null,
+  "Guid": "062389d8-50a6-4bdd-953d-0fd3efe4d7a8",
+  "FatherGuid": null,
+  "MotherGuid": null,
+  "SpouseGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": null,
+  "BirthDate": null,
+  "Images": []
+}

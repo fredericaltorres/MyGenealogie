@@ -1,0 +1,31 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "beaudun",
+  "MaidenName": null,
+  "FirstName": "pierre",
+  "MiddleName": null,
+  "Guid": "bd188b8b-390a-408c-a42c-039ae86848aa",
+  "FatherGuid": null,
+  "MotherGuid": null,
+  "SpouseGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 3,
+    "Day": 31
+  },
+  "DeathDate": null,
+  "BirthDate": null,
+  "Images": [
+    {
+      "ImageName": "bd188b8b-390a-408c-a42c-039ae86848aa.BEAUDUN, Pierre",
+      "FileName": "bd188b8b-390a-408c-a42c-039ae86848aa.BEAUDUN, Pierre.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\bd188b8b-390a-408c-a42c-039ae86848aa.BEAUDUN, Pierre.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/bd188b8b-390a-408c-a42c-039ae86848aa.BEAUDUN, Pierre.jpg"
+    }
+  ]
+}

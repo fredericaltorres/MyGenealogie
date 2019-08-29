@@ -30,7 +30,8 @@ import {
 
 const __personDBClient = new PersonDBClient();
 const DEFAULT_IMAGE_WIDTH = 150;
-const DEFAULT_PERSON_TO_SELECT = "eb6db547-abee-42ec-89c3-da273f8e30f3";
+//const DEFAULT_PERSON_TO_SELECT = "eb6db547-abee-42ec-89c3-da273f8e30f3"; // leon
+const DEFAULT_PERSON_TO_SELECT = "a3487e7a-2fb5-488c-b7ce-1a6395ed2453"; // frederic
 const APP_STATUS_READY = "Ready...";
 const APP_STATUS_BUSY = "Busy...";
 
@@ -110,17 +111,23 @@ class GenealogyMainUI extends Component {
         if (this.state.clipBoardPerson !== null) {
 
             console.log(`Paste '${__personDBClient.getPersonFullName(this.state.clipBoardPerson)}' as ${pasteAsEnum} into '${__personDBClient.getPersonFullName(this.state.selectedPerson)}'`);
-            debugger;
+            
+            const p = this.getPersonSelected();
             switch (pasteAsEnum) {
 
-                case PASTE_OPERATION_AS.Father: break;
-                case PASTE_OPERATION_AS.Mother: break;
-                case PASTE_OPERATION_AS.Child: break;
+                case PASTE_OPERATION_AS.Father:
+                    p.fatherGuid = this.state.clipBoardPerson.guid;
+                    this.onUpdatePersonClick();
+                    break;
+                case PASTE_OPERATION_AS.Mother: 
+                    p.motherGuid = this.state.clipBoardPerson.guid;
+                    this.onUpdatePersonClick();
+                    break;                
                 case PASTE_OPERATION_AS.Spouse:
-                    const p = this.getPersonSelected();
                     p.spouseGuid = this.state.clipBoardPerson.guid;
                     this.onUpdatePersonClick();
                     break;
+                case PASTE_OPERATION_AS.Child: break;
             }
         }
     }
@@ -391,7 +398,15 @@ class GenealogyMainUI extends Component {
         console.log(`${fieldName} = ${value}`);
 
         const selectedPerson = this.state.selectedPerson;
-        selectedPerson[fieldName] = value;
+
+        if (isDate) {
+            selectedPerson[fieldName] = stringDateToPersonDate(value);
+        }
+        else {
+            selectedPerson[fieldName] = value;
+        }
+        
+
         const newState = { ...this.state, selectedPerson };
         this.setState(newState);
     }
@@ -399,8 +414,7 @@ class GenealogyMainUI extends Component {
     getFieldRow(fieldName, fieldValue, isMultiLine = false, isDate) {
 
         if (isPersonDate(fieldValue)) {
-            debugger;
-            //if (fieldValue.year === 0)                
+            
             fieldValue = personDateToString(fieldValue);
         }
 
@@ -438,8 +452,15 @@ class GenealogyMainUI extends Component {
             {this.getFieldRow("maidenName", person.maidenName)}
             {this.getFieldRow("firstName", person.firstName)}
             {this.getFieldRow("middleName", replaceDash(person.middleName))}
+
             {this.getFieldRow("birthDate", person.birthDate, false, true)}
+            {this.getFieldRow("birthCity", person.birthCity)}
+            {this.getFieldRow("birthCountry", person.birthCountry)}
+
             {this.getFieldRow("deathDate", person.deathDate, false, true)}
+            {this.getFieldRow("deathCity", person.deathCity)}
+            {this.getFieldRow("deathCountry", person.deathCountry)}
+
             {this.getFieldRow("comment", person.comment, true)}
 
             {this.isPersonHasSpouse(person) &&
@@ -600,3 +621,4 @@ class GenealogyMainUI extends Component {
 }
 
 export default connect()(GenealogyMainUI);
+

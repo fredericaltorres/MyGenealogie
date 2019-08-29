@@ -1,0 +1,32 @@
+{
+  "Sexe": "M",
+  "BirthCity": "Melilla",
+  "BirthCountry": "Maroc ou Espagne",
+  "DeathCity": "Aix En Provence",
+  "DeathCountry": "France",
+  "Comment": null,
+  "LastName": "torres",
+  "MaidenName": null,
+  "FirstName": "manuel-ii",
+  "MiddleName": null,
+  "Guid": "12095c1d-ad9c-4963-bdac-7b4eeffd2dc0",
+  "FatherGuid": "56d68061-8b25-4762-b809-32198ceede6c",
+  "MotherGuid": "b4ce89bc-4638-4ad9-819f-f38827c96d6c",
+  "SpouseGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": {
+    "Year": 2005,
+    "Month": 0,
+    "Day": 0
+  },
+  "BirthDate": {
+    "Year": 1925,
+    "Month": 5,
+    "Day": 10
+  },
+  "Images": []
+}

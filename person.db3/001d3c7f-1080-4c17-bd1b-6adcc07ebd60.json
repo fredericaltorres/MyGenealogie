@@ -1,0 +1,32 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "roche",
+  "MaidenName": null,
+  "FirstName": "albert",
+  "MiddleName": null,
+  "Guid": "001d3c7f-1080-4c17-bd1b-6adcc07ebd60",
+  "FatherGuid": null,
+  "MotherGuid": null,
+  "SpouseGuid": "92f9cf61-7a9d-42b7-80bb-46d3eba1ce2a",
+  "CreationDate": {
+    "Year": 2005,
+    "Month": 1,
+    "Day": 21
+  },
+  "DeathDate": {
+    "Year": 0,
+    "Month": 0,
+    "Day": 0
+  },
+  "BirthDate": {
+    "Year": 0,
+    "Month": 0,
+    "Day": 0
+  },
+  "Images": []
+}

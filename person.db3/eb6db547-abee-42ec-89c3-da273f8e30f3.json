@@ -1,0 +1,87 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": "Salon de provence",
+  "DeathCountry": null,
+  "Comment": "\r\n- Sorti de l'ecole Polytechnique \"12eme dans la botte\" sur 250 ingenieur des ponts et chaussees\r\n- Professeur a l'ecole nationale des ponts et chaussees\r\n- Directeur a la SNFC\r\n- Directeur general des Chemins de fer du Maroc\r\n- President directeur general du Tanger - Fez\r\n- President directeur general de la Compagnie des Transports Marocains\r\n  ",
+  "LastName": "semeac",
+  "MaidenName": "",
+  "FirstName": "leon",
+  "MiddleName": null,
+  "Guid": "eb6db547-abee-42ec-89c3-da273f8e30f3",
+  "FatherGuid": "4d87103b-10c0-4193-a2e7-42a4e0d9ad15",
+  "MotherGuid": "a3570044-820b-49cf-a974-cdb077a4d19a",
+  "SpouseGuid": "96026fa3-866c-4465-876f-0c76b153c616",
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": {
+    "Year": 1988,
+    "Month": 0,
+    "Day": 0
+  },
+  "BirthDate": {
+    "Year": 1896,
+    "Month": 0,
+    "Day": 0
+  },
+  "Images": [
+    {
+      "ImageName": "eb6db547-abee-42ec-89c3-da273f8e30f3.Semac Leon - date~1897",
+      "FileName": "eb6db547-abee-42ec-89c3-da273f8e30f3.Semac Leon - date~1897.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\eb6db547-abee-42ec-89c3-da273f8e30f3.Semac Leon - date~1897.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/eb6db547-abee-42ec-89c3-da273f8e30f3.Semac Leon - date~1897.jpg"
+    },
+    {
+      "ImageName": "eb6db547-abee-42ec-89c3-da273f8e30f3.Semac Leon - date~1915",
+      "FileName": "eb6db547-abee-42ec-89c3-da273f8e30f3.Semac Leon - date~1915.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\eb6db547-abee-42ec-89c3-da273f8e30f3.Semac Leon - date~1915.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/eb6db547-abee-42ec-89c3-da273f8e30f3.Semac Leon - date~1915.jpg"
+    },
+    {
+      "ImageName": "eb6db547-abee-42ec-89c3-da273f8e30f3.Semac Leon - date~1917",
+      "FileName": "eb6db547-abee-42ec-89c3-da273f8e30f3.Semac Leon - date~1917.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\eb6db547-abee-42ec-89c3-da273f8e30f3.Semac Leon - date~1917.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/eb6db547-abee-42ec-89c3-da273f8e30f3.Semac Leon - date~1917.jpg"
+    },
+    {
+      "ImageName": "eb6db547-abee-42ec-89c3-da273f8e30f3.Semac Leon - date~1964",
+      "FileName": "eb6db547-abee-42ec-89c3-da273f8e30f3.Semac Leon - date~1964.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\eb6db547-abee-42ec-89c3-da273f8e30f3.Semac Leon - date~1964.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/eb6db547-abee-42ec-89c3-da273f8e30f3.Semac Leon - date~1964.jpg"
+    },
+    {
+      "ImageName": "eb6db547-abee-42ec-89c3-da273f8e30f3.Semac Leon 2 - date~1897",
+      "FileName": "eb6db547-abee-42ec-89c3-da273f8e30f3.Semac Leon 2 - date~1897.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\eb6db547-abee-42ec-89c3-da273f8e30f3.Semac Leon 2 - date~1897.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/eb6db547-abee-42ec-89c3-da273f8e30f3.Semac Leon 2 - date~1897.jpg"
+    },
+    {
+      "ImageName": "eb6db547-abee-42ec-89c3-da273f8e30f3.Semac Leon 2 - date~1915",
+      "FileName": "eb6db547-abee-42ec-89c3-da273f8e30f3.Semac Leon 2 - date~1915.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\eb6db547-abee-42ec-89c3-da273f8e30f3.Semac Leon 2 - date~1915.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/eb6db547-abee-42ec-89c3-da273f8e30f3.Semac Leon 2 - date~1915.jpg"
+    },
+    {
+      "ImageName": "eb6db547-abee-42ec-89c3-da273f8e30f3.Semeac Leon, Date-1906",
+      "FileName": "eb6db547-abee-42ec-89c3-da273f8e30f3.Semeac Leon, Date-1906.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\eb6db547-abee-42ec-89c3-da273f8e30f3.Semeac Leon, Date-1906.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/eb6db547-abee-42ec-89c3-da273f8e30f3.Semeac Leon, Date-1906.jpg"
+    },
+    {
+      "ImageName": "eb6db547-abee-42ec-89c3-da273f8e30f3.Semeac leon, date~1897, comment-avec la nourrice",
+      "FileName": "eb6db547-abee-42ec-89c3-da273f8e30f3.Semeac leon, date~1897, comment-avec la nourrice.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\eb6db547-abee-42ec-89c3-da273f8e30f3.Semeac leon, date~1897, comment-avec la nourrice.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/eb6db547-abee-42ec-89c3-da273f8e30f3.Semeac leon, date~1897, comment-avec la nourrice.jpg"
+    },
+    {
+      "ImageName": "eb6db547-abee-42ec-89c3-da273f8e30f3.Semeac leon, date~1897",
+      "FileName": "eb6db547-abee-42ec-89c3-da273f8e30f3.Semeac leon, date~1897.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\eb6db547-abee-42ec-89c3-da273f8e30f3.Semeac leon, date~1897.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/eb6db547-abee-42ec-89c3-da273f8e30f3.Semeac leon, date~1897.jpg"
+    }
+  ]
+}

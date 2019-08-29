@@ -167,6 +167,16 @@ namespace MyGenealogie.Console
             System.Console.WriteLine(m);
         }
 
+        public void SaveToLocalFolder(string dbPath)
+        {
+            foreach(var p in this.Persons)
+            {
+                p.Source = PersonDBSource.LOCAL_FILE_SYSTEM;
+                p._folder = dbPath;
+                p.SaveAsJsonLocalFile(p.GetPropertiesJsonFile());
+            }
+        }
+
         public void LoadFromAzureStorageDB()
         {
             this.Persons = new Persons(PersonDBSource.AZURE_STORAGE);

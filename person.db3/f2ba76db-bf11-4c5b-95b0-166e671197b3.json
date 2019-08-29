@@ -1,0 +1,31 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "constant",
+  "MaidenName": null,
+  "FirstName": "eugene-ii",
+  "MiddleName": null,
+  "Guid": "f2ba76db-bf11-4c5b-95b0-166e671197b3",
+  "FatherGuid": null,
+  "MotherGuid": null,
+  "SpouseGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": null,
+  "BirthDate": null,
+  "Images": [
+    {
+      "ImageName": "f2ba76db-bf11-4c5b-95b0-166e671197b3.CONSTANT, Eugene II",
+      "FileName": "f2ba76db-bf11-4c5b-95b0-166e671197b3.CONSTANT, Eugene II.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\f2ba76db-bf11-4c5b-95b0-166e671197b3.CONSTANT, Eugene II.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/f2ba76db-bf11-4c5b-95b0-166e671197b3.CONSTANT, Eugene II.jpg"
+    }
+  ]
+}

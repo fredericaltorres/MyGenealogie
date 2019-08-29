@@ -13,20 +13,28 @@ namespace MyGenealogie.Console
         {
             var dbPath = @"C:\DVT\MyGenealogie\person.db";
             var db2Path = @"C:\DVT\MyGenealogie\person.db2";
+            var db3Path = @"C:\DVT\MyGenealogie\person.db3";
             var storageKey = File.ReadAllText(@".\storage.credentials");
             var storageName = "mygenealogie";
 
             var veryFirstConvertion = false;
             var reUploadAzureDatabase = false;
-            var verifyAzurePersonDB = true;
+            var verifyAzurePersonDB = false;
             var deleteAzureDatabase = false;
+            var downloadAzurePersonDB = true;
+
+            var db = new PersonDB(db2Path, storageName, storageKey);
+
+            if (downloadAzurePersonDB) // Download all json files from Azure to local disk
+            {
+                db.LoadFromAzureStorageDB();
+                db.SaveToLocalFolder(db3Path);
+            }
 
             if (veryFirstConvertion)
             {
                 new ConvertPersonXmlToJson().Run(dbPath, db2Path);
             }
-
-            var db = new PersonDB(db2Path, storageName, storageKey);
 
             if (reUploadAzureDatabase)
             {

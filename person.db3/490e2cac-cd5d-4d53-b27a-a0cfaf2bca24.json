@@ -1,0 +1,24 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "constant",
+  "MaidenName": null,
+  "FirstName": "jean-francois",
+  "MiddleName": null,
+  "Guid": "490e2cac-cd5d-4d53-b27a-a0cfaf2bca24",
+  "FatherGuid": null,
+  "MotherGuid": null,
+  "SpouseGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": null,
+  "BirthDate": null,
+  "Images": []
+}

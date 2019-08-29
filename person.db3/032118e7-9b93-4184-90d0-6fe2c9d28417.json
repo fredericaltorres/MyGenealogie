@@ -1,0 +1,43 @@
+{
+  "Sexe": "F",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": "Entree au couvant des Carmelite a 21 ans, morte de la turberculeuse. Les religieuses etant si stricte qu'elle n'a pu etre vu que par son oncle CONSTANT Elie docteur.",
+  "LastName": "semeac",
+  "MaidenName": null,
+  "FirstName": "victorine",
+  "MiddleName": null,
+  "Guid": "032118e7-9b93-4184-90d0-6fe2c9d28417",
+  "FatherGuid": "a9efd6a4-a8f6-4ff7-acb2-4af495870002",
+  "MotherGuid": "746f8df4-c808-4306-9e8c-356684f7361c",
+  "SpouseGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 1,
+    "Day": 24
+  },
+  "DeathDate": null,
+  "BirthDate": null,
+  "Images": [
+    {
+      "ImageName": "032118e7-9b93-4184-90d0-6fe2c9d28417.Semeac Victorine 2",
+      "FileName": "032118e7-9b93-4184-90d0-6fe2c9d28417.Semeac Victorine 2.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\032118e7-9b93-4184-90d0-6fe2c9d28417.Semeac Victorine 2.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/032118e7-9b93-4184-90d0-6fe2c9d28417.Semeac Victorine 2.jpg"
+    },
+    {
+      "ImageName": "032118e7-9b93-4184-90d0-6fe2c9d28417.Semeac Victorine 3",
+      "FileName": "032118e7-9b93-4184-90d0-6fe2c9d28417.Semeac Victorine 3.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\032118e7-9b93-4184-90d0-6fe2c9d28417.Semeac Victorine 3.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/032118e7-9b93-4184-90d0-6fe2c9d28417.Semeac Victorine 3.jpg"
+    },
+    {
+      "ImageName": "032118e7-9b93-4184-90d0-6fe2c9d28417.SEMEAC, Victorine",
+      "FileName": "032118e7-9b93-4184-90d0-6fe2c9d28417.SEMEAC, Victorine.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\032118e7-9b93-4184-90d0-6fe2c9d28417.SEMEAC, Victorine.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/032118e7-9b93-4184-90d0-6fe2c9d28417.SEMEAC, Victorine.jpg"
+    }
+  ]
+}

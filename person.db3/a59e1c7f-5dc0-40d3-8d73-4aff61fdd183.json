@@ -1,0 +1,31 @@
+{
+  "Sexe": "M",
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "brandis",
+  "MaidenName": null,
+  "FirstName": "rene",
+  "MiddleName": null,
+  "Guid": "a59e1c7f-5dc0-40d3-8d73-4aff61fdd183",
+  "FatherGuid": null,
+  "MotherGuid": null,
+  "SpouseGuid": null,
+  "CreationDate": {
+    "Year": 2004,
+    "Month": 3,
+    "Day": 31
+  },
+  "DeathDate": null,
+  "BirthDate": null,
+  "Images": [
+    {
+      "ImageName": "a59e1c7f-5dc0-40d3-8d73-4aff61fdd183.BRANDIS, Rene",
+      "FileName": "a59e1c7f-5dc0-40d3-8d73-4aff61fdd183.BRANDIS, Rene.jpg",
+      "LocalFileName": "C:\\DVT\\MyGenealogie\\person.db2\\a59e1c7f-5dc0-40d3-8d73-4aff61fdd183.BRANDIS, Rene.jpg",
+      "Url": "https://mygenealogie.blob.core.windows.net/person-db/a59e1c7f-5dc0-40d3-8d73-4aff61fdd183.BRANDIS, Rene.jpg"
+    }
+  ]
+}
