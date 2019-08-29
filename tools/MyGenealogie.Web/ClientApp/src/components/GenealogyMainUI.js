@@ -14,11 +14,15 @@ import Alert from 'react-bootstrap/Alert';
 // https://github.com/JedWatson/react-select
 import Select from 'react-select';
 
+// https://github.com/ayrton/react-key-handler
+// https://www.npmjs.com/package/react-key-handler
+import KeyHandler, { KEYPRESS, KEYDOWN, KEYUP } from 'react-key-handler'; 
+
 import {
     isPersonDate,
     emptyStringOnNull,
     replaceDash,
-    formatYear,
+    personDateToString,
     stringDateToPersonDate,
     PersonDBClient,
     PASTE_OPERATION_AS,
@@ -30,6 +34,14 @@ const DEFAULT_PERSON_TO_SELECT = "eb6db547-abee-42ec-89c3-da273f8e30f3";
 const APP_STATUS_READY = "Ready...";
 const APP_STATUS_BUSY = "Busy...";
 
+const copyToOperatingSystemClipboard = (s) => {
+    const el = document.createElement('textarea');
+    el.value = s;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+};
 
 class GenealogyMainUI extends Component {
 
@@ -98,21 +110,27 @@ class GenealogyMainUI extends Component {
         if (this.state.clipBoardPerson !== null) {
 
             console.log(`Paste '${__personDBClient.getPersonFullName(this.state.clipBoardPerson)}' as ${pasteAsEnum} into '${__personDBClient.getPersonFullName(this.state.selectedPerson)}'`);
-
+            debugger;
             switch (pasteAsEnum) {
 
                 case PASTE_OPERATION_AS.Father: break;
                 case PASTE_OPERATION_AS.Mother: break;
                 case PASTE_OPERATION_AS.Child: break;
-                case PASTE_OPERATION_AS.Spouse: break;
+                case PASTE_OPERATION_AS.Spouse:
+                    const p = this.getPersonSelected();
+                    p.spouseGuid = this.state.clipBoardPerson.guid;
+                    this.onUpdatePersonClick();
+                    break;
             }
         }
     }
-
+    
     copySelectedPersonToClipboard = () => {
 
         this.state.clipBoardPerson = { ...this.state.selectedPerson };
-        console.log(`Copied to clipboard person:${__personDBClient.getPersonFullName(this.state.clipBoardPerson)}`);
+        const s = __personDBClient.getPersonFullName(this.state.clipBoardPerson);
+        copyToOperatingSystemClipboard(s);
+        console.log(`Copied to clipboard person:${s}`);
         this.updateState("clipBoardPerson", this.state.clipBoardPerson);
     }
 
@@ -380,8 +398,11 @@ class GenealogyMainUI extends Component {
 
     getFieldRow(fieldName, fieldValue, isMultiLine = false, isDate) {
 
-        if (isPersonDate(fieldValue))
-            fieldValue = formatYear(fieldValue);
+        if (isPersonDate(fieldValue)) {
+            debugger;
+            //if (fieldValue.year === 0)                
+            fieldValue = personDateToString(fieldValue);
+        }
 
         fieldValue = emptyStringOnNull(fieldValue);
 
@@ -411,6 +432,8 @@ class GenealogyMainUI extends Component {
     getPersonHtml(person) {
 
         return (<form>
+            <a target="top" href={`https://mygenealogie.blob.core.windows.net/person-db/${person.guid}.json`}>Json Resource</a>
+
             {this.getFieldRow("lastName", person.lastName)}
             {this.getFieldRow("maidenName", person.maidenName)}
             {this.getFieldRow("firstName", person.firstName)}
@@ -431,6 +454,45 @@ class GenealogyMainUI extends Component {
         </form>);
     }
 
+    onUpdatePersonClick = () => {
+        this.setAppStatus(APP_STATUS_BUSY);
+        this.updateSelectedPerson().then((person) => {
+            this.onPersonUpdated(person);
+            this.setAppStatus(APP_STATUS_READY);
+        });
+    }
+
+    onKeyboardUpdate = (event) => {
+
+        event.preventDefault();
+        if (this.state.keyAltDown) {
+            this.onUpdatePersonClick();
+        }
+    }
+
+    onKeyboardAltKey = (event, down) => {
+
+        if (this.state.keyAltDown !== down) {
+            event.preventDefault();
+            this.updateState('keyAltDown', down);
+            console.log(`ALT`);
+        }
+    }
+
+    // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code/code_values     
+    getKeyHandlers = () => {
+
+        return ( <span>
+
+            <KeyHandler keyEventName={KEYUP} code="KeyU" onKeyHandle={this.onKeyboardUpdate} />
+
+            <KeyHandler keyEventName={KEYDOWN} code="AltLeft" onKeyHandle={(event) => { this.onKeyboardAltKey(event, true); }} />
+            <KeyHandler keyEventName={KEYUP} code="AltLeft" onKeyHandle={(event) => { this.onKeyboardAltKey(event, false); }} />
+            <KeyHandler keyEventName={KEYDOWN} code="AltRight" onKeyHandle={(event) => { this.onKeyboardAltKey(event, true); }} />
+            <KeyHandler keyEventName={KEYUP} code="AltRight" onKeyHandle={(event) => { this.onKeyboardAltKey(event, false); }} />
+        </span> );
+    }
+
     render() {
 
         let selectionForComboBox = null;
@@ -445,6 +507,10 @@ class GenealogyMainUI extends Component {
         }
 
         return (
+            <React.Fragment>
+
+            {this.getKeyHandlers()}
+
             <div>
                 <h2>MyGenealogy</h2>
 
@@ -458,13 +524,16 @@ class GenealogyMainUI extends Component {
                             <td><button type="button" className="btn btn-primary" onClick={() => { this.goBackToPreviousPerson(); }}> Back </button> &nbsp;</td>
                             <td><button type="button" className="btn btn-primary" onClick={() => { this.copySelectedPersonToClipboard(); }}> Copy To Clipboard </button></td>
                             <td>
-                                <button type="button" className="btn btn-primary" onClick={() => {
-                                    this.setAppStatus(APP_STATUS_BUSY);
-                                    this.updateSelectedPerson().then((person) => {
-                                        this.onPersonUpdated(person);
-                                        this.setAppStatus(APP_STATUS_READY);
-                                    });
-                                }}> Update </button>
+                                    <button type="button" className="btn btn-primary" onClick={
+                                        this.onUpdatePersonClick
+                                        //() => {
+                                        //    this.setAppStatus(APP_STATUS_BUSY);
+                                        //    this.updateSelectedPerson().then((person) => {
+                                        //        this.onPersonUpdated(person);
+                                        //        this.setAppStatus(APP_STATUS_READY);
+                                        //    });
+                                        //}
+                                }> Update </button>
                             </td>
                             <td>
                                 <Dropdown>
@@ -481,7 +550,8 @@ class GenealogyMainUI extends Component {
                                 </Dropdown>
                             </td>
                             <td>
-                                <ButtonGroup aria-label="Basic example">
+                                    <ButtonGroup aria-label="Basic example">
+
                                     <Button variant="secondary" onClick={() => {
                                         this.setAppStatus(APP_STATUS_BUSY);
                                         __personDBClient.newPerson().then((newPerson) => {
@@ -489,7 +559,8 @@ class GenealogyMainUI extends Component {
                                             this.onPersonCreated(newPerson);
                                             this.setAppStatus(APP_STATUS_READY);
                                         });
-                                    }}> New </Button>
+                                        }}> New </Button>
+
                                     <Button variant="secondary" onClick={() => {
                                         this.setAppStatus(APP_STATUS_BUSY);
                                         const person = this.getPersonSelected();
@@ -502,8 +573,9 @@ class GenealogyMainUI extends Component {
                                                 this.setAppStatus(APP_STATUS_READY);
                                             });
                                         }
-                                    }}> Delete </Button>
-                                    <Button variant="secondary">Clone</Button>
+                                        }}> Delete </Button>
+
+                                        {/*<Button variant="secondary">Clone</Button>*/}
                                 </ButtonGroup>
                             </td>
                         </tr>
@@ -521,7 +593,8 @@ class GenealogyMainUI extends Component {
                 {personSelected && this.getPersonImagesHtml(personSelected)}
 
                 {this.GetPersonsSelector()}
-            </div>
+                </div>
+            </React.Fragment>
         );
     }
 }

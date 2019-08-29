@@ -30,7 +30,7 @@ export function replaceDash(s) {
     return s.replace(new RegExp('-', 'g'), ' ');
 }
 
-export function formatYear(d) {
+export function personDateToString(d) {
 
     if (!d) return '';
     if (d.year === 0 && d.month === 0 && d.day === 0) return '';
@@ -43,7 +43,7 @@ export function formatYear(d) {
 
 export function stringDateToPersonDate(d) {
 
-    if (isObject(d)) return d; // If the field was never updated it is still an object
+    if (isPersonDate(d)) return d; // If the field was never updated it is still an object
     if (!d) return PERSON_TO_DATE_NULL;
     
     var parts = d.split('-');
