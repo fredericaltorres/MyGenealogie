@@ -60,12 +60,13 @@ class GenealogyMainUI extends Component {
     handleChange = (guid) => {
 
         if (guid === null) {
-            this.updateState("selectedPerson", null);
 
+            this.updateState("selectedPerson", null);
             return;
         }
 
-        if (isObject(guid)) { // Coming from react-select combobox
+        if (isObject(guid)) {
+
             guid = guid.value;
         }
 
@@ -180,18 +181,21 @@ class GenealogyMainUI extends Component {
 
     selectDefaultPerson() {
 
-        if (DEFAULT_PERSON_TO_SELECT)
-            this.selectPerson(DEFAULT_PERSON_TO_SELECT);
+        return new Promise((resolve, reject) => {
+            if (DEFAULT_PERSON_TO_SELECT)
+                this.selectPerson(DEFAULT_PERSON_TO_SELECT);
+            resolve();
+        });
     }
 
     reloadData = () => {
         // +++
         this.setAppStatus(APP_STATUS_BUSY);
-        debugger;
         __personDBClient.loadPersons().then((persons) => {
             this.updateState('persons', persons, () => {
-                this.selectDefaultPerson();
-                this.setAppStatus(APP_STATUS_READY);
+                this.selectDefaultPerson().then(() => {
+                    this.setAppStatus(APP_STATUS_READY);
+                });
             });
         });
 
@@ -423,7 +427,6 @@ class GenealogyMainUI extends Component {
                 this.getBlockRow("Mother", this.getPersonMotherSummaryHtml(person))}
             {this.hasPersonChildren(person) &&
                 this.getBlockRow("Children", this.getPersonChildrenSummaryHtml(person))}
-
 
         </form>);
     }

@@ -102,7 +102,7 @@ export class PersonDBClient {
     loadPersons() {
 
         return new Promise((resolve, reject) => {
-            debugger;
+            
             this.trace(`Load persons`);
             return fetch(this.__buildUrl('GetPersons'), this.__buildFetchBlock('GET', ''))
                 .then(this.handleErrors)
