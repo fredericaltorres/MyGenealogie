@@ -62,6 +62,7 @@
     <Compile Include="Model\Persons.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\JsonObject.cs" />
+    <Compile Include="Utility\PasswordUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

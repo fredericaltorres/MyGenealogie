@@ -6,6 +6,7 @@ using System.Text;
 using System.Xml;
 using System.Threading.Tasks;
 using MyGenealogie.Console;
+using MyGenealogie.Lib.Utility;
 
 namespace MyGenealogie
 {
@@ -24,6 +25,18 @@ namespace MyGenealogie
         {
             this._folder = folder;
             this.Source = source;
+        }
+
+        public bool VerifyPassword(string password)
+        {
+            return PasswordUtility.VerifyHashedPassword(password, this.Properties._PasswordHash);
+        }
+
+        public void SetUsernameAndPassword(string username, string password)
+
+        {
+            this.Properties._Username = username;
+            this.Properties._PasswordHash = PasswordUtility.HashPassword(password);
         }
 
         //torres0frederic-antoine-leon

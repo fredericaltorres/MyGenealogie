@@ -30,6 +30,7 @@ import {
 
 const __personDBClient = new PersonDBClient();
 const DEFAULT_IMAGE_WIDTH = 150;
+const DEFAULT_USER_NAME = "fredericaltorres";
 //const DEFAULT_PERSON_TO_SELECT = "eb6db547-abee-42ec-89c3-da273f8e30f3"; // leon
 const DEFAULT_PERSON_TO_SELECT = "a3487e7a-2fb5-488c-b7ce-1a6395ed2453"; // frederic
 const APP_STATUS_READY = "Ready...";
@@ -108,7 +109,11 @@ class GenealogyMainUI extends Component {
 
     pasteSelectedPersonFromClipboardAs = (pasteAsEnum) => {
 
-        if (this.state.clipBoardPerson !== null) {
+        if (this.state.clipBoardPerson === null) {
+
+            this.userError('You must copy a person into the clipboard first');
+        }
+        else {
 
             console.log(`Paste '${__personDBClient.getPersonFullName(this.state.clipBoardPerson)}' as ${pasteAsEnum} into '${__personDBClient.getPersonFullName(this.state.selectedPerson)}'`);
             
@@ -127,7 +132,6 @@ class GenealogyMainUI extends Component {
                     p.spouseGuid = this.state.clipBoardPerson.guid;
                     this.onUpdatePersonClick();
                     break;
-                case PASTE_OPERATION_AS.Child: break;
             }
         }
     }
@@ -321,6 +325,7 @@ class GenealogyMainUI extends Component {
 
         if (!person.images)
             return [];
+
         return person.images.map((image) => {
             return <img key={image.url} src={image.url} width={DEFAULT_IMAGE_WIDTH} />;
         });
@@ -514,6 +519,13 @@ class GenealogyMainUI extends Component {
         </span> );
     }
 
+    askForUsernameAndPassword() {
+
+        var userName = prompt("Username?", DEFAULT_USER_NAME);
+        var password = prompt("Password?");
+        __personDBClient.setUsernamePassword(userName, password);
+    }
+
     render() {
 
         let selectionForComboBox = null;
@@ -535,70 +547,88 @@ class GenealogyMainUI extends Component {
             <div>
                 <h2>MyGenealogy</h2>
 
-                <Alert variant='primary'>
+                    <Alert variant={this.state.applicationStatus === APP_STATUS_BUSY ? 'danger':'primary'}>
                     {this.state.applicationStatus}
                 </Alert>
 
                 <table>
                     <tbody>
                         <tr>
-                            <td><button type="button" className="btn btn-primary" onClick={() => { this.goBackToPreviousPerson(); }}> Back </button> &nbsp;</td>
-                            <td><button type="button" className="btn btn-primary" onClick={() => { this.copySelectedPersonToClipboard(); }}> Copy To Clipboard </button></td>
-                            <td>
-                                    <button type="button" className="btn btn-primary" onClick={
-                                        this.onUpdatePersonClick
-                                        //() => {
-                                        //    this.setAppStatus(APP_STATUS_BUSY);
-                                        //    this.updateSelectedPerson().then((person) => {
-                                        //        this.onPersonUpdated(person);
-                                        //        this.setAppStatus(APP_STATUS_READY);
-                                        //    });
-                                        //}
-                                }> Update </button>
-                            </td>
+                                <td><button type="button" className="btn btn-primary" onClick={() => { this.goBackToPreviousPerson(); }}> Back </button> &nbsp;</td>
+
+                                {/*
+                                <td><button type="button" className="btn btn-primary" onClick={() => { this.copySelectedPersonToClipboard(); }}> Copy To Clipboard </button></td>
+                                */}
+
+                                {/*<td>
+                                    <button type="button" className="btn btn-primary" onClick={ this.onUpdatePersonClick }> Update </button>
+                                </td>*/}
+
+                                <td>
+                                    <ButtonGroup aria-label="Basic example">
+
+                                        <Button variant="secondary" onClick={() => { this.copySelectedPersonToClipboard(); }}> Copy To Clipboard </Button>
+
+                                        <Button variant="secondary" onClick={this.onUpdatePersonClick}> Update </Button>
+
+                                        <Button variant="secondary" onClick={() => {
+                                            this.setAppStatus(APP_STATUS_BUSY);
+                                            __personDBClient.newPerson().then((newPerson) => {
+
+                                                this.onPersonCreated(newPerson);
+                                                this.setAppStatus(APP_STATUS_READY);
+                                            });
+                                        }}> New </Button>
+
+                                        <Button variant="secondary" onClick={() => {
+                                            this.setAppStatus(APP_STATUS_BUSY);
+                                            const person = this.getPersonSelected();
+                                            if (window.confirm(`Delete ${__personDBClient.getPersonFullName(person)}`)) {
+
+                                                __personDBClient.deletePerson(this.getPersonSelected()).then(() => {
+
+                                                    this.onPersonDeleted(person);
+                                                    this.selectDefaultPerson();
+                                                    this.setAppStatus(APP_STATUS_READY);
+                                                });
+                                            }
+                                        }}> Delete </Button>
+
+                                        {/*<Button variant="secondary">Clone</Button>*/}
+                                    </ButtonGroup>
+                                </td>
+
                             <td>
                                 <Dropdown>
                                     <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                        Operations - {__personDBClient.getPersonFullName(this.state.clipBoardPerson)}
+                                        Relationships - {__personDBClient.getPersonFullName(this.state.clipBoardPerson)}
                                     </Dropdown.Toggle>
 
                                     <Dropdown.Menu>
                                         <Dropdown.Item onClick={() => { this.pasteSelectedPersonFromClipboardAs(PASTE_OPERATION_AS.Father); }} >Paste as Father </Dropdown.Item>
                                         <Dropdown.Item onClick={() => { this.pasteSelectedPersonFromClipboardAs(PASTE_OPERATION_AS.Mother); }} >Paste as Mother </Dropdown.Item>
-                                        <Dropdown.Item onClick={() => { this.pasteSelectedPersonFromClipboardAs(PASTE_OPERATION_AS.Child); }} >Paste as child </Dropdown.Item>
                                         <Dropdown.Item onClick={() => { this.pasteSelectedPersonFromClipboardAs(PASTE_OPERATION_AS.Spouse); }} >Paste as Spouse </Dropdown.Item>
                                     </Dropdown.Menu>
                                 </Dropdown>
-                            </td>
-                            <td>
-                                    <ButtonGroup aria-label="Basic example">
+                                </td>
 
-                                    <Button variant="secondary" onClick={() => {
-                                        this.setAppStatus(APP_STATUS_BUSY);
-                                        __personDBClient.newPerson().then((newPerson) => {
 
-                                            this.onPersonCreated(newPerson);
-                                            this.setAppStatus(APP_STATUS_READY);
-                                        });
-                                        }}> New </Button>
 
-                                    <Button variant="secondary" onClick={() => {
-                                        this.setAppStatus(APP_STATUS_BUSY);
-                                        const person = this.getPersonSelected();
-                                        if (window.confirm(`Delete ${__personDBClient.getPersonFullName(person)}`)) {
+                                <td>
+                                    <Dropdown>
+                                        <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                            Maintenance
+                                        </Dropdown.Toggle>
 
-                                            __personDBClient.deletePerson(this.getPersonSelected()).then(() => {
+                                        <Dropdown.Menu>
+                                            <Dropdown.Item onClick={
+                                                this.askForUsernameAndPassword
+                                            } >Sign in</Dropdown.Item>
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+                                </td>
 
-                                                this.onPersonDeleted(person);
-                                                this.selectDefaultPerson();
-                                                this.setAppStatus(APP_STATUS_READY);
-                                            });
-                                        }
-                                        }}> Delete </Button>
 
-                                        {/*<Button variant="secondary">Clone</Button>*/}
-                                </ButtonGroup>
-                            </td>
                         </tr>
                     </tbody>
                 </table>

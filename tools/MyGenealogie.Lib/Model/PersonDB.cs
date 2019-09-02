@@ -218,9 +218,21 @@ namespace MyGenealogie.Console
             }
         }
 
+        public Person GetPersonByLastNameFirstName(string lastName, string firstName)
+        {
+            return this.Persons.FirstOrDefault(p => p.Properties.LastName == lastName && p.Properties.FirstName == firstName);
+        }
+
         public Person GetPersonByGuid(Guid guid)
         {
             return this.Persons.FirstOrDefault(p => p.Properties.Guid == guid);
+        }
+
+        public Person GetPersonByUsername(string username)
+        {
+            if (username == null)
+                throw new ArgumentException($"username parameter cannot be null");
+            return this.Persons.FirstOrDefault(p => p.Properties._Username == username);
         }
     }
 }

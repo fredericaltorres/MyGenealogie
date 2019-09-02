@@ -50,6 +50,12 @@ namespace MyGenealogie.Web
                 app.UseHsts();
             }
 
+            app.UseMiddleware(typeof(MyGenealogie.Web.Middleware.AuthenticationMiddleware));
+            //app.Use(async (context, nextMiddleware) =>
+            //{
+            //    await nextMiddleware();
+            //});
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
@@ -70,6 +76,9 @@ namespace MyGenealogie.Web
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+
+           
+
         }
     }
 }

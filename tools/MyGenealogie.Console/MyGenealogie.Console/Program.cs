@@ -9,6 +9,8 @@ namespace MyGenealogie.Console
 {
     class Program
     {
+
+
         static void Main(string[] args)
         {
             var dbPath = @"C:\DVT\MyGenealogie\person.db";
@@ -21,13 +23,31 @@ namespace MyGenealogie.Console
             var reUploadAzureDatabase = false;
             var verifyAzurePersonDB = false;
             var deleteAzureDatabase = false;
-            var downloadAzurePersonDB = true;
+            var downloadAzurePersonDB = false;
+            var setPassword = true;
 
             var db = new PersonDB(db2Path, storageName, storageKey);
 
+            if(setPassword)
+            {
+                const string fredPassword = "";
+                const string FredUserName = "fredericaltorres";
+                //db.LoadFromAzureStorageDB();
+                //var fred = db.GetPersonByLastNameFirstName("torres","frederic");
+                //fred.SetUsernameAndPassword(FredUserName, fredPassword);
+                //db.UpdatePerson(fred.Properties);
+                var db2 = new PersonDB(db2Path, storageName, storageKey);
+                db2.LoadFromAzureStorageDB();
+                var fred2 = db2.GetPersonByUsername(FredUserName);
+                if (fred2.VerifyPassword(fredPassword))
+                    System.Console.WriteLine($"Credentials stored for username:{FredUserName}");
+                else
+                    System.Console.WriteLine($"Issue storing credentials for username:{FredUserName}");
+            }
+
             if (downloadAzurePersonDB) // Download all json files from Azure to local disk
             {
-                db.LoadFromAzureStorageDB();
+                
                 db.SaveToLocalFolder(db3Path);
             }
 

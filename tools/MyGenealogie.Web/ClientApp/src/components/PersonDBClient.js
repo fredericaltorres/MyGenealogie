@@ -6,7 +6,6 @@ const PERSON_TO_DATE_NULL = { year: 0, month: 0, day: 0 };
 export const PASTE_OPERATION_AS = {
     Mother: 'Mother',
     Father: 'Father',
-    Child: 'Child',
     Spouse: 'Spouse'
 };
 
@@ -60,6 +59,24 @@ const JSON_CONTENT_TYPE = { 'Content-Type': 'application/json' };
 
 export class PersonDBClient {
 
+    _userName = null;
+    _password = null;
+
+    getHeaders() {
+
+        var headers = { ...JSON_CONTENT_TYPE };
+        if (this._userName)
+            headers['Username'] = this._userName;
+        if (this._password)
+            headers['Password'] = this._password;
+        return headers;
+    }
+    setUsernamePassword(userName, password) {
+
+        this.trace(`setUsernamePassword userName:${userName}, password:*****`);
+        this._userName = userName;
+        this._password = password;
+    }
     trace(m) {
 
         console.log(`[PersonDBClient]${m}`);
@@ -81,9 +98,10 @@ export class PersonDBClient {
     }
     handleErrors(response) {
 
-        if (!response.ok) 
+        if (!response.ok) {
+            console.log(`http call failed:${response.statusCode} - ${response.statusText}`);
             throw Error(response.statusText);
-
+        }
         return response;
     }
     __buildFetchBlock(method, data) {
@@ -91,12 +109,12 @@ export class PersonDBClient {
         if (method === 'GET')
             return {
                 method,
-                headers: JSON_CONTENT_TYPE,
+                headers: this.getHeaders()
             };
 
         return {
             method,
-            headers: JSON_CONTENT_TYPE,
+            headers: this.getHeaders(),
             body: JSON.stringify(data)
         };
     }

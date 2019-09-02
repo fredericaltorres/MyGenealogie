@@ -28,6 +28,7 @@ namespace MyGenealogie.Web.Controllers
         [HttpPut("[action]")]
         public IActionResult UpdatePerson([FromBody]PersonProperties personProperties)
         {
+        
             var person = this.personDB.GetPersonByGuid(personProperties.Guid);
             if (person == null)
                 return BadRequest($"Person guid:{personProperties.Guid}, Lastname:{personProperties.LastName}, FirstName:{personProperties.FirstName} not found in backend memory");

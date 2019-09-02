@@ -5,6 +5,9 @@ namespace MyGenealogie
 {
     public class PersonProperties
     {
+        public string _Username;
+        public string _PasswordHash;
+
         public string Sexe;
         public string BirthCity;
         public string BirthCountry;
