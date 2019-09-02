@@ -23,8 +23,8 @@ namespace MyGenealogie.Console
             var reUploadAzureDatabase = false;
             var verifyAzurePersonDB = false;
             var deleteAzureDatabase = false;
-            var downloadAzurePersonDB = false;
-            var setPassword = true;
+            var downloadAzurePersonDB = true;
+            var setPassword = false;
 
             var db = new PersonDB(db2Path, storageName, storageKey);
 
@@ -47,7 +47,7 @@ namespace MyGenealogie.Console
 
             if (downloadAzurePersonDB) // Download all json files from Azure to local disk
             {
-                
+                db.LoadFromAzureStorageDB();
                 db.SaveToLocalFolder(db3Path);
             }
 

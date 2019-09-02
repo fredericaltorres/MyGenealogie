@@ -1,4 +1,6 @@
 {
+  "_Username": null,
+  "_PasswordHash": null,
   "Sexe": "F",
   "BirthCity": null,
   "BirthCountry": null,
@@ -11,14 +13,22 @@
   "MiddleName": "charlotte",
   "Guid": "689b8a1d-a6d7-4ab8-81a0-402f27214e7c",
   "FatherGuid": "a3487e7a-2fb5-488c-b7ce-1a6395ed2453",
-  "MotherGuid": null,
+  "MotherGuid": "ccfe5efd-9b4a-4c61-8b0b-492733ee3174",
   "SpouseGuid": null,
   "CreationDate": {
     "Year": 2004,
     "Month": 1,
     "Day": 24
   },
-  "DeathDate": null,
-  "BirthDate": null,
+  "DeathDate": {
+    "Year": 0,
+    "Month": 0,
+    "Day": 0
+  },
+  "BirthDate": {
+    "Year": 0,
+    "Month": 0,
+    "Day": 0
+  },
   "Images": []
 }
