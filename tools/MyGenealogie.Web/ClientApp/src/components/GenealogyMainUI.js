@@ -222,20 +222,11 @@ class GenealogyMainUI extends Component {
         this.setAppStatus(APP_STATUS_BUSY);
         __personDBClient.loadPersons().then((persons) => {
             this.updateState('persons', persons, () => {
-                this.selectDefaultPerson().then(() => {
+                this.selectDefaultPerson().finally(() => {
                     this.setAppStatus(APP_STATUS_READY);
                 });
             });
         });
-
-        //return fetch('api/MyGenealogie/GetPersons').then(response => response.json())
-        //    .then(data => {
-        //        // console.log(`reloadData data:${JSON.stringify(data)}`);
-        //        this.updateState('persons', data, () => {
-        //            this.selectDefaultPerson();
-        //            this.setAppStatus(APP_STATUS_READY);
-        //        });
-        //    });
     }
 
     onPersonUpdated = (person) => {
@@ -482,8 +473,11 @@ class GenealogyMainUI extends Component {
 
     onUpdatePersonClick = () => {
         this.setAppStatus(APP_STATUS_BUSY);
-        this.updateSelectedPerson().then((person) => {
+        this.updateSelectedPerson()
+        .then((person) => {
             this.onPersonUpdated(person);
+        })
+        .finally(() => {
             this.setAppStatus(APP_STATUS_READY);
         });
     }
@@ -574,8 +568,8 @@ class GenealogyMainUI extends Component {
                                         <Button variant="secondary" onClick={() => {
                                             this.setAppStatus(APP_STATUS_BUSY);
                                             __personDBClient.newPerson().then((newPerson) => {
-
                                                 this.onPersonCreated(newPerson);
+                                            }).finally(() => {
                                                 this.setAppStatus(APP_STATUS_READY);
                                             });
                                         }}> New </Button>
@@ -589,6 +583,7 @@ class GenealogyMainUI extends Component {
 
                                                     this.onPersonDeleted(person);
                                                     this.selectDefaultPerson();
+                                                }).finally(() => {
                                                     this.setAppStatus(APP_STATUS_READY);
                                                 });
                                             }

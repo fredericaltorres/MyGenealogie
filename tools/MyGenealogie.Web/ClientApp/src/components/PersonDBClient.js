@@ -99,8 +99,12 @@ export class PersonDBClient {
     handleErrors(response) {
 
         if (!response.ok) {
-            console.log(`http call failed:${response.statusCode} - ${response.statusText}`);
-            throw Error(response.statusText);
+            response.json()
+                .then((error) => {
+                    const m = `http call failed:${response.status} - ${error.message}`;
+                    console.log(m);
+                    alert(`ERROR:${m}`);
+                });
         }
         return response;
     }

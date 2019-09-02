@@ -1,3 +1,4 @@
+// #define AUTHENTICATE_ON
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -50,11 +51,9 @@ namespace MyGenealogie.Web
                 app.UseHsts();
             }
 
-            app.UseMiddleware(typeof(MyGenealogie.Web.Middleware.AuthenticationMiddleware));
-            //app.Use(async (context, nextMiddleware) =>
-            //{
-            //    await nextMiddleware();
-            //});
+            #if  AUTHENTICATE_ON 
+                app.UseMiddleware(typeof(MyGenealogie.Web.Middleware.AuthenticationMiddleware));
+            #endif
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

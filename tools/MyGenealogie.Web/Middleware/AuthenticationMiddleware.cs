@@ -55,7 +55,7 @@ namespace MyGenealogie.Web.Middleware
         {
             System.Console.WriteLine(m);
             context.Response.StatusCode = statusCode;
-            await context.Response.WriteAsync(m);
+            await context.Response.WriteAsync($@"{{ ""message"":""{m}"" }}");
         }
 
         private static bool ShouldApplyAuthentication(HttpContext context)
