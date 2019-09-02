@@ -216,7 +216,28 @@ export class PersonDBClient {
         return new Promise((resolve, reject) => {
 
             this.trace(`Upload image for person ${this.getPersonFullName(person)}`);
-            return fetch(this.__buildUrl('UploadImage'/*, person.guid*/), this.__buildFetchBlockForImages('POST', imageData, person))
+            return fetch(this.__buildUrl('UploadImage'), this.__buildFetchBlockForImages('POST', imageData, person))
+                .then(this.handleErrors)
+                .then(response => {
+                    if (response.ok)
+                        resolve(person);
+                    else
+                        reject(person);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    reject(error);
+                });
+        });
+    }
+
+    deleteImage(imageFileName, person) {
+
+        return new Promise((resolve, reject) => {
+
+            this.trace(`Delete image:${imageFileName} for person ${this.getPersonFullName(person)}`);
+            ++++
+            return fetch(this.__buildUrl('DeleteImage'), this.__buildFetchBlock('DELETE', {}, person))
                 .then(this.handleErrors)
                 .then(response => {
                     if (response.ok)

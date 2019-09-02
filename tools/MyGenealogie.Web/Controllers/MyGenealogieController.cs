@@ -56,7 +56,7 @@ namespace MyGenealogie.Web.Controllers
 
                 person.Properties.Images.Add(personImage);
                 if (this.personDB.UpdatePerson(person.Properties))
-                    return Ok();
+                    return new OkObjectResult(person.Properties);
             }
             return new NotFoundObjectResult(personGuid); // TODO: Improve
         }

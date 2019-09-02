@@ -313,13 +313,31 @@ class GenealogyMainUI extends Component {
         return r;
     }
 
+    deleteImage = (fileName) => {
+        alert(fileName);
+        this.setAppStatus(APP_STATUS_BUSY);
+        const person = this.getPersonSelected();
+
+        __personDBClient.deleteImage(person, fileName)
+            .then((personUpdated) => {
+                this.onPersonUpdated(personUpdated);
+            }).finally(() => {
+                this.setAppStatus(APP_STATUS_READY);
+            });
+    }
+
     getPersonImagesHtml(person) {
 
         if (!person.images)
             return [];
 
         return person.images.map((image) => {
-            return <img key={image.url} src={image.url} width={DEFAULT_IMAGE_WIDTH} />;
+            return (<span>
+                <img key={image.url} data-filenam={image.fileName} src={image.url} width={DEFAULT_IMAGE_WIDTH} />
+                <button type="button" className="btn btn-primary" onClick={() => {
+                    this.deleteImage(image.fileName);
+                }}> D </button>
+            </span> );
         });
     }
 
@@ -473,12 +491,19 @@ class GenealogyMainUI extends Component {
     }
 
     onUploadImageClick = () => {
-        debugger;
+        this.setAppStatus(APP_STATUS_BUSY);
         var input = document.querySelector('input[type="file"]');
         const fileToUpload = input.files[0];
         const formData = new FormData();
-        formData.append('file', fileToUpload, fileToUpload.name);
-        __personDBClient.uploadImage(this.state.selectedPerson, formData);
+        formData.append('file', fileToUpload, fileToUpload.name);        
+        __personDBClient.uploadImage(this.state.selectedPerson, formData)
+        .then((person) => {
+            debugger;
+            this.onPersonUpdated(person);
+        })
+        .finally(() => {
+            this.setAppStatus(APP_STATUS_READY);
+        });
     }
 
     onSelectImageToUpload = (event) => {
@@ -656,7 +681,6 @@ class GenealogyMainUI extends Component {
                 <hr />
                 {personSelected && this.getPersonHtml(personSelected)}
                 {personSelected && this.getPersonImagesHtml(personSelected)}
-
                 {this.GetPersonsSelector()}
                 </div>
             </React.Fragment>
