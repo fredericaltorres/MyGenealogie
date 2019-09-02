@@ -490,6 +490,14 @@ class GenealogyMainUI extends Component {
         }
     }
 
+    onKeyboardCopyToClipboard = (event) => {
+
+        event.preventDefault();
+        if (this.state.keyAltDown) {
+            this.copySelectedPersonToClipboard();
+        }
+    }
+
     onKeyboardAltKey = (event, down) => {
 
         if (this.state.keyAltDown !== down) {
@@ -505,6 +513,7 @@ class GenealogyMainUI extends Component {
         return ( <span>
 
             <KeyHandler keyEventName={KEYUP} code="KeyU" onKeyHandle={this.onKeyboardUpdate} />
+            <KeyHandler keyEventName={KEYUP} code="KeyC" onKeyHandle={this.onKeyboardCopyToClipboard} />
 
             <KeyHandler keyEventName={KEYDOWN} code="AltLeft" onKeyHandle={(event) => { this.onKeyboardAltKey(event, true); }} />
             <KeyHandler keyEventName={KEYUP} code="AltLeft" onKeyHandle={(event) => { this.onKeyboardAltKey(event, false); }} />
