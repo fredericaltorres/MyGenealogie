@@ -81,9 +81,11 @@ export class PersonDBClient {
 
         console.log(`[PersonDBClient]${m}`);
     }
-    __buildUrl(urlAction) {
-
-        return `api/MyGenealogie/${urlAction}`;
+    __buildUrl(urlAction, guid = null) {
+        if(guid)
+            return `api/MyGenealogie/${urlAction}/${guid}`;
+        else 
+            return `api/MyGenealogie/${urlAction}`;
     }
     getPersonFullName(p) {
 
@@ -120,6 +122,17 @@ export class PersonDBClient {
             method,
             headers: this.getHeaders(),
             body: JSON.stringify(data)
+        };
+    }
+    __buildFetchBlockForImages(method, files) {
+
+        const h = this.getHeaders();
+        h.enctype = "multipart/form-data";
+        delete h['Content-Type'];
+        return {
+            method,
+            headers: h,
+            body: files
         };
     }
     loadPersons() {
@@ -195,6 +208,28 @@ export class PersonDBClient {
             });
         });
     }
+
+    // https://programmingwithmosh.com/javascript/react-file-upload-proper-server-side-nodejs-easy/
+    uploadImage(person, imageData) {
+
+        return new Promise((resolve, reject) => {
+
+            this.trace(`Upload image for person ${this.getPersonFullName(person)}`);
+            return fetch(this.__buildUrl('UploadImage'/*, person.guid*/), this.__buildFetchBlockForImages('POST', imageData))
+                .then(this.handleErrors)
+                .then(response => {
+                    if (response.ok)
+                        resolve(person);
+                    else
+                        reject(person);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    reject(error);
+                });
+        });
+    }
+
 
     updatePersonApi = (person) => {
 

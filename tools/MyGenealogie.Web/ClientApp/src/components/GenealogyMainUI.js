@@ -51,6 +51,7 @@ class GenealogyMainUI extends Component {
         persons: [],
         selectedPerson: null,
         clipBoardPerson: null,
+        fileToUpload: null,
         applicationStatus: "Loading...",
     };
 
@@ -218,7 +219,7 @@ class GenealogyMainUI extends Component {
     }
 
     reloadData = () => {
-        // +++
+        
         this.setAppStatus(APP_STATUS_BUSY);
         __personDBClient.loadPersons().then((persons) => {
             this.updateState('persons', persons, () => {
@@ -471,6 +472,21 @@ class GenealogyMainUI extends Component {
         </form>);
     }
 
+    onUploadImageClick = () => {
+        debugger;
+        var input = document.querySelector('input[type="file"]');
+        const fileToUpload = input.files[0];
+        const formData = new FormData();
+        formData.append('file', fileToUpload, fileToUpload.name);
+        __personDBClient.uploadImage(this.state.selectedPerson, formData);
+    }
+
+    onSelectImageToUpload = (event) => {
+
+        var fileToUpload = event.target.files[0];
+        this.updateState("fileToUpload", fileToUpload);
+    }
+
     onUpdatePersonClick = () => {
         this.setAppStatus(APP_STATUS_BUSY);
         this.updateSelectedPerson()
@@ -558,21 +574,15 @@ class GenealogyMainUI extends Component {
                     <tbody>
                         <tr>
                                 <td><button type="button" className="btn btn-primary" onClick={() => { this.goBackToPreviousPerson(); }}> Back </button> &nbsp;</td>
-
-                                {/*
-                                <td><button type="button" className="btn btn-primary" onClick={() => { this.copySelectedPersonToClipboard(); }}> Copy To Clipboard </button></td>
-                                */}
-
-                                {/*<td>
-                                    <button type="button" className="btn btn-primary" onClick={ this.onUpdatePersonClick }> Update </button>
-                                </td>*/}
-
                                 <td>
                                     <ButtonGroup aria-label="Basic example">
 
                                         <Button variant="secondary" onClick={() => { this.copySelectedPersonToClipboard(); }}> Copy To Clipboard </Button>
 
                                         <Button variant="secondary" onClick={this.onUpdatePersonClick}> Update </Button>
+
+                                        <Button variant="secondary" onClick={this.onUploadImageClick}> Upload Image </Button>
+                                        <input type="file" name="file" onChange={this.onSelectImageToUpload} />
 
                                         <Button variant="secondary" onClick={() => {
                                             this.setAppStatus(APP_STATUS_BUSY);

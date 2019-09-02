@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyGenealogie.Console;
 
@@ -23,6 +24,24 @@ namespace MyGenealogie.Web.Controllers
             var l = new List<PersonProperties>();
             l = this.personDB.Persons.Select(p => p.Properties).ToList();
             return l;
+        }
+
+
+        //[HttpPost("[action]/{personGuid?}")]
+        //public IActionResult UploadImage(string personGuid)
+
+        // https://dotnetcoretutorials.com/2017/03/12/uploading-files-asp-net-core/
+        [HttpPost("[action]")]
+        public IActionResult UploadImage(IFormFile file)
+        {
+            //var person = this.personDB.GetPersonByGuid(Guid.Parse(personGuid));
+            //if (person == null)
+            //    return BadRequest($"Person guid:{personGuid} not found in backend memory");
+
+            //if (this.personDB.UpdatePerson(personProperties))
+                return Ok();
+            //else
+              //  return new NotFoundObjectResult(personProperties.Guid); // TODO: Improve
         }
 
         [HttpPut("[action]")]
