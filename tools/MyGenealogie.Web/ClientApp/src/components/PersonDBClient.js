@@ -124,11 +124,12 @@ export class PersonDBClient {
             body: JSON.stringify(data)
         };
     }
-    __buildFetchBlockForImages(method, files) {
+    __buildFetchBlockForImages(method, files, person) {
 
         const h = this.getHeaders();
         h.enctype = "multipart/form-data";
         delete h['Content-Type'];
+        h.guid = person.guid;
         return {
             method,
             headers: h,
@@ -215,7 +216,7 @@ export class PersonDBClient {
         return new Promise((resolve, reject) => {
 
             this.trace(`Upload image for person ${this.getPersonFullName(person)}`);
-            return fetch(this.__buildUrl('UploadImage'/*, person.guid*/), this.__buildFetchBlockForImages('POST', imageData))
+            return fetch(this.__buildUrl('UploadImage'/*, person.guid*/), this.__buildFetchBlockForImages('POST', imageData, person))
                 .then(this.handleErrors)
                 .then(response => {
                     if (response.ok)

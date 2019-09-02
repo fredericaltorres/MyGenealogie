@@ -144,13 +144,7 @@ namespace MyGenealogie
                 var images = Directory.GetFiles(folder, fileMask).ToList();
                 foreach (var i in images)
                 {
-                    var pi = new PersonImage
-                    {
-                        ImageName = Path.GetFileNameWithoutExtension(i),
-                        FileName = Path.GetFileName(i),
-                        LocalFileName = i,
-                        Url = BuildImageUrl(Path.GetFileName(i), PersonDB.personDBContainer),
-                    };
+                    PersonImage pi = BuildPersonImage(i);
                     l.Add(pi);
                 }
                 this.Properties.Images = l;
@@ -160,6 +154,17 @@ namespace MyGenealogie
                 //foreach(var im in this.Properties.Images)
                 //    im.Url = BuildImageUrl(im.FileName, this.GetFolderName());
             }
+        }
+
+        public PersonImage BuildPersonImage(string imageLocalFileName)
+        {
+            return new PersonImage
+            {
+                ImageName = Path.GetFileNameWithoutExtension(imageLocalFileName),
+                FileName = Path.GetFileName(imageLocalFileName),
+                LocalFileName = imageLocalFileName,
+                Url = BuildImageUrl(Path.GetFileName(imageLocalFileName), PersonDB.personDBContainer),
+            };
         }
 
         public void CopyImagesWithGuidPrefix(string destination)

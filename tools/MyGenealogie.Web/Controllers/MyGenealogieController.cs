@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -34,14 +35,30 @@ namespace MyGenealogie.Web.Controllers
         [HttpPost("[action]")]
         public IActionResult UploadImage(IFormFile file)
         {
-            //var person = this.personDB.GetPersonByGuid(Guid.Parse(personGuid));
-            //if (person == null)
-            //    return BadRequest($"Person guid:{personGuid} not found in backend memory");
+            var personGuid = this.HttpContext.Request.Headers["guid"];
+            var person = this.personDB.GetPersonByGuid(Guid.Parse(personGuid));
+            if (person == null)
+                return BadRequest($"Person guid:{personGuid} not found in backend memory");
 
-            //if (this.personDB.UpdatePerson(personProperties))
-                return Ok();
-            //else
-              //  return new NotFoundObjectResult(personProperties.Guid); // TODO: Improve
+            var fileNameOnly = $"{personGuid}.{file.FileName}";
+            var tmpPath = Path.Combine(Environment.GetEnvironmentVariable("TEMP"), fileNameOnly);
+            if (System.IO.File.Exists(tmpPath))
+                System.IO.File.Delete(tmpPath);
+
+            if (file.Length > 0)
+            {
+                using (var stream = new FileStream(tmpPath, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+                var personImage = person.BuildPersonImage(tmpPath);
+                this.personDB.UploadImage(person, personImage);
+
+                person.Properties.Images.Add(personImage);
+                if (this.personDB.UpdatePerson(person.Properties))
+                    return Ok();
+            }
+            return new NotFoundObjectResult(personGuid); // TODO: Improve
         }
 
         [HttpPut("[action]")]

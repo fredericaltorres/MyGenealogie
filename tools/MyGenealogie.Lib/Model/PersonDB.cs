@@ -45,6 +45,12 @@ namespace MyGenealogie.Console
             }
         }
 
+        public void UploadImage(Person p, PersonImage image)
+        {
+            var bm = GetBlobManager();
+            bm.UploadJpegFileAsync(image.LocalFileName, overide: true).GetAwaiter().GetResult();
+        }
+
         public bool UpdatePerson(PersonProperties personProperties)
         {
             var person = this.GetPersonByGuid(personProperties.Guid);
