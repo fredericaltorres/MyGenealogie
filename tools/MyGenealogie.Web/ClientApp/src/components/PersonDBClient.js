@@ -112,17 +112,25 @@ export class PersonDBClient {
     }
     __buildFetchBlock(method, data) {
 
-        if (method === 'GET')
-            return {
-                method,
-                headers: this.getHeaders()
-            };
+        const headers = this.getHeaders();
+        let r = null;
 
-        return {
-            method,
-            headers: this.getHeaders(),
-            body: JSON.stringify(data)
-        };
+        if (method === 'GET') {
+            r = {
+                method,
+                headers
+            };
+        }
+        else {
+            r = {
+                method,
+                headers,
+                body: JSON.stringify(data)
+            };
+        }
+        debugger;
+        console.log(`__buildFetchBlock returns ${JSON.stringify(r)}`);
+        return r;
     }
     __buildFetchBlockForImages(method, files, person) {
 
@@ -209,9 +217,7 @@ export class PersonDBClient {
             });
         });
     }
-
-    // https://programmingwithmosh.com/javascript/react-file-upload-proper-server-side-nodejs-easy/
-    uploadImage(person, imageData) {
+    uploadImage(person, imageData) { // https://programmingwithmosh.com/javascript/react-file-upload-proper-server-side-nodejs-easy/
 
         return new Promise((resolve, reject) => {
 
@@ -230,14 +236,13 @@ export class PersonDBClient {
                 });
         });
     }
-
-    deleteImage(imageFileName, person) {
+    deleteImage(person, imageFileName) {
 
         return new Promise((resolve, reject) => {
 
             this.trace(`Delete image:${imageFileName} for person ${this.getPersonFullName(person)}`);
-            ++++
-            return fetch(this.__buildUrl('DeleteImage'), this.__buildFetchBlock('DELETE', {}, person))
+            debugger;
+            return fetch(this.__buildUrl('DeleteImage'), this.__buildFetchBlock('DELETE', { imageFileName, guid: person.guid }))
                 .then(this.handleErrors)
                 .then(response => {
                     if (response.ok)
@@ -251,9 +256,7 @@ export class PersonDBClient {
                 });
         });
     }
-
-
-    updatePersonApi = (person) => {
+    updatePersonApi = (person) => { // TODO: Is this used?
 
         console.log(`Call to back end to update person:${__personDBClient.getPersonFullName(person)}`);
 

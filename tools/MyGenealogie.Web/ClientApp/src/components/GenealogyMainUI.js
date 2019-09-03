@@ -312,27 +312,27 @@ class GenealogyMainUI extends Component {
 
         return r;
     }
-
     deleteImage = (fileName) => {
-        alert(fileName);
+
+        debugger;
         this.setAppStatus(APP_STATUS_BUSY);
         const person = this.getPersonSelected();
 
         __personDBClient.deleteImage(person, fileName)
             .then((personUpdated) => {
+                debugger;
                 this.onPersonUpdated(personUpdated);
             }).finally(() => {
                 this.setAppStatus(APP_STATUS_READY);
             });
     }
-
     getPersonImagesHtml(person) {
 
         if (!person.images)
             return [];
 
         return person.images.map((image) => {
-            return (<span>
+            return (<span key={image.url}>
                 <img key={image.url} data-filenam={image.fileName} src={image.url} width={DEFAULT_IMAGE_WIDTH} />
                 <button type="button" className="btn btn-primary" onClick={() => {
                     this.deleteImage(image.fileName);
@@ -491,11 +491,13 @@ class GenealogyMainUI extends Component {
     }
 
     onUploadImageClick = () => {
+
         this.setAppStatus(APP_STATUS_BUSY);
-        var input = document.querySelector('input[type="file"]');
+
+        const input = document.querySelector('input[type="file"]');
         const fileToUpload = input.files[0];
         const formData = new FormData();
-        formData.append('file', fileToUpload, fileToUpload.name);        
+        formData.append('file', fileToUpload, fileToUpload.name);
         __personDBClient.uploadImage(this.state.selectedPerson, formData)
         .then((person) => {
             debugger;
@@ -506,7 +508,7 @@ class GenealogyMainUI extends Component {
         });
     }
 
-    onSelectImageToUpload = (event) => {
+    onSelectImageToUpload = (event) => { // TODO REMOVE
 
         var fileToUpload = event.target.files[0];
         this.updateState("fileToUpload", fileToUpload);

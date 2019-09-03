@@ -51,21 +51,36 @@ namespace MyGenealogie.Console
             bm.UploadJpegFileAsync(image.LocalFileName, overide: true).GetAwaiter().GetResult();
         }
 
+        public bool DeleteImage(Guid personGuid, string imageFileName)
+        {
+            var person = this.GetPersonByGuid(personGuid);
+            var personImageToDelete = person.Properties.Images.FirstOrDefault(i => i.FileName == imageFileName);
+            if (personImageToDelete != null)
+            {
+                person.Properties.Images.Remove(personImageToDelete);
+                if (this.UpdatePerson(person.Properties))
+                    return true;
+            }
+            return false;
+        }
+
         public bool UpdatePerson(PersonProperties personProperties)
         {
             var person = this.GetPersonByGuid(personProperties.Guid);
             if (person == null)
                 return false;
 
+            // Save the person as a JSON local file
             var source = person.Source;
             var folder = person._folder;
             person.Source = PersonDBSource.LOCAL_FILE_SYSTEM;
             person._folder = Environment.GetEnvironmentVariable("TEMP");
             person.Properties = personProperties;
-            person.SaveAsJsonLocalFile(); // Save as JSON local file
+            person.SaveAsJsonLocalFile(); 
+            // Upload the json local file to Azure storage
             GetBlobManager().UploadJsonFileAsync(person.GetPropertiesJsonFile(), overide: true).GetAwaiter().GetResult();
             File.Delete(person.GetPropertiesJsonFile());
-
+            // Save the global json file in Azure storage
             person.Source = source;
             person._folder = folder;
             this.SaveJsonDBInAzure();
@@ -227,6 +242,11 @@ namespace MyGenealogie.Console
         public Person GetPersonByLastNameFirstName(string lastName, string firstName)
         {
             return this.Persons.FirstOrDefault(p => p.Properties.LastName == lastName && p.Properties.FirstName == firstName);
+        }
+
+        public bool PersonExists(Guid guid)
+        {
+            return GetPersonByGuid(guid) != null;
         }
 
         public Person GetPersonByGuid(Guid guid)

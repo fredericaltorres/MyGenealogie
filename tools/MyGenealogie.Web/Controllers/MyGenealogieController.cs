@@ -22,14 +22,23 @@ namespace MyGenealogie.Web.Controllers
         [HttpGet("[action]")]
         public List<PersonProperties> GetPersons()
         {
-            var l = new List<PersonProperties>();
-            l = this.personDB.Persons.Select(p => p.Properties).ToList();
-            return l;
+            return this.personDB.Persons.Select(p => p.Properties).ToList();
         }
 
+        [HttpDelete("[action]")]
+        public IActionResult DeleteImage([FromBody] DeleteImageInfo deleteImageInfo)
+        {
+            if(!this.personDB.PersonExists(deleteImageInfo.Guid))
+                return BadRequest($"Person guid:{deleteImageInfo.Guid} not found in backend memory");
 
-        //[HttpPost("[action]/{personGuid?}")]
-        //public IActionResult UploadImage(string personGuid)
+            if(this.personDB.DeleteImage(deleteImageInfo.Guid, deleteImageInfo.ImageFileName))
+            {
+                var person = this.personDB.GetPersonByGuid(deleteImageInfo.Guid);
+                return new OkObjectResult(person.Properties);
+            }
+            else
+                return new NotFoundObjectResult(deleteImageInfo.Guid); // TODO: Improve
+        }
 
         // https://dotnetcoretutorials.com/2017/03/12/uploading-files-asp-net-core/
         [HttpPost("[action]")]
@@ -64,7 +73,6 @@ namespace MyGenealogie.Web.Controllers
         [HttpPut("[action]")]
         public IActionResult UpdatePerson([FromBody]PersonProperties personProperties)
         {
-        
             var person = this.personDB.GetPersonByGuid(personProperties.Guid);
             if (person == null)
                 return BadRequest($"Person guid:{personProperties.Guid}, Lastname:{personProperties.LastName}, FirstName:{personProperties.FirstName} not found in backend memory");
@@ -83,6 +91,7 @@ namespace MyGenealogie.Web.Controllers
             else
                 return new NotFoundObjectResult(guid); // TODO: Improve
         }
+                
 
         [HttpPost("[action]")]
         public IActionResult NewPerson()

@@ -3,6 +3,12 @@ using System.Collections.Generic;
 
 namespace MyGenealogie
 {
+    public class DeleteImageInfo
+    {
+        public Guid Guid { get; set; }
+        public string ImageFileName { get; set; }
+    }
+
     public class PersonProperties
     {
         public string _Username;
