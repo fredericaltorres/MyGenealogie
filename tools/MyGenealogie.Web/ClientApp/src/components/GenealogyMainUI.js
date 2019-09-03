@@ -233,6 +233,7 @@ class GenealogyMainUI extends Component {
     onPersonUpdated = (person) => {
 
         console.log(`onPersonUpdated person:${__personDBClient.getPersonFullName(person)}`);
+        console.dir(person);
         var persons = this.state.persons;
         const index = persons.findIndex((p) => { return p.guid === person.guid; });
         if (index === -1) {
@@ -243,7 +244,6 @@ class GenealogyMainUI extends Component {
         else {
             persons[index] = person;
             this.updateState("persons", persons);
-
             return true;
         }
     };
@@ -276,11 +276,12 @@ class GenealogyMainUI extends Component {
 
     updateState = (property, value, callBack = () => { }) => {
 
-        if (typeof (property) === 'string')
+        if (typeof (property) === 'string') {
+            console.log(`updateState property:${property}`);
             this.setState({ ...this.state, [property]: value }, callBack);
+        }
 
         if (typeof (property) === 'object') {
-
             let newState = { ...this.state };
             Object.key(property).forEach((key) => {
                 newState = { ...newState, [key]: property[key] };
@@ -314,17 +315,16 @@ class GenealogyMainUI extends Component {
     }
     deleteImage = (fileName) => {
 
-        debugger;
         this.setAppStatus(APP_STATUS_BUSY);
         const person = this.getPersonSelected();
 
         __personDBClient.deleteImage(person, fileName)
             .then((personUpdated) => {
-                debugger;
                 this.onPersonUpdated(personUpdated);
-            }).finally(() => {
-                this.setAppStatus(APP_STATUS_READY);
             });
+            //.finally(() => {
+            //    this.setAppStatus(APP_STATUS_READY);
+            //});
     }
     getPersonImagesHtml(person) {
 
@@ -499,13 +499,12 @@ class GenealogyMainUI extends Component {
         const formData = new FormData();
         formData.append('file', fileToUpload, fileToUpload.name);
         __personDBClient.uploadImage(this.state.selectedPerson, formData)
-        .then((person) => {
-            debugger;
-            this.onPersonUpdated(person);
-        })
-        .finally(() => {
-            this.setAppStatus(APP_STATUS_READY);
-        });
+            .then((person) => {
+                this.onPersonUpdated(person);
+            });
+        //.finally(() => {
+        //    this.setAppStatus(APP_STATUS_READY);
+        //});
     }
 
     onSelectImageToUpload = (event) => { // TODO REMOVE
@@ -517,12 +516,12 @@ class GenealogyMainUI extends Component {
     onUpdatePersonClick = () => {
         this.setAppStatus(APP_STATUS_BUSY);
         this.updateSelectedPerson()
-        .then((person) => {
-            this.onPersonUpdated(person);
-        })
-        .finally(() => {
-            this.setAppStatus(APP_STATUS_READY);
-        });
+            .then((person) => {
+                this.onPersonUpdated(person);
+            });
+        //.finally(() => {
+        //    this.setAppStatus(APP_STATUS_READY);
+        //});
     }
 
     onKeyboardUpdate = (event) => {
@@ -573,9 +572,16 @@ class GenealogyMainUI extends Component {
     }
 
     render() {
-
-        let selectionForComboBox = null;
         const personSelected = this.getPersonSelected();
+        let selectionForComboBox = null;
+
+        const personSelectedFullName = __personDBClient.getPersonFullName(personSelected);
+
+        let imageCount = 0;
+        if (personSelected && personSelected.images)
+            imageCount = personSelected.images.length;
+
+        console.log(`RENDER ------- personSelectedFullName:${personSelectedFullName} ---- images.count:${imageCount}`);
 
         if (personSelected) {
 

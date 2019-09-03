@@ -128,7 +128,6 @@ export class PersonDBClient {
                 body: JSON.stringify(data)
             };
         }
-        debugger;
         console.log(`__buildFetchBlock returns ${JSON.stringify(r)}`);
         return r;
     }
@@ -204,17 +203,17 @@ export class PersonDBClient {
 
             this.trace(`Update person ${this.getPersonFullName(person)}`);
             return fetch(this.__buildUrl('UpdatePerson'), this.__buildFetchBlock('PUT', person))
-            .then(this.handleErrors)
-            .then(response => {
-                if (response.ok)
-                    resolve(person);
-                else
-                    reject(person);
-            })
-            .catch(function (error) {
-                console.log(error);
-                reject(error);
-            });
+                .then(this.handleErrors)
+                .then(response => {
+                    if (response.ok)
+                        resolve(person); // TODO implement response.json() for consistency
+                    else
+                        reject(person);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    reject(error);
+                });
         });
     }
     uploadImage(person, imageData) { // https://programmingwithmosh.com/javascript/react-file-upload-proper-server-side-nodejs-easy/
@@ -225,8 +224,12 @@ export class PersonDBClient {
             return fetch(this.__buildUrl('UploadImage'), this.__buildFetchBlockForImages('POST', imageData, person))
                 .then(this.handleErrors)
                 .then(response => {
-                    if (response.ok)
-                        resolve(person);
+                    if (response.ok) {
+                        response.json()
+                            .then((personUpdated) => {
+                                resolve(personUpdated);
+                            });
+                    }
                     else
                         reject(person);
                 })
@@ -241,12 +244,14 @@ export class PersonDBClient {
         return new Promise((resolve, reject) => {
 
             this.trace(`Delete image:${imageFileName} for person ${this.getPersonFullName(person)}`);
-            debugger;
             return fetch(this.__buildUrl('DeleteImage'), this.__buildFetchBlock('DELETE', { imageFileName, guid: person.guid }))
                 .then(this.handleErrors)
                 .then(response => {
-                    if (response.ok)
-                        resolve(person);
+                    if (response.ok) {
+                        response.json().then((personUpdated) => {
+                            resolve(personUpdated);
+                        });
+                    }
                     else
                         reject(person);
                 })
