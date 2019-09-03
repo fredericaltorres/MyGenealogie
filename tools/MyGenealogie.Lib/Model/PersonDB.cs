@@ -51,12 +51,19 @@ namespace MyGenealogie.Console
             bm.UploadJpegFileAsync(image.LocalFileName, overide: true).GetAwaiter().GetResult();
         }
 
+        public void DeleteImageInAzureStorage(PersonImage image)
+        {
+            var bm = GetBlobManager();
+            bm.DeleteFileAsync(image.LocalFileName).GetAwaiter().GetResult();
+        }
+
         public bool DeleteImage(Guid personGuid, string imageFileName)
         {
             var person = this.GetPersonByGuid(personGuid);
             var personImageToDelete = person.Properties.Images.FirstOrDefault(i => i.FileName == imageFileName);
             if (personImageToDelete != null)
             {
+                this.DeleteImageInAzureStorage(personImageToDelete);
                 person.Properties.Images.Remove(personImageToDelete);
                 if (this.UpdatePerson(person.Properties))
                     return true;

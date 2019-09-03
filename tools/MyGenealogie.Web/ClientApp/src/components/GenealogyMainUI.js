@@ -49,9 +49,8 @@ class GenealogyMainUI extends Component {
 
     state = {
         persons: [],
-        selectedPerson: null,
+        selectedGuid: null,
         clipBoardPerson: null,
-        fileToUpload: null,
         applicationStatus: "Loading...",
     };
 
@@ -76,7 +75,7 @@ class GenealogyMainUI extends Component {
 
         if (guid === null) {
 
-            this.updateState("selectedPerson", null);
+            this.updateState("selectedGuid", null);
             return;
         }
 
@@ -85,15 +84,15 @@ class GenealogyMainUI extends Component {
             guid = guid.value;
         }
 
-        var selectedPerson = { ...this.getPersonFromGuid(guid) };
-        if (selectedPerson) {
+        var sp = { ...this.getPersonFromGuid(guid) };
+        if (sp) {
 
-            console.log(`handleChange  ${JSON.stringify(selectedPerson)}`);
+            console.log(`handleChange  ${JSON.stringify(sp)}`);
 
-            this.personHistory.push(selectedPerson.guid);
+            this.personHistory.push(sp.guid);
             console.log(`personHistory  ${JSON.stringify(this.personHistory)}`);
 
-            this.updateState("selectedPerson", selectedPerson);
+            this.updateState("selectedGuid", guid);
         }
         else {
             this.userError(`Cannot select person guid:${guid}`);
@@ -102,7 +101,7 @@ class GenealogyMainUI extends Component {
 
     updateSelectedPerson = () => {
 
-        const person = { ...this.state.selectedPerson };
+        const person = this.getPersonSelected();
         person.birthDate = stringDateToPersonDate(person.birthDate);
         person.deathDate = stringDateToPersonDate(person.deathDate);
         return __personDBClient.updatePerson(person); // Return promise
@@ -116,8 +115,7 @@ class GenealogyMainUI extends Component {
         }
         else {
 
-            console.log(`Paste '${__personDBClient.getPersonFullName(this.state.clipBoardPerson)}' as ${pasteAsEnum} into '${__personDBClient.getPersonFullName(this.state.selectedPerson)}'`);
-            
+            console.log(`Paste '${__personDBClient.getPersonFullName(this.state.clipBoardPerson)}' as ${pasteAsEnum} into '${__personDBClient.getPersonFullName(this.getPersonSelected())}`);
             const p = this.getPersonSelected();
             switch (pasteAsEnum) {
 
@@ -139,7 +137,7 @@ class GenealogyMainUI extends Component {
     
     copySelectedPersonToClipboard = () => {
 
-        this.state.clipBoardPerson = { ...this.state.selectedPerson };
+        this.state.clipBoardPerson = { ...this.getPersonSelected() };
         const s = __personDBClient.getPersonFullName(this.state.clipBoardPerson);
         copyToOperatingSystemClipboard(s);
         console.log(`Copied to clipboard person:${s}`);
@@ -168,8 +166,8 @@ class GenealogyMainUI extends Component {
 
     getPersonSelected() {
 
-        if (this.state.selectedPerson)
-            return this.state.selectedPerson;
+        if (this.state.selectedGuid)
+            return this.getPersonFromGuid(this.state.selectedGuid);
 
         return null;
     }
@@ -221,16 +219,20 @@ class GenealogyMainUI extends Component {
     reloadData = () => {
         
         this.setAppStatus(APP_STATUS_BUSY);
+
         __personDBClient.loadPersons().then((persons) => {
+
             this.updateState('persons', persons, () => {
-                this.selectDefaultPerson().finally(() => {
+
+                this.selectDefaultPerson().then(() => {
+
                     this.setAppStatus(APP_STATUS_READY);
                 });
             });
         });
     }
 
-    onPersonUpdated = (person) => {
+    onPersonUpdated = (person, callBack = undefined) => {
 
         console.log(`onPersonUpdated person:${__personDBClient.getPersonFullName(person)}`);
         console.dir(person);
@@ -243,7 +245,7 @@ class GenealogyMainUI extends Component {
         }
         else {
             persons[index] = person;
-            this.updateState("persons", persons);
+            this.updateState("persons", persons, callBack);
             return true;
         }
     };
@@ -277,18 +279,19 @@ class GenealogyMainUI extends Component {
     updateState = (property, value, callBack = () => { }) => {
 
         if (typeof (property) === 'string') {
+            const newState = { ...this.state, [property]: value };
             console.log(`updateState property:${property}`);
-            this.setState({ ...this.state, [property]: value }, callBack);
-        }
-
-        if (typeof (property) === 'object') {
-            let newState = { ...this.state };
-            Object.key(property).forEach((key) => {
-                newState = { ...newState, [key]: property[key] };
-            });
-            console.log(`new state:${JSON.stringify(newState)}`);
             this.setState(newState, callBack);
         }
+
+        //if (typeof (property) === 'object') {
+        //    let newState = { ...this.state };
+        //    Object.key(property).forEach((key) => {
+        //        newState = { ...newState, [key]: property[key] };
+        //    });
+        //    console.log(`new state:${JSON.stringify(newState)}`);
+        //    this.setState(newState);
+        //}
     }
 
     GetPersonsSelector() {
@@ -313,18 +316,24 @@ class GenealogyMainUI extends Component {
 
         return r;
     }
+    displayPersonSelectedInfo() {
+
+        const p = this.getPersonSelected();
+        console.log(`Person Selected has ${p.images.length} images`);
+    }
     deleteImage = (fileName) => {
 
         this.setAppStatus(APP_STATUS_BUSY);
         const person = this.getPersonSelected();
 
-        __personDBClient.deleteImage(person, fileName)
-            .then((personUpdated) => {
-                this.onPersonUpdated(personUpdated);
+        __personDBClient.deleteImage(person, fileName).then((personUpdated) => {
+
+            this.onPersonUpdated(personUpdated, () => {
+
+                    this.displayPersonSelectedInfo();
+                    this.setAppStatus(APP_STATUS_READY);
+                });
             });
-            //.finally(() => {
-            //    this.setAppStatus(APP_STATUS_READY);
-            //});
     }
     getPersonImagesHtml(person) {
 
@@ -412,18 +421,16 @@ class GenealogyMainUI extends Component {
         const value = e.target.value;
         console.log(`${fieldName} = ${value}`);
 
-        const selectedPerson = this.state.selectedPerson;
+        const person = this.getPersonSelected();
 
         if (isDate) {
-            selectedPerson[fieldName] = stringDateToPersonDate(value);
+            person[fieldName] = stringDateToPersonDate(value);
         }
         else {
-            selectedPerson[fieldName] = value;
+            person[fieldName] = value;
         }
-        
 
-        const newState = { ...this.state, selectedPerson };
-        this.setState(newState);
+        this.onPersonUpdated(person);
     }
 
     getFieldRow(fieldName, fieldValue, isMultiLine = false, isDate) {
@@ -498,30 +505,25 @@ class GenealogyMainUI extends Component {
         const fileToUpload = input.files[0];
         const formData = new FormData();
         formData.append('file', fileToUpload, fileToUpload.name);
-        __personDBClient.uploadImage(this.state.selectedPerson, formData)
-            .then((person) => {
-                this.onPersonUpdated(person);
+
+        __personDBClient.uploadImage(this.getPersonSelected(), formData).then((person) => {
+
+            this.onPersonUpdated(person, () => {
+
+                this.displayPersonSelectedInfo();
+                this.setAppStatus(APP_STATUS_READY);
             });
-        //.finally(() => {
-        //    this.setAppStatus(APP_STATUS_READY);
-        //});
-    }
-
-    onSelectImageToUpload = (event) => { // TODO REMOVE
-
-        var fileToUpload = event.target.files[0];
-        this.updateState("fileToUpload", fileToUpload);
+        });
     }
 
     onUpdatePersonClick = () => {
         this.setAppStatus(APP_STATUS_BUSY);
         this.updateSelectedPerson()
             .then((person) => {
-                this.onPersonUpdated(person);
+                this.onPersonUpdated(person, () => {
+                    this.setAppStatus(APP_STATUS_READY);
+                });
             });
-        //.finally(() => {
-        //    this.setAppStatus(APP_STATUS_READY);
-        //});
     }
 
     onKeyboardUpdate = (event) => {
@@ -611,12 +613,7 @@ class GenealogyMainUI extends Component {
                                     <ButtonGroup aria-label="Basic example">
 
                                         <Button variant="secondary" onClick={() => { this.copySelectedPersonToClipboard(); }}> Copy To Clipboard </Button>
-
                                         <Button variant="secondary" onClick={this.onUpdatePersonClick}> Update </Button>
-
-                                        <Button variant="secondary" onClick={this.onUploadImageClick}> Upload Image </Button>
-                                        <input type="file" name="file" onChange={this.onSelectImageToUpload} />
-
                                         <Button variant="secondary" onClick={() => {
                                             this.setAppStatus(APP_STATUS_BUSY);
                                             __personDBClient.newPerson().then((newPerson) => {
@@ -625,7 +622,6 @@ class GenealogyMainUI extends Component {
                                                 this.setAppStatus(APP_STATUS_READY);
                                             });
                                         }}> New </Button>
-
                                         <Button variant="secondary" onClick={() => {
                                             this.setAppStatus(APP_STATUS_BUSY);
                                             const person = this.getPersonSelected();
@@ -640,9 +636,9 @@ class GenealogyMainUI extends Component {
                                                 });
                                             }
                                         }}> Delete </Button>
-
-                                        {/*<Button variant="secondary">Clone</Button>*/}
+                                        <Button variant="secondary" onClick={this.onUploadImageClick}> Upload Image </Button>
                                     </ButtonGroup>
+                                    <input type="file" name="file" />
                                 </td>
 
                             <td>
