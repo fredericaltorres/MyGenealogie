@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { Link } from 'react-router-dom';
+// import { bindActionCreators } from 'redux';
+// import { Link } from 'react-router-dom';
 import isObject from 'lodash/isObject';
 
 // https://react-bootstrap.github.io/components/dropdowns/
@@ -16,7 +16,7 @@ import Select from 'react-select';
 
 // https://github.com/ayrton/react-key-handler
 // https://www.npmjs.com/package/react-key-handler
-import KeyHandler, { KEYPRESS, KEYDOWN, KEYUP } from 'react-key-handler'; 
+import KeyHandler, { KEYDOWN, KEYUP } from 'react-key-handler'; // KEYPRESS, 
 
 import {
     isPersonDate,
@@ -59,6 +59,11 @@ class GenealogyMainUI extends Component {
         this.reloadData();
     }
 
+    trace(m) {
+
+        console.log(`[GenealogyMainUI]${m}`);
+    }
+
     personHistory = []; // guid list of all persons viewed
 
     setAppStatus(status) {
@@ -84,13 +89,13 @@ class GenealogyMainUI extends Component {
             guid = guid.value;
         }
 
-        var sp = { ...this.getPersonFromGuid(guid) };
-        if (sp) {
+        var newSelectedPerson = { ...this.getPersonFromGuid(guid) };
+        if (newSelectedPerson) {
 
-            console.log(`handleChange  ${JSON.stringify(sp)}`);
+            this.trace(`handleChange ${__personDBClient.getPersonFullName(newSelectedPerson)}`);
 
-            this.personHistory.push(sp.guid);
-            console.log(`personHistory  ${JSON.stringify(this.personHistory)}`);
+            this.personHistory.push(newSelectedPerson.guid);
+            this.trace(`personHistory  ${JSON.stringify(this.personHistory)}`);
 
             this.updateState("selectedGuid", guid);
         }
@@ -115,7 +120,7 @@ class GenealogyMainUI extends Component {
         }
         else {
 
-            console.log(`Paste '${__personDBClient.getPersonFullName(this.state.clipBoardPerson)}' as ${pasteAsEnum} into '${__personDBClient.getPersonFullName(this.getPersonSelected())}`);
+            this.trace(`Paste '${__personDBClient.getPersonFullName(this.state.clipBoardPerson)}' as ${pasteAsEnum} into '${__personDBClient.getPersonFullName(this.getPersonSelected())}`);
             const p = this.getPersonSelected();
             switch (pasteAsEnum) {
 
@@ -131,24 +136,26 @@ class GenealogyMainUI extends Component {
                     p.spouseGuid = this.state.clipBoardPerson.guid;
                     this.onUpdatePersonClick();
                     break;
+                default:
+                    throw new Error(`Invalid paste_as operation:${pasteAsEnum}`);
             }
         }
     }
     
     copySelectedPersonToClipboard = () => {
 
-        this.state.clipBoardPerson = { ...this.getPersonSelected() };
-        const s = __personDBClient.getPersonFullName(this.state.clipBoardPerson);
+        const clipBoardPerson = { ...this.getPersonSelected() };
+        const s = __personDBClient.getPersonFullName(clipBoardPerson);
         copyToOperatingSystemClipboard(s);
-        console.log(`Copied to clipboard person:${s}`);
-        this.updateState("clipBoardPerson", this.state.clipBoardPerson);
+        this.trace(`Copied to clipboard person:${s}`);
+        this.updateState("clipBoardPerson", clipBoardPerson);
     }
 
     goBackToPreviousPerson = () => {
 
         if (this.personHistory.length > 1) {
 
-            var currentPersonGuid = this.personHistory.pop();
+            var currentPersonGuid = this.personHistory.pop(); // eslint-disable-line
             var previousPersonGuid = this.personHistory.pop();
             this.selectPerson(previousPersonGuid);
         }
@@ -234,7 +241,7 @@ class GenealogyMainUI extends Component {
 
     onPersonUpdated = (person, callBack = undefined) => {
 
-        console.log(`onPersonUpdated person:${__personDBClient.getPersonFullName(person)}`);
+        this.trace(`onPersonUpdated person:${__personDBClient.getPersonFullName(person)}`);
         console.dir(person);
         var persons = this.state.persons;
         const index = persons.findIndex((p) => { return p.guid === person.guid; });
@@ -252,7 +259,7 @@ class GenealogyMainUI extends Component {
 
     onPersonCreated = (person) => {
 
-        console.log(`onPersonCreated person:${__personDBClient.getPersonFullName(person)}`);
+        this.trace(`onPersonCreated person:${__personDBClient.getPersonFullName(person)}`);
         var persons = this.state.persons;
         persons.push(person);
         this.updateState("persons", persons);
@@ -263,7 +270,7 @@ class GenealogyMainUI extends Component {
     onPersonDeleted = (person) => {
 
         person = this.getPersonFromGuid(person.guid); // Get the extact instance from the state
-        console.log(`onPersonDeleted person:${__personDBClient.getPersonFullName(person)}`);
+        this.trace(`onPersonDeleted person:${__personDBClient.getPersonFullName(person)}`);
         var persons = this.state.persons;
         const index = persons.indexOf(person);
         if (index === -1) {
@@ -280,7 +287,7 @@ class GenealogyMainUI extends Component {
 
         if (typeof (property) === 'string') {
             const newState = { ...this.state, [property]: value };
-            console.log(`updateState property:${property}`);
+            this.trace(`updateState property:${property}`);
             this.setState(newState, callBack);
         }
 
@@ -319,7 +326,7 @@ class GenealogyMainUI extends Component {
     displayPersonSelectedInfo() {
 
         const p = this.getPersonSelected();
-        console.log(`Person Selected has ${p.images.length} images`);
+        this.trace(`Person Selected has ${p.images.length} images`);
     }
     deleteImage = (fileName) => {
 
@@ -342,7 +349,7 @@ class GenealogyMainUI extends Component {
 
         return person.images.map((image) => {
             return (<span key={image.url}>
-                <img key={image.url} data-filenam={image.fileName} src={image.url} width={DEFAULT_IMAGE_WIDTH} />
+                <img key={image.url} alt={image.fileName} src={image.url} width={DEFAULT_IMAGE_WIDTH} />
                 <button type="button" className="btn btn-primary" onClick={() => {
                     this.deleteImage(image.fileName);
                 }}> D </button>
@@ -419,7 +426,7 @@ class GenealogyMainUI extends Component {
     onFieldChange = (e, fieldName, isDate) => {
 
         const value = e.target.value;
-        console.log(`${fieldName} = ${value}`);
+        this.trace(`${fieldName} = ${value}`);
 
         const person = this.getPersonSelected();
 
@@ -515,7 +522,30 @@ class GenealogyMainUI extends Component {
             });
         });
     }
+    onDeletePersonClick = () => {
 
+        this.setAppStatus(APP_STATUS_BUSY);
+        const person = this.getPersonSelected();
+        if (window.confirm(`Delete ${__personDBClient.getPersonFullName(person)}`)) {
+
+            __personDBClient.deletePerson(this.getPersonSelected()).then(() => {
+
+                this.onPersonDeleted(person);
+                this.selectDefaultPerson();
+            }).finally(() => {
+                this.setAppStatus(APP_STATUS_READY);
+            });
+        }
+    }
+    onCreatePersonClick = () => {
+
+        this.setAppStatus(APP_STATUS_BUSY);
+        __personDBClient.newPerson().then((newPerson) => {
+            this.onPersonCreated(newPerson);
+        }).finally(() => {
+            this.setAppStatus(APP_STATUS_READY);
+        });
+    }
     onUpdatePersonClick = () => {
         this.setAppStatus(APP_STATUS_BUSY);
         this.updateSelectedPerson()
@@ -547,7 +577,7 @@ class GenealogyMainUI extends Component {
         if (this.state.keyAltDown !== down) {
             event.preventDefault();
             this.updateState('keyAltDown', down);
-            console.log(`ALT`);
+            this.trace(`ALT`);
         }
     }
 
@@ -583,7 +613,7 @@ class GenealogyMainUI extends Component {
         if (personSelected && personSelected.images)
             imageCount = personSelected.images.length;
 
-        console.log(`RENDER ------- personSelectedFullName:${personSelectedFullName} ---- images.count:${imageCount}`);
+        this.trace(`RENDER ------- personSelectedFullName:${personSelectedFullName} ---- images.count:${imageCount}`);
 
         if (personSelected) {
 
@@ -614,28 +644,8 @@ class GenealogyMainUI extends Component {
 
                                         <Button variant="secondary" onClick={() => { this.copySelectedPersonToClipboard(); }}> Copy To Clipboard </Button>
                                         <Button variant="secondary" onClick={this.onUpdatePersonClick}> Update </Button>
-                                        <Button variant="secondary" onClick={() => {
-                                            this.setAppStatus(APP_STATUS_BUSY);
-                                            __personDBClient.newPerson().then((newPerson) => {
-                                                this.onPersonCreated(newPerson);
-                                            }).finally(() => {
-                                                this.setAppStatus(APP_STATUS_READY);
-                                            });
-                                        }}> New </Button>
-                                        <Button variant="secondary" onClick={() => {
-                                            this.setAppStatus(APP_STATUS_BUSY);
-                                            const person = this.getPersonSelected();
-                                            if (window.confirm(`Delete ${__personDBClient.getPersonFullName(person)}`)) {
-
-                                                __personDBClient.deletePerson(this.getPersonSelected()).then(() => {
-
-                                                    this.onPersonDeleted(person);
-                                                    this.selectDefaultPerson();
-                                                }).finally(() => {
-                                                    this.setAppStatus(APP_STATUS_READY);
-                                                });
-                                            }
-                                        }}> Delete </Button>
+                                        <Button variant="secondary" onClick={this.onCreatePersonClick}> New </Button>
+                                        <Button variant="secondary" onClick={this.onDeletePersonClick}> Delete </Button>
                                         <Button variant="secondary" onClick={this.onUploadImageClick}> Upload Image </Button>
                                     </ButtonGroup>
                                     <input type="file" name="file" />

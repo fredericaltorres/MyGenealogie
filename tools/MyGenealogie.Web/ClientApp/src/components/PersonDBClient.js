@@ -49,9 +49,9 @@ export function stringDateToPersonDate(d) {
     var parts = d.split('-');
 
     return {
-        year:  (parts[0] === undefined || parts[0] === '') ? 0 : parseInt(parts[0]),
-        month: (parts[1] === undefined || parts[1] === '')  ? 0 : parseInt(parts[1]),
-        day:   (parts[2] === undefined || parts[20] === '')  ? 0 : parseInt(parts[2])
+        year:  (parts[0] === undefined || parts[0] === '') ? 0 : parseInt(parts[0], 10),
+        month: (parts[1] === undefined || parts[1] === '') ? 0 : parseInt(parts[1], 10),
+        day: (parts[2] === undefined || parts[20] === '') ? 0 : parseInt(parts[2], 10),
     };
 }
 

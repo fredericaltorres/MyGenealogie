@@ -1,9 +1,11 @@
 ﻿import React from 'react';
-import { Link } from 'react-router-dom';
-import { Nav, Navbar, NavItem } from 'react-bootstrap'; //Glyphicon
-import { LinkContainer } from 'react-router-bootstrap';
+//import { Link } from 'react-router-dom';
+//import { Nav, Navbar, NavItem } from 'react-bootstrap'; //Glyphicon
+//import { LinkContainer } from 'react-router-bootstrap';
 import './NavMenu.css';
 
+export default (props) => <span>NavMenu.js</span>;
+/*
 export default props => (
   <Navbar inverse fixedTop fluid collapseOnSelect>
     <Navbar.Header>
@@ -33,3 +35,4 @@ export default props => (
     </Navbar.Collapse>
   </Navbar>
 );
+*/
