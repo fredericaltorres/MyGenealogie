@@ -82,10 +82,13 @@ export class PersonDBClient {
         console.log(`[PersonDBClient]${m}`);
     }
     __buildUrl(urlAction, guid = null) {
+        let url = null;
         if(guid)
-            return `api/MyGenealogie/${urlAction}/${guid}`;
+            url = `api/MyGenealogie/${urlAction}/${guid}`;
         else 
-            return `api/MyGenealogie/${urlAction}`;
+            url = `api/MyGenealogie/${urlAction}`;
+        this.trace(`About to call url:${url}`);
+        return url;
     }
     getPersonFullName(p) {
 
@@ -137,11 +140,13 @@ export class PersonDBClient {
         h.enctype = "multipart/form-data";
         delete h['Content-Type'];
         h.guid = person.guid;
-        return {
+        const r = {
             method,
             headers: h,
             body: files
         };
+        console.log(`__buildFetchBlockForImages returns ${JSON.stringify(r)}`);
+        return r;
     }
     loadPersons() {
 
@@ -185,7 +190,7 @@ export class PersonDBClient {
         
         return new Promise((resolve, reject) => {
             
-            this.trace(`delete person ${this.getPersonFullName(person)}`);
+            this.trace(`Delete person ${this.getPersonFullName(person)}`);
             return fetch(this.__buildUrl('DeletePerson'), this.__buildFetchBlock('DELETE', person.guid))
             .then(this.handleErrors)
             .then(response => {
@@ -261,23 +266,23 @@ export class PersonDBClient {
                 });
         });
     }
-    updatePersonApi = (person) => { // TODO: Is this used?
+    //updatePersonApi = (person) => { // TODO: Is this used?
 
-        console.log(`Call to back end to update person:${__personDBClient.getPersonFullName(person)}`);
+    //    console.log(`Call to back end to update person:${__personDBClient.getPersonFullName(person)}`);
 
-        return fetch('api/MyGenealogie/UpdatePerson', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(person) // body data type must match "Content-Type" header
-        })
-            .then(response => {
-                console.log(response);
-                console.log(`back end update Ok:${response.ok} person:${__personDBClient.getPersonFullName(person)}`);
-                this.onPersonUpdated(person);
-            });
-    }
+    //    return fetch('api/MyGenealogie/UpdatePerson', {
+    //        method: 'PUT',
+    //        headers: {
+    //            'Content-Type': 'application/json'
+    //        },
+    //        body: JSON.stringify(person) // body data type must match "Content-Type" header
+    //    })
+    //        .then(response => {
+    //            console.log(response);
+    //            console.log(`back end update Ok:${response.ok} person:${__personDBClient.getPersonFullName(person)}`);
+    //            this.onPersonUpdated(person);
+    //        });
+    //}
 }
 
 const __personDBClient = new PersonDBClient();

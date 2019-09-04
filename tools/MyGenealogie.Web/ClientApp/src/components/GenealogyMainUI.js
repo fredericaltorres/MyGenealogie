@@ -287,7 +287,7 @@ class GenealogyMainUI extends Component {
 
         if (typeof (property) === 'string') {
             const newState = { ...this.state, [property]: value };
-            this.trace(`updateState property:${property}`);
+            // this.trace(`updateState property:${property}`);
             this.setState(newState, callBack);
         }
 
@@ -612,8 +612,6 @@ class GenealogyMainUI extends Component {
         let imageCount = 0;
         if (personSelected && personSelected.images)
             imageCount = personSelected.images.length;
-
-        this.trace(`RENDER ------- personSelectedFullName:${personSelectedFullName} ---- images.count:${imageCount}`);
 
         if (personSelected) {
 
