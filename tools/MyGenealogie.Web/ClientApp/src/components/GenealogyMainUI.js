@@ -330,17 +330,20 @@ class GenealogyMainUI extends Component {
     }
     deleteImage = (fileName) => {
 
-        this.setAppStatus(APP_STATUS_BUSY);
-        const person = this.getPersonSelected();
+        if (window.confirm(`Delete image ${fileName}?`)) {
 
-        __personDBClient.deleteImage(person, fileName).then((personUpdated) => {
+            this.setAppStatus(APP_STATUS_BUSY);
+            const person = this.getPersonSelected();
 
-            this.onPersonUpdated(personUpdated, () => {
+            __personDBClient.deleteImage(person, fileName).then((personUpdated) => {
+
+                this.onPersonUpdated(personUpdated, () => {
 
                     this.displayPersonSelectedInfo();
                     this.setAppStatus(APP_STATUS_READY);
                 });
             });
+        }
     }
     getPersonImagesHtml(person) {
 
@@ -349,7 +352,11 @@ class GenealogyMainUI extends Component {
 
         return person.images.map((image) => {
             return (<span key={image.url}>
-                <img key={image.url} alt={image.fileName} src={image.url} width={DEFAULT_IMAGE_WIDTH} />
+                
+                <a target="top" href={image.url}>
+                    <img key={image.url} alt={image.fileName} src={image.url} width={DEFAULT_IMAGE_WIDTH} />
+                </a>
+
                 <button type="button" className="btn btn-primary" onClick={() => {
                     this.deleteImage(image.fileName);
                 }}> D </button>
@@ -440,14 +447,18 @@ class GenealogyMainUI extends Component {
         this.onPersonUpdated(person);
     }
 
-    getFieldRow(fieldName, fieldValue, isMultiLine = false, isDate) {
+    getFieldRow(fieldName, fieldValue, fieldName2, fieldValue2, isMultiLine = false, isDate = false) {
 
-        if (isPersonDate(fieldValue)) {
-            
+        if (fieldValue && isPersonDate(fieldValue)) {
             fieldValue = personDateToString(fieldValue);
         }
-
         fieldValue = emptyStringOnNull(fieldValue);
+
+
+        if (fieldValue2 && isPersonDate(fieldValue2)) {
+            fieldValue2 = personDateToString(fieldValue2);
+        }
+        fieldValue2 = emptyStringOnNull(fieldValue2);
 
         if (isMultiLine) {
             return (<div className="form-group row">
@@ -461,12 +472,19 @@ class GenealogyMainUI extends Component {
         }
         else {
 
+            const getSecondFieldRowHtml = () => {
+                if (fieldName2) {
+                    return null;
+                }
+                else return null;
+            };
+
             return (<div className="form-group row">
-                <label htmlFor={fieldName} className="col-sm-2 col-form-label">{fieldName} : </label>
-                <div className="col-sm-10">
-                    <input type="text" pattern="[0-9. -]*" className="form-control" id={fieldName} value={fieldValue}
-                        onChange={(e) => { this.onFieldChange(e, fieldName, isDate); }}
-                    />
+                    <label htmlFor={fieldName} className="col-sm-2 col-form-label">{fieldName} : </label>
+                    <div className="col-sm-10">
+                        <input type="text" pattern="[0-9. -]*" className="form-control" id={fieldName} value={fieldValue}
+                            onChange={(e) => { this.onFieldChange(e, fieldName, isDate); }}
+                        />
                 </div>
             </div>);
         }
@@ -477,20 +495,20 @@ class GenealogyMainUI extends Component {
         return (<form>
             <a target="top" href={`https://mygenealogie.blob.core.windows.net/person-db/${person.guid}.json`}>Json Resource</a>
 
-            {this.getFieldRow("lastName", person.lastName)}
+            {this.getFieldRow("lastName", person.lastName, "otherName", "tutu")}
             {this.getFieldRow("maidenName", person.maidenName)}
             {this.getFieldRow("firstName", person.firstName)}
             {this.getFieldRow("middleName", replaceDash(person.middleName))}
 
-            {this.getFieldRow("birthDate", person.birthDate, false, true)}
+            {this.getFieldRow("birthDate", person.birthDate, null, null, false, true)}
             {this.getFieldRow("birthCity", person.birthCity)}
             {this.getFieldRow("birthCountry", person.birthCountry)}
 
-            {this.getFieldRow("deathDate", person.deathDate, false, true)}
+            {this.getFieldRow("deathDate", person.deathDate, null, null, false, true)}
             {this.getFieldRow("deathCity", person.deathCity)}
             {this.getFieldRow("deathCountry", person.deathCountry)}
 
-            {this.getFieldRow("comment", person.comment, true)}
+            {this.getFieldRow("comment", person.comment, null, null, true)}
 
             {this.isPersonHasSpouse(person) &&
                 this.getBlockRow("Spouse", this.getPersonSpouseSummaryHtml(person))}
