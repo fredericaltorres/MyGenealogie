@@ -128,10 +128,10 @@ class GenealogyMainUI extends Component {
                     p.fatherGuid = this.state.clipBoardPerson.guid;
                     this.onUpdatePersonClick();
                     break;
-                case PASTE_OPERATION_AS.Mother: 
+                case PASTE_OPERATION_AS.Mother:
                     p.motherGuid = this.state.clipBoardPerson.guid;
                     this.onUpdatePersonClick();
-                    break;                
+                    break;
                 case PASTE_OPERATION_AS.Spouse:
                     p.spouseGuid = this.state.clipBoardPerson.guid;
                     this.onUpdatePersonClick();
@@ -141,7 +141,7 @@ class GenealogyMainUI extends Component {
             }
         }
     }
-    
+
     copySelectedPersonToClipboard = () => {
 
         const clipBoardPerson = { ...this.getPersonSelected() };
@@ -224,7 +224,7 @@ class GenealogyMainUI extends Component {
     }
 
     reloadData = () => {
-        
+
         this.setAppStatus(APP_STATUS_BUSY);
 
         __personDBClient.loadPersons().then((persons) => {
@@ -352,7 +352,7 @@ class GenealogyMainUI extends Component {
 
         return person.images.map((image) => {
             return (<span key={image.url}>
-                
+
                 <a target="top" href={image.url}>
                     <img key={image.url} alt={image.fileName} src={image.url} width={DEFAULT_IMAGE_WIDTH} />
                 </a>
@@ -360,7 +360,7 @@ class GenealogyMainUI extends Component {
                 <button type="button" className="btn btn-primary" onClick={() => {
                     this.deleteImage(image.fileName);
                 }}> D </button>
-            </span> );
+            </span>);
         });
     }
 
@@ -422,12 +422,12 @@ class GenealogyMainUI extends Component {
 
     getBlockRow(fieldName, jsx) {
 
-        return (<div className="form-group row">
-            <label htmlFor={fieldName} className="col-sm-2 col-form-label">{fieldName}</label>
-            <div className="col-sm-10">
+        return (<tr>
+            <td><label htmlFor={fieldName} className="col-sm-2 col-form-label">{fieldName}</label></td>
+            <td><div className="col-sm-10">
                 {jsx}
-            </div>
-        </div>);
+            </div></td>
+        </tr>);
     }
 
     onFieldChange = (e, fieldName, isDate) => {
@@ -436,9 +436,11 @@ class GenealogyMainUI extends Component {
         this.trace(`${fieldName} = ${value}`);
 
         const person = this.getPersonSelected();
-
+        
         if (isDate) {
-            person[fieldName] = stringDateToPersonDate(value);
+            const newDateValue = stringDateToPersonDate(value);
+            this.trace(`isDate:${JSON.stringify(newDateValue)}`);
+            person[fieldName] = newDateValue;
         }
         else {
             person[fieldName] = value;
@@ -447,12 +449,14 @@ class GenealogyMainUI extends Component {
         this.onPersonUpdated(person);
     }
 
-    getFieldRow(fieldName, fieldValue, fieldName2, fieldValue2, isMultiLine = false, isDate = false) {
+    getFieldRow(fieldName1, fieldValue1, fieldName2, fieldValue2, isMultiLine = false, isDate1 = false, isDate2 = false) {
+        //if (isMultiLine)
+        //    debugger;
 
-        if (fieldValue && isPersonDate(fieldValue)) {
-            fieldValue = personDateToString(fieldValue);
+        if (fieldValue1 && isPersonDate(fieldValue1)) {
+            fieldValue1 = personDateToString(fieldValue1);
         }
-        fieldValue = emptyStringOnNull(fieldValue);
+        fieldValue1 = emptyStringOnNull(fieldValue1);
 
 
         if (fieldValue2 && isPersonDate(fieldValue2)) {
@@ -461,17 +465,29 @@ class GenealogyMainUI extends Component {
         fieldValue2 = emptyStringOnNull(fieldValue2);
 
         if (isMultiLine) {
-            return (<div className="form-group row">
-                <label htmlFor={fieldName} className="col-sm-2 col-form-label">{fieldName}</label>
-                <div className="col-sm-10">
-                    <textarea cols="80" rows="4" className="form-control-sm" id={fieldName} value={fieldValue}
-                        onChange={(e) => { this.onFieldChange(e, fieldName); }}
+            return (<tr>
+                <td><label htmlFor={fieldName1} className="col-form-label">{fieldName1}</label></td>
+                <td><div className="col-sm-10">
+                    <textarea cols="80" rows="4" className="form-control-sm" id={fieldName1} value={fieldValue1}
+                        onChange={(e) => { this.onFieldChange(e, fieldName1); }}
                     />
-                </div>
-            </div>);
+                </div></td>
+            </tr>);
         }
         else {
 
+            const getTDForLabel = (fieldName) => {
+                return <td><label htmlFor={fieldName}>{fieldName} : </label></td>;
+            };
+            const getTDForInput = (fieldName, fieldValue, isDate) => {
+                return (<td>
+                    <div className="col-sm-10">
+                        <input type="text" className="form-control-sm" id={fieldName} value={fieldValue}
+                            onChange={(e) => { this.onFieldChange(e, fieldName, isDate); }}
+                        />
+                    </div>
+                </td>);
+            };
             const getSecondFieldRowHtml = () => {
                 if (fieldName2) {
                     return null;
@@ -479,47 +495,35 @@ class GenealogyMainUI extends Component {
                 else return null;
             };
 
-            return (<div className="form-group row">
-                    <label htmlFor={fieldName} className="col-sm-2 col-form-label">{fieldName} : </label>
-                    <div className="col-sm-10">
-                        <input type="text" pattern="[0-9. -]*" className="form-control" id={fieldName} value={fieldValue}
-                            onChange={(e) => { this.onFieldChange(e, fieldName, isDate); }}
-                        />
-                </div>
-            </div>);
+            return (<tr key={fieldName1}>
+                {getTDForLabel(fieldName1)}
+                {getTDForInput(fieldName1, fieldValue1, isDate1)}
+                {fieldName2 && getTDForLabel(fieldName2)}
+                {fieldName2 && getTDForInput(fieldName2, fieldValue2, isDate2)}
+            </tr>);
         }
     }
-
     getPersonHtml(person) {
+        return (
+            <table border="0" cellPadding="1" cellSpacing="1" width="100%">
+                <tbody>
+                    {this.getFieldRow("lastName", person.lastName, "maidenName", person.maidenName)}
+                    {this.getFieldRow("firstName", person.firstName, "middleName", replaceDash(person.middleName))}
+                    {this.getFieldRow("birthDate", person.birthDate, "birthCity", person.birthCity, false, true)}
+                    {this.getFieldRow("birthCountry", person.birthCountry, "deathDate", person.deathDate, false, false, true)}
+                    {this.getFieldRow("deathCity", person.deathCity, "deathCountry", person.deathCountry)}                    
+                    {this.getFieldRow("comment", person.comment, null, null, true)}
 
-        return (<form>
-            <a target="top" href={`https://mygenealogie.blob.core.windows.net/person-db/${person.guid}.json`}>Json Resource</a>
-
-            {this.getFieldRow("lastName", person.lastName, "otherName", "tutu")}
-            {this.getFieldRow("maidenName", person.maidenName)}
-            {this.getFieldRow("firstName", person.firstName)}
-            {this.getFieldRow("middleName", replaceDash(person.middleName))}
-
-            {this.getFieldRow("birthDate", person.birthDate, null, null, false, true)}
-            {this.getFieldRow("birthCity", person.birthCity)}
-            {this.getFieldRow("birthCountry", person.birthCountry)}
-
-            {this.getFieldRow("deathDate", person.deathDate, null, null, false, true)}
-            {this.getFieldRow("deathCity", person.deathCity)}
-            {this.getFieldRow("deathCountry", person.deathCountry)}
-
-            {this.getFieldRow("comment", person.comment, null, null, true)}
-
-            {this.isPersonHasSpouse(person) &&
-                this.getBlockRow("Spouse", this.getPersonSpouseSummaryHtml(person))}
-            {this.isPersonHasFather(person) &&
-                this.getBlockRow("Father", this.getPersonFatherSummaryHtml(person))}
-            {this.isPersonHasMother(person) &&
-                this.getBlockRow("Mother", this.getPersonMotherSummaryHtml(person))}
-            {this.hasPersonChildren(person) &&
-                this.getBlockRow("Children", this.getPersonChildrenSummaryHtml(person))}
-
-        </form>);
+                    {this.isPersonHasSpouse(person) &&
+                        this.getBlockRow("Spouse", this.getPersonSpouseSummaryHtml(person))}
+                    {this.isPersonHasFather(person) &&
+                        this.getBlockRow("Father", this.getPersonFatherSummaryHtml(person))}
+                    {this.isPersonHasMother(person) &&
+                        this.getBlockRow("Mother", this.getPersonMotherSummaryHtml(person))}
+                    {this.hasPersonChildren(person) &&
+                        this.getBlockRow("Children", this.getPersonChildrenSummaryHtml(person))}
+                </tbody>
+            </table>);
     }
 
     onUploadImageClick = () => {
@@ -602,7 +606,7 @@ class GenealogyMainUI extends Component {
     // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code/code_values     
     getKeyHandlers = () => {
 
-        return ( <span>
+        return (<span>
 
             <KeyHandler keyEventName={KEYUP} code="KeyU" onKeyHandle={this.onKeyboardUpdate} />
             <KeyHandler keyEventName={KEYUP} code="KeyC" onKeyHandle={this.onKeyboardCopyToClipboard} />
@@ -611,7 +615,7 @@ class GenealogyMainUI extends Component {
             <KeyHandler keyEventName={KEYUP} code="AltLeft" onKeyHandle={(event) => { this.onKeyboardAltKey(event, false); }} />
             <KeyHandler keyEventName={KEYDOWN} code="AltRight" onKeyHandle={(event) => { this.onKeyboardAltKey(event, true); }} />
             <KeyHandler keyEventName={KEYUP} code="AltRight" onKeyHandle={(event) => { this.onKeyboardAltKey(event, false); }} />
-        </span> );
+        </span>);
     }
 
     askForUsernameAndPassword() {
@@ -642,18 +646,18 @@ class GenealogyMainUI extends Component {
         return (
             <React.Fragment>
 
-            {this.getKeyHandlers()}
+                {this.getKeyHandlers()}
 
-            <div>
-                <h2>MyGenealogy</h2>
+                <div>
+                    <h2>MyGenealogy</h2>
 
-                    <Alert variant={this.state.applicationStatus === APP_STATUS_BUSY ? 'danger':'primary'}>
-                    {this.state.applicationStatus}
-                </Alert>
+                    <Alert variant={this.state.applicationStatus === APP_STATUS_BUSY ? 'danger' : 'primary'}>
+                        {this.state.applicationStatus}
+                    </Alert>
 
-                <table>
-                    <tbody>
-                        <tr>
+                    <table>
+                        <tbody>
+                            <tr>
                                 <td><button type="button" className="btn btn-primary" onClick={() => { this.goBackToPreviousPerson(); }}> Back </button> &nbsp;</td>
                                 <td>
                                     <ButtonGroup aria-label="Basic example">
@@ -667,18 +671,18 @@ class GenealogyMainUI extends Component {
                                     <input type="file" name="file" />
                                 </td>
 
-                            <td>
-                                <Dropdown>
-                                    <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                        Relationships - {__personDBClient.getPersonFullName(this.state.clipBoardPerson)}
-                                    </Dropdown.Toggle>
+                                <td>
+                                    <Dropdown>
+                                        <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                            Relationships - {__personDBClient.getPersonFullName(this.state.clipBoardPerson)}
+                                        </Dropdown.Toggle>
 
-                                    <Dropdown.Menu>
-                                        <Dropdown.Item onClick={() => { this.pasteSelectedPersonFromClipboardAs(PASTE_OPERATION_AS.Father); }} >Paste as Father </Dropdown.Item>
-                                        <Dropdown.Item onClick={() => { this.pasteSelectedPersonFromClipboardAs(PASTE_OPERATION_AS.Mother); }} >Paste as Mother </Dropdown.Item>
-                                        <Dropdown.Item onClick={() => { this.pasteSelectedPersonFromClipboardAs(PASTE_OPERATION_AS.Spouse); }} >Paste as Spouse </Dropdown.Item>
-                                    </Dropdown.Menu>
-                                </Dropdown>
+                                        <Dropdown.Menu>
+                                            <Dropdown.Item onClick={() => { this.pasteSelectedPersonFromClipboardAs(PASTE_OPERATION_AS.Father); }} >Paste as Father </Dropdown.Item>
+                                            <Dropdown.Item onClick={() => { this.pasteSelectedPersonFromClipboardAs(PASTE_OPERATION_AS.Mother); }} >Paste as Mother </Dropdown.Item>
+                                            <Dropdown.Item onClick={() => { this.pasteSelectedPersonFromClipboardAs(PASTE_OPERATION_AS.Spouse); }} >Paste as Spouse </Dropdown.Item>
+                                        </Dropdown.Menu>
+                                    </Dropdown>
                                 </td>
 
 
@@ -698,20 +702,21 @@ class GenealogyMainUI extends Component {
                                 </td>
 
 
-                        </tr>
-                    </tbody>
-                </table>
+                            </tr>
+                        </tbody>
+                    </table>
 
-                <Select
-                    isClearable isSearchable
-                    value={selectionForComboBox}
-                    onChange={this.handleChange}
-                    options={this.GetPersonsDataForCombo()}
-                />
-                <hr />
-                {personSelected && this.getPersonHtml(personSelected)}
-                {personSelected && this.getPersonImagesHtml(personSelected)}
-                {this.GetPersonsSelector()}
+                    <Select
+                        isClearable isSearchable
+                        value={selectionForComboBox}
+                        onChange={this.handleChange}
+                        options={this.GetPersonsDataForCombo()}
+                    />
+                    <hr />
+                    {personSelected && <a target="top" href={`https://mygenealogie.blob.core.windows.net/person-db/${personSelected.guid}.json`}>Json Resource</a>}
+                    {personSelected && this.getPersonHtml(personSelected)}
+                    {personSelected && this.getPersonImagesHtml(personSelected)}
+                    {this.GetPersonsSelector()}
                 </div>
             </React.Fragment>
         );

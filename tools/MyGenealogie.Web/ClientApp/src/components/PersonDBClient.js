@@ -30,15 +30,20 @@ export function replaceDash(s) {
     return s.replace(new RegExp('-', 'g'), ' ');
 }
 
+function padZero(v, len) {
+    const s = v.toString();
+    return s.padStart(len, '0');
+}
+
 export function personDateToString(d) {
 
     if (!d) return '';
-    if (d.year === 0 && d.month === 0 && d.day === 0) return '';
-    if (d.year !== 0 && d.month === 0 && d.day === 0) return `${d.year}`;
-    if (d.year !== 0 && d.month !== 0 && d.day === 0) return `${d.year}-${d.month}`;
-    if (d.year !== 0 && d.month !== 0 && d.day !== 0) return `${d.year}-${d.month}-${d.day}`;
+    //if (d.year === 0 && d.month === 0 && d.day === 0) return '';
+    //if (d.year !== 0 && d.month === 0 && d.day === 0) return `${d.year}`;
+    //if (d.year !== 0 && d.month !== 0 && d.day === 0) return `${d.year}-${d.month}`;
+    //if (d.year !== 0 && d.month !== 0 && d.day !== 0) return `${d.year}-${d.month}-${d.day}`;
 
-    return 'date-issue';
+    return `${padZero(d.year, 4)}-${padZero(d.month, 2)}-${padZero(d.day, 2)}`;
 }
 
 export function stringDateToPersonDate(d) {
@@ -49,9 +54,9 @@ export function stringDateToPersonDate(d) {
     var parts = d.split('-');
 
     return {
-        year:  (parts[0] === undefined || parts[0] === '') ? 0 : parseInt(parts[0], 10),
-        month: (parts[1] === undefined || parts[1] === '') ? 0 : parseInt(parts[1], 10),
-        day: (parts[2] === undefined || parts[20] === '') ? 0 : parseInt(parts[2], 10),
+        year:  (parts[0] === undefined || parts[ 0] === '') ? 0 : parseInt(parts[0], 10),
+        month: (parts[1] === undefined || parts[ 1] === '') ? 0 : parseInt(parts[1], 10),
+        day:   (parts[2] === undefined || parts[20] === '') ? 0 : parseInt(parts[2], 10),
     };
 }
 
