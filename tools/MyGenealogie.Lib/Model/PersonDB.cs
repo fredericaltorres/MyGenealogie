@@ -83,7 +83,7 @@ namespace MyGenealogie.Console
             person.Source = PersonDBSource.LOCAL_FILE_SYSTEM;
             person._folder = Environment.GetEnvironmentVariable("TEMP");
             person.Properties = personProperties;
-            person.SaveAsJsonLocalFile(); 
+            person.SaveAsJsonToLocalFolder(); 
             // Upload the json local file to Azure storage
             GetBlobManager().UploadJsonFileAsync(person.GetPropertiesJsonFile(), overide: true).GetAwaiter().GetResult();
             File.Delete(person.GetPropertiesJsonFile());
@@ -119,7 +119,7 @@ namespace MyGenealogie.Console
             var bm = GetBlobManager();
             p._folder = Environment.GetEnvironmentVariable("TEMP");
             var tmpJsonFile = p.GetPropertiesJsonFile();
-            p.SaveAsJsonLocalFile(tmpJsonFile);
+            p.SaveAsJsonToLocalFolder(tmpJsonFile);
             bm.UploadJsonFileAsync(tmpJsonFile, overide: true).GetAwaiter().GetResult();
         }
 
@@ -150,7 +150,7 @@ namespace MyGenealogie.Console
             p.Properties.DeathDate = new PersonDate().SetToNow();
             p.Properties.CreationDate = new PersonDate().SetToNow();
             p.Properties.CreationDate = new PersonDate().SetToNow();
-            p.SaveAsJsonLocalFile(); // Save as JSON local file
+            p.SaveAsJsonToLocalFolder(); // Save as JSON local file
             GetBlobManager().UploadJsonFileAsync(p.GetPropertiesJsonFile()).GetAwaiter().GetResult();
 
             this.Persons.Add(p);
@@ -197,11 +197,23 @@ namespace MyGenealogie.Console
 
         public void SaveToLocalFolder(string dbPath)
         {
-            foreach(var p in this.Persons)
+            var bm = GetBlobManager();
+            foreach (var p in this.Persons)
             {
+                this.Trace($"");
+                this.Trace($"Saving to local path p:{p.GetFullName()}");
                 p.Source = PersonDBSource.LOCAL_FILE_SYSTEM;
                 p._folder = dbPath;
-                p.SaveAsJsonLocalFile(p.GetPropertiesJsonFile());
+                p.SaveAsJsonToLocalFolder(p.GetPropertiesJsonFile());
+                if (p.Properties.Images != null)
+                {
+                    foreach (var i in p.Properties.Images)
+                    {
+                        this.Trace($"Saving to local path, image:{i.FileName}");
+                        var localPath = Path.Combine(dbPath, i.FileName);
+                        bm.DownloadFileAsync(i.FileName, localPath);
+                    }
+                }
             }
         }
 

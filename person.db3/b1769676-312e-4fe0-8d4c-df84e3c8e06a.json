@@ -1,0 +1,34 @@
+{
+  "_Username": null,
+  "_PasswordHash": null,
+  "Sexe": null,
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "New 378714328",
+  "MaidenName": null,
+  "FirstName": "New 378714328",
+  "MiddleName": null,
+  "Guid": "b1769676-312e-4fe0-8d4c-df84e3c8e06a",
+  "FatherGuid": null,
+  "MotherGuid": null,
+  "SpouseGuid": null,
+  "CreationDate": {
+    "Year": 2019,
+    "Month": 9,
+    "Day": 3
+  },
+  "DeathDate": {
+    "Year": 2019,
+    "Month": 9,
+    "Day": 3
+  },
+  "BirthDate": {
+    "Year": 2019,
+    "Month": 9,
+    "Day": 3
+  },
+  "Images": null
+}

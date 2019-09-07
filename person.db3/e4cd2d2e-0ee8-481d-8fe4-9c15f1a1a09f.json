@@ -1,0 +1,34 @@
+{
+  "_Username": null,
+  "_PasswordHash": null,
+  "Sexe": null,
+  "BirthCity": null,
+  "BirthCountry": null,
+  "DeathCity": null,
+  "DeathCountry": null,
+  "Comment": null,
+  "LastName": "Torres",
+  "MaidenName": null,
+  "FirstName": "Frederic Junior",
+  "MiddleName": null,
+  "Guid": "e4cd2d2e-0ee8-481d-8fe4-9c15f1a1a09f",
+  "FatherGuid": "a3487e7a-2fb5-488c-b7ce-1a6395ed2453",
+  "MotherGuid": null,
+  "SpouseGuid": null,
+  "CreationDate": {
+    "Year": 2019,
+    "Month": 9,
+    "Day": 2
+  },
+  "DeathDate": {
+    "Year": 2019,
+    "Month": 9,
+    "Day": 2
+  },
+  "BirthDate": {
+    "Year": 2019,
+    "Month": 9,
+    "Day": 2
+  },
+  "Images": null
+}

@@ -285,7 +285,7 @@ namespace MyGenealogie
             return p;
         }
 
-        public void SaveAsJsonLocalFile(string outputJsonFileName = null)
+        public void SaveAsJsonToLocalFolder(string outputJsonFileName = null)
         {
             if (outputJsonFileName == null)
                 outputJsonFileName = this.GetPropertiesJsonFile();
